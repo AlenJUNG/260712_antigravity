@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Automation Strategy - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item active"><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🤖 AI 영상 제작 완전 자동화 및 효율 극대화 전략 (공학적 접근)</h1>
+<p>기존 파이프라인(대본 ➡️ 이미지 ➡️ 음성 ➡️ 립싱크 ➡️ 자막/BGM ➡️ 편집)은 퀄리티가 우수하지만, 수작업(다운로드, 크로마키 제거, 타임라인 정렬 등)이 많이 개입됩니다. </p>
+<p>품질은 그대로 유지(혹은 향상)하면서 제작 시간을 <strong>90% 이상 단축할 수 있는 AI 자동화 고도화 전략</strong> 3가지를 제시합니다.</p>
+<hr />
+<h2>전략 1: 파이썬 API 기반 완전 자동화 파이프라인 (추천 - 제로 노가다)</h2>
+<p>개발 및 코딩을 조금 접목하여 <strong>"주제 입력 ➡️ 최종 MP4 영상 완성"</strong>까지 클릭 한 번으로 끝내는 자체 자동화 프로그램을 구축하는 방법입니다.</p>
+<div class="mermaid-container"><pre class="mermaid">graph TD
+    Topic[주제 입력] --&gt; ClaudeAPI[1. Claude API: 대본 생성]
+    ClaudeAPI --&gt; VoiceAPI[2. ElevenLabs API: 목소리 생성]
+    VoiceAPI --&gt; VideoAPI[3. Replicate API: LivePortrait 립싱크 비디오 생성]
+    VideoAPI --&gt; Moviepy[4. Moviepy/FFmpeg: 크로마키 합성, BGM 믹싱, 자막 합성]
+    Moviepy --&gt; FinalVideo[5. 최종 쇼츠 MP4 완성]</pre></div>
+<h3>🛠️ 자동화 기술 스택 및 연동 방식</h3>
+<ol>
+<li><strong>대본 자동화 (Claude API)</strong>: 파이썬 스크립트에서 Claude API를 호출해 한글 교육 대본을 규격화된 JSON 형태로 가져옵니다. (캐릭터별 대사 자동 분리)</li>
+<li><strong>음성 생성 자동화 (ElevenLabs API)</strong>: 분리된 대사 데이터를 ElevenLabs API로 전송하여 성우별 음성 파일(mp3)을 자동으로 내려받습니다.</li>
+<li><strong>립싱크 비디오 자동화 (Replicate API - LivePortrait)</strong>:</li>
+<li>이미지 생성은 초기에 미드저니로 캐릭터 표정 템플릿(정면, 기쁨, 슬픔 등) 5~6장만 확보해 둡니다.</li>
+<li>파이썬이 Replicate 클라우드 API를 호출하여 <code>마스터 이미지</code> + <code>생성된 mp3</code>를 전송하고 말하는 캐릭터 비디오를 자동으로 생성 및 다운로드합니다.</li>
+<li><strong>최종 자동 합성 (Python MoviePy / FFmpeg)</strong>:</li>
+<li>파이썬의 비디오 편집 라이브러리인 <strong>MoviePy</strong>를 이용해 자동으로 배경 이미지 위에 캐릭터 크로마키를 날려 합성합니다.</li>
+<li>오디오 트랙을 얹고 BGM 볼륨 조절(더킹)을 코드로 자동 연산하여 믹싱합니다.</li>
+<li>Whisper API를 통해 받아온 자막 텍스트(SRT)를 영상에 강제로 입힙니다(Burn-in).</li>
+</ol>
+<div class="alert-box tip">💡 <b>TIP:</b> <br />
+이 API 자동화 파이프라인을 구축해 두면, 엑셀 시트에 주제만 10개 써놓고 실행 버튼을 누르면 10개의 고화질 쇼츠 영상이 폴더에 한 번에 생성됩니다.</div>
+<hr />
+<h2>전략 2: 플랫폼 연동형 자동화 (Vrew / CapCut 최적화)</h2>
+<p>코딩 없이 기존 숏폼 제작 플랫폼의 자동화 기능을 결합하여 시간을 단축하는 방법입니다.</p>
+<h3>1. Vrew의 '텍스트로 비디오 만들기' 기능 극대화</h3>
+<p>Vrew는 텍스트만 넣으면 AI 목소리, 자막, 배경 이미지/비디오를 한 번에 자동 매칭하여 가편집본을 30초 만에 만들어 줍니다.<br />
+* <strong>자동화 워크플로우</strong>: Claude가 짜준 대본 입력 ➡️ Vrew에서 음성 및 자막 자동 생성 ➡️ 어색한 배경 이미지 부분만 내 미드저니 캐릭터 이미지로 드래그 앤 드롭 교체 ➡️ 완성.<br />
+* <strong>효과</strong>: 타임라인 조절과 자막 싱크 맞추는 시간이 0초로 단축됩니다.</p>
+<h3>2. 캡컷(CapCut)의 '스마트 템플릿' 및 '배치 내보내기'</h3>
+<ul>
+<li>자주 사용하는 3명 캐릭터의 화면 분할 구도, 자막 스타일, BGM 볼륨 오디오 더킹 강도를 <strong>'프로젝트 템플릿'</strong>으로 미리 저장해 둡니다.</li>
+<li>새로운 영상 제작 시, 오디오 파일과 립싱크 비디오 파일만 기존 클립 위에 <strong>'대체하기(Replace)'</strong>로 덮어씌우면 모든 효과와 카메라 워킹이 그대로 유지된 채 5분 만에 완성됩니다.</li>
+</ul>
+<hr />
+<h2>전략 3: 롱폼 ➡️ 숏폼 변환 AI 자동화 (원소스 멀티유즈)</h2>
+<p>한국어 교육 내용을 10분짜리 롱폼 영상(유튜브 강의)으로 한 편 만든 뒤, AI가 조회수가 잘 나올 만한 핵심 구간만 잘라내어 쇼츠 10~20개로 자동 가공해 주는 방식입니다.</p>
+<ul>
+<li><strong>추천 AI 툴</strong>: <strong>Opus Clip</strong> / <strong>Munch</strong> / <strong>Dumme</strong></li>
+<li><strong>자동화 원리</strong>:</li>
+<li>10분짜리 가로형 원본 동영상을 업로드합니다.</li>
+<li>AI가 자동으로 재미있거나 유익한 구간을 탐지해 9:16 세로형으로 화면을 리프레임(Reframe)합니다.</li>
+<li>말하는 화자의 얼굴을 트래킹하여 카메라 앵글을 유지합니다.</li>
+<li>화려한 숏폼 스타일의 이모지 자동 첨부 자막을 입혀서 즉석 다운로드 링크를 제공합니다.</li>
+<li><strong>효과</strong>: 롱폼 영상 한 편을 찍으면 일주일 치 쇼츠 콘텐츠 기획 및 제작 리소스가 99% 자동 해결됩니다.</li>
+</ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

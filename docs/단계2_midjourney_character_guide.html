@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단계2 Midjourney Character Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item active"><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🎨 Midjourney 캐릭터 일관성 생성 가이드 (단계별 실전 매뉴얼)</h1>
+<p>유튜브 한국어 교육 쇼츠의 주인공이 될 3명의 캐릭터를 미드저니(Midjourney)에서 동일한 얼굴로 생성하고 일관성을 유지하는 단계별 실전 가이드입니다.</p>
+<hr />
+<h2>1단계: 가입 및 개인 작업 환경 세팅</h2>
+<p>미드저니는 <strong>디스코드(Discord)</strong>라는 메신저 플랫폼 안에서 챗봇 형태로 작동합니다.</p>
+<ol>
+<li><strong>디스코드 가입</strong>: <a href="https://discord.com/">디스코드 공식 홈페이지</a>에서 가입하고 PC 앱을 다운로드하여 로그인합니다.</li>
+<li><strong>미드저니 가입</strong>: <a href="https://www.midjourney.com/">미드저니 홈페이지</a>에 접속하여 <strong>[Sign In]</strong> 또는 <strong>[Join the Beta]</strong>를 누르고 디스코드 계정을 연동합니다.</li>
+<li><strong>요금제 구독</strong>: 첫 이용 시 구독이 필요합니다. 홈페이지 마이페이지에서 <strong>[Manage Sub]</strong>을 누르고 요금제를 결제합니다.</li>
+<li><em>추천</em>: 처음에는 <strong>Basic Plan ($10/월)</strong>으로 시작해 보고, 생성량이 많아지면 <strong>Standard Plan ($30/월)</strong>으로 업그레이드하세요.</li>
+<li><strong>개인 디스코드 서버 생성 (필수)</strong>: </li>
+<li>공개 서버(Newbies 채널)에서 이미지를 생성하면 다른 사람들이 만드는 이미지에 내 작업물이 금방 묻혀 찾기 힘듭니다.</li>
+<li>디스코드 왼쪽 메뉴의 <strong>[+] 버튼 (서버 추가하기)</strong> ➡️ <strong>[직접 만들기]</strong> ➡️ <strong>[나와 친구들을 위한 서버]</strong>를 선택해 나만의 비밀 방을 만듭니다.</li>
+<li><strong>미드저니 봇 초대</strong>: </li>
+<li>미드저니 공식 디스코드 서버에 입장한 후, 우측 멤버 목록에서 <strong>[Midjourney Bot]</strong>을 클릭합니다.</li>
+<li><strong>[서버에 추가]</strong> 버튼을 누르고 방금 만든 내 개인 서버를 선택해 연결해 줍니다.</li>
+</ol>
+<hr />
+<h2>2단계: '마스터 캐릭터' (기준 얼굴) 생성하기</h2>
+<p>캐릭터 일관성의 첫 단계는 기준이 되는 얼굴인 <strong>'마스터 이미지'</strong>를 완벽하게 만드는 것입니다. 교육용 립싱크 영상에 쓰기 적합하게 생성해야 합니다.</p>
+<h3>💡 립싱크 최적화 캐릭터 프롬프트 작성 팁</h3>
+<ul>
+<li><strong>정면 샷 (Front-facing)</strong>: 카메라를 정면으로 똑바로 바라보고 있어야 입모양 매칭이 자연스럽습니다.</li>
+<li><strong>입 닫기 (Closed mouth)</strong>: 벌리고 있으면 오디오 싱크 연산 시 왜곡이 일어납니다.</li>
+<li><strong>심플한 배경 (Solid background)</strong>: 인물만 따서 편집하기 편하도록 흰색 또는 단색 배경을 씁니다.</li>
+</ul>
+<h3>📝 실전 마스터 프롬프트 예시 (귀여운 애니메이션 풍 선생님)</h3>
+<p>내 개인 서버 대화창에 <code>/imagine</code>을 치고 Enter를 누른 후 아래 프롬프트를 붙여넣습니다.</p>
+<pre><code class="language-text">A beautiful young Korean female teacher character, friendly smile, closed mouth, front-facing, clean solid white background, 2D anime flat illustration style, neat line art, high resolution --ar 3:4 --v 6.0
+</code></pre>
+<blockquote>
+<p><strong>[파라미터 해석]</strong><br />
+* <code>--ar 3:4</code>: 세로형 포트레이트 비율 설정<br />
+* <code>--v 6.0</code>: 최신 고화질 v6 버전 엔진 활성화</p>
+</blockquote>
+<h3>🔍 업스케일 및 이미지 링크 복사</h3>
+<ol>
+<li>프롬프트를 전송하면 4장의 후보 이미지가 나옵니다.</li>
+<li>마음에 드는 캐릭터(예: U1 ~ U4 중 1번 선택 시 <strong>U1</strong> 클릭)를 선택해 크게 키웁니다(Upscale).</li>
+<li>확대된 이미지를 마우스 우클릭하고 <strong>[링크 복사 (Copy Link)]</strong>를 누릅니다. 이 URL 주소가 캐릭터 얼굴의 고유 코드가 됩니다. (예: <code>https://media.discordapp.net/attachments/xxxx/yyyy.png</code>)</li>
+</ol>
+<hr />
+<h2>3단계: <code>--cref</code> 파라미터로 캐릭터 일관성 유지하기</h2>
+<p>미드저니의 핵심 기능인 <strong>Character Reference (<code>--cref</code>)</strong>를 사용해 다른 행동과 표정을 만들어 냅니다.</p>
+<h3>⚙️ 명령어 기본 구조</h3>
+<p><code>/imagine [새로운 행동/상황 프롬프트] --cref [2단계에서 복사한 마스터 이미지 URL] --cw [0 또는 100]</code></p>
+<h3>💡 <code>--cw</code> (Character Weight, 캐릭터 가중치) 활용법</h3>
+<ul>
+<li><strong><code>--cw 100</code> (기본값)</strong>: 머리 스타일, 얼굴 모양, 그리고 <strong>입고 있는 옷 스타일</strong>까지 동일하게 복제합니다. (매 쇼츠마다 옷을 고정할 때 추천)</li>
+<li><strong><code>--cw 0</code></strong>: 옷을 제외하고 <strong>오직 얼굴 이목구비</strong>만 복제합니다. (캐릭터가 옷을 갈아입는 연출을 하고 싶을 때 필수)</li>
+</ul>
+<h3>💬 실전 활용 프롬프트 템플릿</h3>
+<h4>1. 화난 표정 짓기 (옷은 그대로 유지)</h4>
+<pre><code class="language-text">A young Korean female teacher character, angry expression, closed mouth, clean solid white background, 2D anime flat illustration style, neat line art --cref [마스터이미지URL] --cw 100 --ar 3:4 --v 6.0
+</code></pre>
+<h4>2. 교실 칠판 앞에서 가리키는 동작 (옷 갈아입히기 - 수트 착용)</h4>
+<pre><code class="language-text">A young Korean female teacher character wearing a professional grey suit, pointing at a whiteboard, friendly expression, closed mouth, classroom background, 2D anime flat illustration style, neat line art --cref [마스터이미지URL] --cw 0 --ar 3:4 --v 6.0
+</code></pre>
+<hr />
+<h2>4단계: 쇼츠 제작을 위한 소스 최종 추출</h2>
+<ol>
+<li>쇼츠 영상 1편에 필요한 캐릭터 컷(예: 기본 설명 표정, 놀라는 표정, 질문하는 자세 등)을 3~4개 확보합니다.</li>
+<li>최종 선택한 이미지들을 고화질로 저장합니다.</li>
+<li>배경이 흰색 단색이므로, 나중에 캡컷(CapCut) 등에서 <strong>'크로마키'</strong> 스포이트 기능을 이용해 배경을 없애고 세련된 교실 배경 이미지 위에 합성합니다.</li>
+</ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

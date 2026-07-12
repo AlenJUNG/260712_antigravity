@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>생거진천 3대 가족 2박 3일 힐링 여행 계획표</title>
+  <!-- Google Fonts: Outfit & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Design Tokens & CSS Variables */
+    :root {
+      --primary: #2d6a4f;
+      --primary-light: #52b788;
+      --primary-dark: #1b4332;
+      --secondary: #d8f3dc;
+      --accent: #f7a072;
+      --bg: #f4f7f5;
+      --text: #2d3748;
+      --text-muted: #718096;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.4);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+      --shadow-sm: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+      --border-radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(82, 183, 136, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(247, 160, 114, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+      padding-bottom: 60px;
+    }
+
+    /* Layout & Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header (Hero Section) */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      box-shadow: 0 10px 30px rgba(27, 67, 50, 0.15);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1200&q=80') no-repeat center center;
+      background-size: cover;
+      opacity: 0.15;
+      mix-blend-mode: overlay;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      word-break: keep-all;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Summary Dashboard cards */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: -30px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .db-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .db-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.12);
+    }
+
+    .db-card i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .db-card h3 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .db-card p {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Sticky Tab Navigation */
+    .tabs-container {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 247, 245, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 10px 0;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      padding: 2px;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none; /* Safari & Chrome */
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 100px;
+      padding: 12px 8px;
+      border: none;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn i {
+      font-size: 1.1rem;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
+    }
+
+    /* Tab Content Panels */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Timeline Section styling */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-left: 15px;
+      border-left: 2px dashed var(--primary-light);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -46px;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      z-index: 2;
+      transition: var(--transition);
+    }
+
+    .timeline-item:hover .timeline-marker {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .timeline-content {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .timeline-content:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .time {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .timeline-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-desc {
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    /* Meta Info (Price & Spot cards) */
+    .meta-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding-top: 15px;
+      margin-top: 15px;
+    }
+
+    .meta-tag {
+      background: #edf2f7;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .meta-tag.budget {
+      background: #fffaf0;
+      color: #dd6b20;
+      font-weight: 700;
+    }
+
+    .meta-tag.tips {
+      background: #f0fff4;
+      color: var(--primary-dark);
+      width: 100%;
+      line-height: 1.4;
+    }
+
+    /* Budget Page Styles */
+    .budget-section {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    .budget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+      padding-bottom: 15px;
+    }
+
+    .budget-header h2 {
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    .total-amount {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .budget-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .budget-row:last-child {
+      border-bottom: none;
+    }
+
+    .category-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .category-title {
+      font-weight: 600;
+    }
+
+    .category-value {
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Progress bar for budget weight */
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary-light);
+      border-radius: 3px;
+    }
+
+    /* Tip Card Style */
+    .tip-card {
+      background: linear-gradient(135deg, #fffaf0, #ffeb3b1a);
+      border: 1px dashed #dd6b20;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .tip-card i {
+      font-size: 1.5rem;
+      color: #dd6b20;
+    }
+
+    .tip-card div h4 {
+      font-weight: 700;
+      color: #dd6b20;
+      margin-bottom: 5px;
+    }
+
+    .tip-card div p {
+      font-size: 0.9rem;
+      color: #744210;
+      line-height: 1.5;
+    }
+
+    /* Packing List style */
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .checklist-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .check-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .check-card h3 {
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .check-item.checked span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .caution-note {
+      color: #e53e3e;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="badge">JINCHEON 2N3D FAMILY TRIP</div>
+    <h1>3대 가족 생거진천 힐링 여행</h1>
+    <p>어르신들께는 녹음 짙은 힐링을, 자녀(8세/5세)들에게는 신나는 물놀이 추억을 선물하는 2박 3일 계획표</p>
+  </header>
+
+  <div class="container">
+    <!-- Dashboard Summary -->
+    <div class="dashboard">
+      <div class="db-card">
+        <i class="fa-solid fa-users"></i>
+        <h3>여행 인원</h3>
+        <p>어른 4 · 아이 2 (총 6명)</p>
+      </div>
+      <div class="db-card">
+        <i class="fa-solid fa-hotel"></i>
+        <h3>머무는 곳</h3>
+        <p>생거진천 자연휴양림</p>
+      </div>
+      <div class="db-card">
+        <i class="fa-solid fa-wallet"></i>
+        <h3>예상 예산</h3>
+        <p>약 796,500 원</p>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('day1')">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>1일차 (일)</span>
+        </button>
+        <button class="tab-btn" onclick="openTab('day2')">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>2일차 (월)</span>
+        </button>
+        <button class="tab-btn" onclick="openTab('day3')">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>3일차 (화)</span>
+        </button>
+        <button class="tab-btn" onclick="openTab('budget')">
+          <i class="fa-solid fa-coins"></i>
+          <span>상세 예산</span>
+        </button>
+        <button class="tab-btn" onclick="openTab('packing')">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>준비물</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 1: DAY 1 -->
+    <div id="day1" class="tab-content active">
+      <div class="timeline">
+        <!-- 1일차 11:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">1</div>
+          <div class="timeline-content">
+            <span class="time">11:00 ~ 12:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-utensils"></i> 점심: 쌀밥집 곰가내</h3>
+            <p class="timeline-desc">진천의 우수 특산품 무농약 쌀을 사용하여 정갈하게 지어낸 맛있는 돌솥 밥 한 상입니다. 장인·장모님 입맛에도 딱이고 불고기, 구운 생선 등이 있어 8세, 5세 아이들도 영양가 높게 한 끼를 먹기 좋은 백곡면의 시그니처 웰빙 한정식 맛집입니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 백곡면 백곡로 842</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 예상 예산: 약 90,000원</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1일차 13:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">2</div>
+          <div class="timeline-content">
+            <span class="time">13:00 ~ 14:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-landmark"></i> 진천종박물관 & 역사테마공원</h3>
+            <p class="timeline-desc">하루 중 태양이 가장 뜨거울 때, 쾌적하고 시원한 실내 박물관으로 대피합니다! 전 세계의 유서 깊은 타종 문화와 소리를 체험하고 타종 소리를 직접 느껴봅니다. 박물관 앞 역사공원은 잔디밭이 넓어 시원해지면 걷기도 좋습니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 진천읍 백곡로 1504-12</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 어른 5,000원 · 소아 1,500원 (총 21,500원)</span>
+              <span class="meta-tag tips"><i class="fa-solid fa-circle-info"></i> 매표 시 진천사랑상품권으로 일부 금액을 환급해 줍니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1일차 15:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">3</div>
+          <div class="timeline-content">
+            <span class="time">15:00 ~ 17:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-water"></i> 자연휴양림 입실 및 물놀이</h3>
+            <p class="timeline-desc">생거진천 자연휴양림에 체크인하고 여장을 풉니다. 에어컨 아래에서 잠시 휴식한 뒤, 에너지가 넘치는 아이들을 데리고 휴양림 내에 설치된 여름철 '물놀이장' 또는 그늘진 유아 숲속 계곡에서 시원한 여름을 보냅니다. 어르신들은 숲이 우거진 데크에서 상쾌한 숲바람 속에 힐링하십니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 백곡면 명암길 435-13</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 물놀이 요금: 무료 (투숙객)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1일차 18:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">4</div>
+          <div class="timeline-content">
+            <span class="time">18:00 ~</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-fire-burner"></i> 저녁: 가마소가든 혹은 백숙 보양식</h3>
+            <p class="timeline-desc">휴양림 야외 데크에서 운치 있는 숯불 바비큐 파티를 진행하거나, 혹은 몸이 피로하지 않도록 휴양림 인근 맛집(가마소가든 혹은 그곳에 가고 싶다)에서 정성껏 삶아진 한방 토종닭 백숙으로 푸짐하고 든든하게 영양을 채웁니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 예상 예산: 약 80,000원</span>
+              <span class="meta-tag tips"><i class="fa-solid fa-triangle-exclamation"></i> 자연휴양림 객실 내에서는 냄새 배임 문제로 고기나 생선을 구울 수 없으니 주의하세요.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: DAY 2 -->
+    <div id="day2" class="tab-content">
+      <div class="timeline">
+        <!-- 2일차 09:30 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">1</div>
+          <div class="timeline-content">
+            <span class="time">09:30 ~ 11:00</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-dharmachakra"></i> 보탑사 아침 산책</h3>
+            <p class="timeline-desc">아침의 산들바람을 쐬며 보탑사로 향합니다. 철골 하나 없이 오직 통나무로만 짜 맞춘 국보급 3층 목탑이 웅장한 사찰입니다. 마당 평지가 평화롭고 형형색색의 정원꽃이 가꾸어져 있어 장인·장모님과 차분히 거닐며 예쁜 기념사진을 찍기에 가장 좋습니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 보탑사길 130</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 입장료 & 주차료: 무료</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2일차 11:30 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">2</div>
+          <div class="timeline-content">
+            <span class="time">11:30 ~ 12:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-bowl-food"></i> 점심: 진천막국수</h3>
+            <p class="timeline-desc">지역주민뿐만 아니라 관광객도 줄을 서서 먹는 최고 맛집입니다. 메밀 새싹이 소복하게 얹어진 깔끔하고 시원한 메밀막국수와 부드럽게 삶아낸 한방수육을 함께 곁들입니다. 더위에 지쳤던 입맛을 확 돋워주는 실패 없는 명가입니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 이월면 송림2길 3</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 예상 예산: 약 75,000원</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2일차 13:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">3</div>
+          <div class="timeline-content">
+            <span class="time">13:00 ~ 15:00</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-tree"></i> 만뢰산 자연생태공원</h3>
+            <p class="timeline-desc">나무 그늘 밑 시원한 숲길을 따라 생태연못과 곤충 관찰원, 대형 모래 놀이터와 다목적 광장이 구비된 친환경 공원입니다. 아이들이 안전하게 물장구칠 수 있는 시내 물줄기도 있어 신나게 뛰어노는 동안 어르신들은 정자에 앉아 푸른 경치를 조망합니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 백곡면 명암길 435-4</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 입장료: 무료</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2일차 18:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">4</div>
+          <div class="timeline-content">
+            <span class="time">18:00 ~</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-shrimp"></i> 저녁: 청산가든 (허영만 백반기행)</h3>
+            <p class="timeline-desc">장인·장모님을 모시고 가기 최적의 식당으로 꼽히는 백반 맛집. 많이 짜지 않고 깊은 감칠맛을 자랑하는 일품 간장게장과 구수하고 영양 듬뿍 들어간 가마솥밥 정식입니다. 부모님께는 격식 있는 정성 어린 대접이, 온 가족에게는 든든한 최고급 만찬이 됩니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 이월면 신계길 23</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 예상 예산: 약 150,000원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: DAY 3 -->
+    <div id="day3" class="tab-content">
+      <div class="timeline">
+        <!-- 3일차 09:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">1</div>
+          <div class="timeline-content">
+            <span class="time">09:00 ~ 10:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-bridge"></i> 진천 농다리 & 미르309 출렁다리</h3>
+            <p class="timeline-desc">천년의 신비함이 숨 쉬는 동양 최고의 돌다리 '농다리'를 건너보며 역사를 느낍니다. 이어서 계단 없이 편하게 조성된 호수 데크길을 20분간 산책하다 보면, 주탑이 없이 호수 위를 높고 길게 가로지르는 핫플레이스 '미르309 출렁다리'가 나옵니다. 시원한 호수 뷰와 짜릿한 모험이 동시에 가능합니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag"><i class="fa-solid fa-map-pin"></i> 진천군 문백면 구곡리 601-32</span>
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 입장료: 무료</span>
+              <span class="meta-tag tips"><i class="fa-solid fa-sun"></i> 한낮에는 그늘이 적어 햇볕이 따가우니 아침 9시에 선선할 때 둘러보시길 적극 추천합니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3일차 10:30 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">2</div>
+          <div class="timeline-content">
+            <span class="time">10:30 ~ 11:30</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-tv"></i> 농다리스토리움</h3>
+            <p class="timeline-desc">농다리를 다 걷고 나면 그 바로 옆에 세워진 실내 홍보체험 전시관으로 이동합니다. 시원한 실내에서 진천 농다리가 천년 동안 가라앉거나 무너지지 않은 과학적 원리를 3D와 인터랙티브 터치 화면으로 흥미롭게 탐구하여 아이들의 호기심을 채워줍니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 관람료: 무료</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3일차 12:00 -->
+        <div class="timeline-item">
+          <div class="timeline-marker">3</div>
+          <div class="timeline-content">
+            <span class="time">12:00 ~ 13:00</span>
+            <h3 class="timeline-title"><i class="fa-solid fa-square-poll-horizontal"></i> 점심식사 및 귀가</h3>
+            <p class="timeline-desc">진천읍 방면으로 나와 개운하고 소화가 잘되는 메밀 칼국수나 만두전골 정식을 즐깁니다. 어르신들의 소화 부담을 덜고 깔끔하게 진천 여행의 유종의 미를 장식합니다.</p>
+            <div class="meta-box">
+              <span class="meta-tag budget"><i class="fa-solid fa-won-sign"></i> 예상 예산: 약 50,000원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BUDGET -->
+    <div id="budget" class="tab-content">
+      <div class="budget-section">
+        <div class="budget-header">
+          <h2>예산 세부 분석</h2>
+          <div class="total-amount">합계: 약 796,500원</div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="budget-row">
+          <div class="category-info">
+            <div class="category-icon"><i class="fa-solid fa-house-chimney-crack"></i></div>
+            <div>
+              <span class="category-title">숙박비 (2박)</span>
+              <div class="progress-bar-container"><div class="progress-bar" style="width: 27%;"></div></div>
+            </div>
+          </div>
+          <div class="category-value">
+            220,000 원<br>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">휴양림 6인 객실 일·월 기준</span>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="budget-row">
+          <div class="category-info">
+            <div class="category-icon"><i class="fa-solid fa-utensils"></i></div>
+            <div>
+              <span class="category-title">식비 (총 5식)</span>
+              <div class="progress-bar-container"><div class="progress-bar" style="width: 55%; background-color: var(--primary);"></div></div>
+            </div>
+          </div>
+          <div class="category-value">
+            445,000 원<br>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">한정식, 백숙, 막국수, 간장게장 등</span>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="budget-row">
+          <div class="category-info">
+            <div class="category-icon"><i class="fa-solid fa-ticket"></i></div>
+            <div>
+              <span class="category-title">입장료 및 관람료</span>
+              <div class="progress-bar-container"><div class="progress-bar" style="width: 3%; background-color: var(--accent);"></div></div>
+            </div>
+          </div>
+          <div class="category-value">
+            21,500 원<br>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">진천 종박물관 (초등/일반)</span>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="budget-row">
+          <div class="category-info">
+            <div class="category-icon"><i class="fa-solid fa-mug-saucer"></i></div>
+            <div>
+              <span class="category-title">카페 및 기타 간식</span>
+              <div class="progress-bar-container"><div class="progress-bar" style="width: 8%; background-color: var(--primary-light);"></div></div>
+            </div>
+          </div>
+          <div class="category-value">
+            60,000 원<br>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">커피 및 아동 아이스크림 등</span>
+          </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="budget-row">
+          <div class="category-info">
+            <div class="category-icon"><i class="fa-solid fa-gas-pump"></i></div>
+            <div>
+              <span class="category-title">유류비 & 톨게이트 비용</span>
+              <div class="progress-bar-container"><div class="progress-bar" style="width: 7%; background-color: var(--text-muted);"></div></div>
+            </div>
+          </div>
+          <div class="category-value">
+            50,000 원<br>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">이동거리에 따른 차량 연료비</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <i class="fa-solid fa-gift"></i>
+        <div>
+          <h4>체류형 관광 지원 꿀팁!</h4>
+          <p>충북 진천군에서는 주중(일~목요일) 생거진천 자연휴양림 숙박객을 위해 결제 금액의 30%를 진천사랑상품권으로 환급해 주는 관광 활성화 사업을 운영하고 있습니다. 체크인 시 해당 이벤트를 꼭 확인하시어 상품권을 돌려받으시면, 식비와 간식비를 최대 약 66,000원 아끼실 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: PACKING CHECKLIST -->
+    <div id="packing" class="tab-content">
+      <div class="checklist-grid">
+        <!-- Card 1 -->
+        <div class="check-card">
+          <h3><i class="fa-solid fa-bed"></i> 휴양림 필수용품 <span style="font-size: 0.75rem; color: #e53e3e; font-weight: 500;">(미비치 항목)</span></h3>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>수건 (객실 제공 안 됨, 넉넉히 지참)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>세면도구 (칫솔, 치약, 샴푸, 바디워시)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>휴대용 헤어 드라이기 (필요시)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>개인 상비약 (소화제, 감기약, 모기 물린 데 바르는 약)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>쓰레기 봉투용 현금 (관리소 구매용 잔돈)</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="check-card">
+          <h3><i class="fa-solid fa-umbrella-beach"></i> 여름 야외 및 물놀이 용품</h3>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>아이들 수영복 & 래쉬가드</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>아쿠아슈즈 또는 방수 샌들</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>선크림 & 피부 보호 제품</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>양산 또는 가벼운 접이식 우산 (햇빛/소나기)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <span>야외용 모기 기피제 / 패치 (숲속 모기 방지)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching logic
+    function openTab(tabId) {
+      // Hide all tabs
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      // Deactivate all buttons
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => btn.classList.remove('active'));
+
+      // Show requested tab
+      document.getElementById(tabId).classList.add('active');
+
+      // Highlight active button
+      event.currentTarget.classList.add('active');
+
+      // Scroll smoothly to navigation bar to keep tabs in view
+      document.querySelector('.tabs-container').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Toggle custom checklist check visual state & save to LocalStorage
+    function toggleCheck(element) {
+      const checkbox = element.querySelector('input[type="checkbox"]');
+      
+      // Prevent double trigger when clicking directly on checkbox input
+      if (event.target !== checkbox) {
+        checkbox.checked = !checkbox.checked;
+      }
+      
+      if (checkbox.checked) {
+        element.classList.add('checked');
+      } else {
+        element.classList.remove('checked');
+      }
+
+      saveChecklistState();
+    }
+
+    // Save states of checkboxes so users don't lose data on reload
+    function saveChecklistState() {
+      const checkItems = document.querySelectorAll('.check-item');
+      const states = [];
+      checkItems.forEach((item, index) => {
+        states.push({
+          index: index,
+          checked: item.querySelector('input[type="checkbox"]').checked
+        });
+      });
+      localStorage.setItem('jincheon_packing_checklist', JSON.stringify(states));
+    }
+
+    // Load states of checkboxes
+    function loadChecklistState() {
+      const stored = localStorage.getItem('jincheon_packing_checklist');
+      if (stored) {
+        const states = JSON.parse(stored);
+        const checkItems = document.querySelectorAll('.check-item');
+        states.forEach(state => {
+          if (checkItems[state.index]) {
+            const checkbox = checkItems[state.index].querySelector('input[type="checkbox"]');
+            checkbox.checked = state.checked;
+            if (state.checked) {
+              checkItems[state.index].classList.add('checked');
+            }
+          }
+        });
+      }
+    }
+
+    // Initialize checklist state on load
+    window.onload = loadChecklistState;
+  </script>
+</body>
+</html>

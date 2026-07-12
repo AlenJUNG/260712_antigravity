@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인수인계 - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item active"><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>📋 작업 인수인계 및 히스토리 요약서 (Handover Note)</h1>
+<p>본 문서는 다른 랩탑에서 작업을 신속하게 이어갈 수 있도록 이번 세션의 작업 진행 상태와 다음 작업 목표를 정리한 인수인계서입니다.</p>
+<hr />
+<h2>1. 프로젝트 및 작업 상태 정보</h2>
+<ul>
+<li><strong>프로젝트명</strong>: AI 캐릭터 기반 유튜브 한글 교육 쇼츠 (부끼쇼 스타일)</li>
+<li><strong>프로젝트 저장소 절대 경로</strong>: <code>D:\git\260712_antigravity</code></li>
+<li><strong>현재 세션 ID</strong>: <code>86ed7594-6b1b-4f22-90df-2d3ce3011526</code></li>
+</ul>
+<hr />
+<h2>2. 완료된 작업 히스토리 (What We Did)</h2>
+<h3>🎬 ① AI 영상 제작 파이프라인 정립 및 실전 가이드 완료</h3>
+<ul>
+<li><strong>메인 파이프라인 (<a href="ai_video_pipeline.html">ai_video_pipeline.md</a>)</strong>: 기획부터 립싱크, 최종 합성 및 오디오 ducking까지 5개 제작 단계 정립.</li>
+<li><strong>단계별 상세 실전 매뉴얼 제작</strong>:<ul>
+<li><strong>단계 2 (캐릭터)</strong>: <a href="단계2_midjourney_character_guide.html">단계2_midjourney_character_guide.html</a> (미드저니 세팅 및 <code>--cref</code> 얼굴 고정 기법)</li>
+<li><strong>단계 3 (음성/TTS)</strong>: <a href="단계3_tts_voice_guide.html">단계3_tts_voice_guide.html</a> (ElevenLabs 및 Typecast 디테일 성우 튜닝)</li>
+<li><strong>단계 4 (립싱크)</strong>: <a href="단계4_lipsync_animation_guide.html">단계4_lipsync_animation_guide.html</a> (헤이젠/헤드라 오디오 구동형 원어민 입모양 매칭)</li>
+<li><strong>단계 5 (편집/합성)</strong>: <a href="단계5_video_editing_bgm_guide.html">단계5_video_editing_bgm_guide.html</a> (사운드로우 BGM 생성, 캡컷 크로마키 및 화자 컷 편집)</li>
+</ul>
+</li>
+<li><strong>자동화 고도화 전략 (<a href="ai_automation_strategy.html">ai_automation_strategy.md</a>)</strong>: 파이썬 API 완전 자동화 연동 및 롱폼-숏폼 변환 툴(Opus Clip) 활용법 정립.</li>
+</ul>
+<h3>💻 ② Antigravity CLI (agy) 오류 해결 및 환경 정비</h3>
+<ul>
+<li><strong>agy TUI 래퍼 오류 해결</strong>: 기존 PowerShell <code>$PROFILE</code> 파일에 등록되어 정상 실행을 방해하던 <code>agy</code> 함수 정의 및 TUI 파이썬 스크립트(<code>agy_tui.py</code>), 배치 파일(<code>agy.bat</code>)을 완전히 삭제하여 <strong>순정 agy CLI(버전 1.1.1)를 정상 복구</strong>했습니다.</li>
+<li><strong>CLI 가이드 제작 (<a href="antigravity_cli_guide.html">antigravity_cli_guide.md</a>)</strong>: 입문자/중급자/고급자 레벨별 핵심 <code>agy</code> 실행 및 슬래시 명령어 사용 매뉴얼 정립.</li>
+</ul>
+<h3>🎨 ③ 반응형 HTML 웹 매뉴얼 일괄 포팅 완료</h3>
+<ul>
+<li>작성한 모든 마크다운 파일(<code>.md</code>)을 사이드바 내비게이션, 모던 UI 디자인, Mermaid 다이어그램 렌더링, 경고 콜아웃 상자가 결합된 <strong>반응형 HTML 문서로 변환 완료</strong>하였습니다.</li>
+</ul>
+<hr />
+<h2>3. 다른 랩탑에서 이어서 시작할 단계 (Next Steps)</h2>
+<p>새로운 터미널을 열고 다음 순서대로 작업을 시작하세요.</p>
+<ol>
+<li><strong>원격 저장소에서 소스 가져오기 (Git Pull)</strong>:<ul>
+<li><code>git pull</code>을 받아 최신화된 <code>./docs</code> 폴더 내 자료를 확보합니다.</li>
+</ul>
+</li>
+<li><strong>프로젝트 경로 세팅</strong>:<ul>
+<li>가급적 새 랩탑에서도 프로젝트 폴더를 <strong><code>D:\git\260712_antigravity</code></strong> 경로에 위치시켜 절대 경로 링크들의 호환성을 유지해 주세요.</li>
+</ul>
+</li>
+<li><strong>한글 교육 대본 기획 (1단계 돌입)</strong>:<ul>
+<li>새 터미널에서 <code>agy</code>를 실행한 후, <strong>Claude 3.5 Sonnet</strong>에게 3명 캐릭터(한국인 교사, 외국인 학생 2명)가 등장하여 영어로 한국어 인사말이나 기초 자모음을 재미있게 가르치는 60초 분량 쇼츠 대본 3세트를 요청하여 제작을 개시합니다.</li>
+</ul>
+</li>
+<li><strong>이미지 생성 (2단계)</strong>:<ul>
+<li><a href="단계2_midjourney_character_guide.html">단계 2 미드저니 캐릭터 가이드</a>를 켜놓고 마스터 캐릭터 이미지를 생성 및 추출합니다.</li>
+</ul>
+</li>
+</ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

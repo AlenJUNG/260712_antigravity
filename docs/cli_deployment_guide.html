@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLI 즉시 배포 및 링크 생성 가이드 - AI Development Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+            <li class="nav-item"><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+            <li class="nav-item"><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+            <li class="nav-item"><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+            <li class="nav-item"><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+            <li class="nav-item"><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+            <li class="nav-item"><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+            <li class="nav-item"><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+            <li class="nav-item"><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+            <li class="nav-item"><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+            <li class="nav-item"><a href="statusbar.html">📊 상태 바 가이드</a></li>
+            <li class="nav-item active"><a href="cli_deployment_guide.html">🚀 CLI 즉시 배포 가이드</a></li>
+            <li class="nav-item"><a href="인수인계.html">📋 작업 인수인계서</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🚀 CLI 환경 즉시 배포 및 링크 생성 가이드</h1>
+                <p>로컬 터미널이나 CLI 환경(예: <code>agy cli</code>)에서 웹페이지(HTML/CSS/JS)를 즉시 배포하고 다른 사람에게 공유할 수 있는 링크를 생성하는 가이드입니다.</p>
+                <p>기존에 설정된 <strong>Netlify</strong>를 활용하는 방법과 가장 간편한 <strong>Surge</strong>를 이용하는 방법을 소개합니다.</p>
+
+                <hr>
+
+                <h2>🗺️ 배포 방식 요약 비교</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>🌐 Netlify CLI</th>
+                            <th>⚡ Surge CLI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>특징</strong></td>
+                            <td>기설정된 사이트 ID 연동, 안정적인 지속 배포</td>
+                            <td>회원가입/설정 없이 터미널에서 즉시 배포</td>
+                        </tr>
+                        <tr>
+                            <td><strong>속도</strong></td>
+                            <td>보통 (브라우저 로그인 필요)</td>
+                            <td>매우 빠름 (이메일/비밀번호만 입력)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>로그인 방식</strong></td>
+                            <td>브라우저 연동 인증 (<code>netlify login</code>)</td>
+                            <td>터미널 대화형 입력 (<code>surge login</code>)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>사용 환경</strong></td>
+                            <td>정식 프로젝트 배포, 커스텀 도메인 연동</td>
+                            <td>빠른 테스트용 임시 주소 발급</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <h2>1. 🌐 Netlify CLI를 사용한 배포</h2>
+                <p>현재 프로젝트에는 이미 Netlify 설정 파일(<code>.netlify/state.json</code>)이 있어, 기존 사이트 ID(<code>42529771-b4dd-4db2-bb41-bfc501a6a4a6</code>)로 손쉽게 배포할 수 있습니다.</p>
+
+                <h3>Step 1. Netlify CLI 로그인</h3>
+                <p>터미널에서 아래 명령을 실행합니다. 자동으로 브라우저 창이 열리며 Netlify 인증을 진행합니다.</p>
+                <pre><code>npx netlify login</code></pre>
+
+                <h3>Step 2. 드래프트(테스트) 배포</h3>
+                <p>배포하고자 하는 디렉토리(여기서는 <code>docs</code> 폴더)를 지정하여 배포합니다.</p>
+                <pre><code>npx netlify deploy --dir=docs</code></pre>
+                <div class="alert-box tip">
+                    <strong>💡 참고:</strong> 명령어가 성공적으로 끝나면 터미널에 <strong>Website Draft URL</strong>이 표시됩니다. 이를 통해 변경 사항을 사전에 확인합니다.
+                </div>
+
+                <h3>Step 3. 프로덕션(최종) 배포</h3>
+                <p>최종 퍼블리싱 상태로 올리고 고정된 공식 배포 주소를 발급받으려면 <code>--prod</code> 플래그를 붙여 실행합니다.</p>
+                <pre><code>npx netlify deploy --dir=docs --prod</code></pre>
+
+                <hr>
+
+                <h2>2. ⚡ Surge CLI를 사용한 즉시 배포</h2>
+                <p>복잡한 계정 로그인이나 사전 연동 과정 없이, <strong>단 3초 만에 임시 공유 링크</strong>를 생성하고 싶을 때 강력히 추천하는 도구입니다.</p>
+
+                <h3>Step 1. Surge 배포 실행</h3>
+                <p>터미널에 아래 명령어를 실행하고 배포할 디렉토리를 지정합니다.</p>
+                <pre><code>npx surge ./docs</code></pre>
+
+                <h3>Step 2. 터미널 내 즉시 계정 생성 (최초 1회)</h3>
+                <p>명령어를 실행하면 터미널에서 즉시 이메일과 비밀번호 입력을 요구합니다.</p>
+                <pre><code>   email: user@example.com
+   password: **********</code></pre>
+                <ul>
+                    <li>최초 입력한 이메일과 비밀번호로 Surge 계정이 자동 생성되며 바로 배포가 시작됩니다.</li>
+                    <li>두 번째 실행부터는 기존 계정 정보가 유지되어 추가 입력 없이 즉시 배포됩니다.</li>
+                </ul>
+
+                <h3>Step 3. 도메인 지정 및 공유</h3>
+                <p>계정 인증이 끝나면 배포 경로와 함께 임의로 생성된 서브도메인이 표시됩니다.</p>
+                <pre><code>   project: ./docs
+   domain: funny-pear.surge.sh</code></pre>
+                <ul>
+                    <li>원하는 도메인 주소(예: <code>my-test-page.surge.sh</code>)가 있다면 텍스트를 직접 입력해 바꿀 수도 있습니다.</li>
+                    <li>엔터를 누르면 배포가 완료되며, 출력된 링크(<code>https://funny-pear.surge.sh</code>)를 복사해 다른 사람에게 전달하면 즉시 웹사이트를 확인할 수 있습니다.</li>
+                </ul>
+
+                <hr>
+
+                <h2>💡 에이전트 자동화 꿀팁</h2>
+                <p><code>agy cli</code> 내에서 에이전트(AI)에게 명령하여 대신 배포를 처리하도록 할 수도 있습니다. 에이전트에게 아래와 같이 자유롭게 명령해 보세요:</p>
+                <blockquote>
+                    <strong>"docs 폴더를 surge로 배포하고 링크를 공유해 줘."</strong><br>
+                    (에이전트가 <code>npx surge ./docs</code> 커맨드를 생성하고 배포가 성공하면 생성된 링크를 텍스트로 깔끔하게 정리해 보여줍니다.)
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

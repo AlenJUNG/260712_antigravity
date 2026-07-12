@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Statusline Setup - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item active"><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>Google Antigravity (AGY) 커스텀 상태 표시줄(statusLine) 설정 가이드</h1>
+<p>이 문서는 Antigravity CLI(<code>agy</code>)의 하단 상태 바에 <strong>Context 사용량</strong>, <strong>Session 한도</strong>, <strong>Week 한도</strong>를 미려한 게이지 바 형태로 모니터링할 수 있도록 연동하는 가이드입니다. </p>
+<p>다른 기기(맥북, 윈도우 등)에서 새로 설정할 때 이 문서를 따라 신속하게 설치하실 수 있습니다.</p>
+<hr />
+<h2>💻 상태 표시줄 렌더링 예시</h2>
+<pre><code class="language-text">Context ▌░░░░░░░░░ 8%  ·  Session ██░░░░░░░░ 20% ↻10:30am  ·  Week ████░░░░░░ 41% ↻Jul 12 12pm (KST)
+</code></pre>
+<hr />
+<h2>🛠️ 설치 및 연동 단계</h2>
+<h3>1단계: Python 스크립트 작성 (<code>statusline.py</code>)</h3>
+<p><code>agy</code>로부터 파이프라인(<code>stdin</code>)으로 들어오는 에이전트 실시간 상태 JSON 데이터를 파싱하여 하단 바 문구를 렌더링하는 스크립트입니다. </p>
+<p>각 운영체제별 설정 폴더에 스크립트 파일을 생성하고 아래 코드를 저장합니다.</p>
+<ul>
+<li><strong>윈도우 저장 경로</strong>: <code>C:\Users\&lt;사용자명&gt;\.gemini\antigravity-cli\statusline.py</code></li>
+<li><strong>맥/리눅스 저장 경로</strong>: <code>~/.gemini/antigravity-cli/statusline.py</code></li>
+</ul>
+<h4>📄 <code>statusline.py</code> 소스 코드</h4>
+<pre><code class="language-python">#!/usr/bin/env python3
+import sys
+import json
+from datetime import datetime, timedelta, timezone
+
+# Windows UTF-8 stdout 인코딩 꼬임 및 CP949 에러 방지
+if sys.platform.startswith('win'):
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+RESET = '\033[0m'
+BOLD = '\033[1m'
+DIM = '\033[2m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+RED = '\033[31m'
+BAR_WIDTH = 10
+
+def get_bar_color(pct):
+    if pct &gt;= 80: return RED
+    if pct &gt;= 50: return YELLOW
+    return GREEN
+
+def make_bar(pct):
+    units = pct / (100 / BAR_WIDTH)
+    full = int(units)
+    half = '▌' if (units - full) &gt;= 0.5 else ''
+    visual = '█' * full + half
+    empty = '░' * max(0, BAR_WIDTH - (full + (1 if half else 0)))
+    return f&quot;{get_bar_color(pct)}{visual}{DIM}{empty}{RESET}&quot;
+
+def format_reset(epoch, with_date=False):
+    try:
+        # UTC Epoch 초를 KST(UTC+9) 시간대로 조정
+        kst_time = datetime.fromtimestamp(epoch, tz=timezone.utc) + timedelta(hours=9)
+        ampm = &quot;pm&quot; if kst_time.hour &gt;= 12 else &quot;am&quot;
+        hr = 12 if kst_time.hour % 12 == 0 else kst_time.hour % 12
+        time_str = f&quot;{hr}{ampm}&quot; if kst_time.minute == 0 else f&quot;{hr}:{kst_time.minute:02d}{ampm}&quot;
+        return f&quot;{kst_time.strftime('%b')} {kst_time.day} {time_str}&quot; if with_date else time_str
+    except Exception:
+        return &quot;N/A&quot;
+
+def make_part(label, win, with_date=False):
+    if not win or 'used_percentage' not in win:
+        return f&quot;{BOLD}{label}{RESET} {DIM}대기중{RESET}&quot;
+    pct = win['used_percentage']
+    s = f&quot;{BOLD}{label}{RESET} {make_bar(pct)} {round(pct)}%&quot;
+    if 'resets_at' in win:
+        s += f&quot; {DIM}↻{format_reset(win['resets_at'], with_date)}{RESET}&quot;
+    return s
+
+def main():
+    try:
+        raw = sys.stdin.read()
+        data = json.loads(raw) if raw.strip() else {}
+    except Exception:
+        sys.stdout.write(f&quot;{DIM}사용량 정보 없음{RESET}&quot;)
+        return
+
+    # 1. Context Usage 파싱 및 구성
+    tokens = data.get('tokens', {})
+    if tokens and tokens.get('total', 0) &gt; 0:
+        used = tokens.get('used', 0)
+        total = tokens['total']
+        pct = (used / total) * 100
+        context_win = {'used_percentage': pct}
+    else:
+        context_win = None
+
+    # 2. Rate Limits (Session / Week) 파싱 및 구성
+    rl = data.get('rate_limits')
+    if not rl:
+        if context_win:
+            sys.stdout.write(f&quot;{make_part('Context', context_win, False)}  {DIM}·{RESET}  {DIM}사용량 정보 대기 중{RESET}&quot;)
+        else:
+            sys.stdout.write(f&quot;{DIM}사용량 정보 대기 중{RESET}&quot;)
+        return
+
+    # 3. 레이아웃 조립 출력
+    line = (
+        f&quot;{make_part('Context', context_win, False)}  {DIM}·{RESET}  &quot;
+        f&quot;{make_part('Session', rl.get('five_hour'), False)}  {DIM}·{RESET}  &quot;
+        f&quot;{make_part('Week', rl.get('seven_day'), True)}  {DIM}(KST){RESET}&quot;
+    )
+    sys.stdout.write(line)
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<hr />
+<h3>2단계: 에이전트 환경 설정 (<code>settings.json</code>) 수정</h3>
+<p>Antigravity CLI가 위의 스크립트를 주기적으로 실행하여 하단에 상태바를 그릴 수 있게 설정 파일을 열어 연동 정보를 추가합니다.</p>
+<ul>
+<li><strong>설정 파일 위치</strong>:<ul>
+<li><strong>윈도우</strong>: <code>C:\Users\&lt;사용자명&gt;\.gemini\antigravity-cli\settings.json</code></li>
+<li><strong>맥/리눅스</strong>: <code>~/.gemini/antigravity-cli/settings.json</code></li>
+</ul>
+</li>
+<li><strong>추가할 JSON 코드</strong>:<br />
+<code>settings.json</code> 파일의 루트 브라켓(<code>{ }</code>) 안에 아래와 같이 <code>"statusLine"</code> 설정을 추가합니다. (이미 해당 키가 존재한다면 내용을 덮어씁니다.)</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;statusLine&quot;: {
+    &quot;type&quot;: &quot;&quot;,
+    &quot;command&quot;: &quot;python C:/Users/YOUR_USER_NAME/.gemini/antigravity-cli/statusline.py&quot;,
+    &quot;enabled&quot;: true
+  }
+}
+</code></pre>
+<p><em>(맥북/리눅스 환경에서는 <code>"command"</code> 부분을 <code>"python3 ~/.gemini/antigravity-cli/statusline.py"</code>로 수정해 주시면 됩니다.)</em></p>
+<hr />
+<h3>3단계: 로컬 실행 및 렌더링 검증 방법</h3>
+<p>설치 후 스크립트가 잘 작동하는지 쉘(터미널)에서 아래 모의 데이터를 전달하는 일회성 테스트 명령어를 실행해 볼 수 있습니다.</p>
+<h4>윈도우 PowerShell 검증 명령어</h4>
+<pre><code class="language-powershell">python -c &quot;import subprocess; p = subprocess.Popen(['python', r'C:\Users\YOUR_USER_NAME\.gemini\antigravity-cli\statusline.py'], stdin=subprocess.PIPE, stdout=subprocess.PIPE); out, err = p.communicate(b'{\&quot;tokens\&quot;:{\&quot;used\&quot;:15000,\&quot;total\&quot;:200000},\&quot;rate_limits\&quot;:{\&quot;five_hour\&quot;:{\&quot;used_percentage\&quot;:20,\&quot;resets_at\&quot;:1751592600},\&quot;seven_day\&quot;:{\&quot;used_percentage\&quot;:41,\&quot;resets_at\&quot;:1751857200}}}'); print(out.decode('utf-8'))&quot;
+</code></pre>
+<h4>맥북 / 리눅스 Bash 검증 명령어</h4>
+<pre><code class="language-bash">echo '{&quot;tokens&quot;:{&quot;used&quot;:15000,&quot;total&quot;:200000},&quot;rate_limits&quot;:{&quot;five_hour&quot;:{&quot;used_percentage&quot;:20,&quot;resets_at&quot;:1751592600},&quot;seven_day&quot;:{&quot;used_percentage&quot;:41,&quot;resets_at&quot;:1751857200}}}' | python3 ~/.gemini/antigravity-cli/statusline.py
+</code></pre>
+<hr />
+<h2>💡 유용한 팁</h2>
+<ol>
+<li><strong>적용 및 리스타트</strong>:<br />
+    설정 완료 후 실행 중인 <code>agy</code> CLI 창을 종료하고 새로 띄워 한 번이라도 에이전트와 질문/대답(API 통신)을 주고받으면 하단 상태바에 즉각 데이터가 로드됩니다.</li>
+<li><strong>화면 토글</strong>:<br />
+    터미널 HUD 창 내에서 <strong><code>/statusline</code></strong> 명령어를 입력하면 커스텀 상태 바를 실시간으로 끄거나 켤 수 있습니다.</li>
+<li><strong>폰트 깨짐 대책</strong>:<br />
+    상태 바가 네모난 상자(<code>ㅁ</code>)로 깨져 나오는 경우, 해당 터미널의 폰트 설정에서 CJK 가독성이 높은 <strong>'D2Coding'</strong>, <strong>'Cascadia Code'</strong>, 혹은 <strong>'Nerd Font'</strong> 계열 폰트로 변경해 주시면 이쁜 특수문자(<code>█</code>, <code>░</code>)가 깔끔하게 렌더링됩니다.</li>
+</ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

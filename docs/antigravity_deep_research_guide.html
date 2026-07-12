@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Deep Research Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item active"><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🔍 Google Antigravity CLI (agy) Deep Research (딥 리서치) 활용 가이드</h1>
+<p>Google Antigravity CLI(<code>agy</code>)의 <strong>Deep Research (딥 리서치)</strong> 기능은 백그라운드에서 실행되는 독립적인 서브에이전트(Subagent)를 가동하여, 다각도로 웹 검색을 수행하고 신뢰할 수 있는 소스를 교차 검증한 후 심층 리포트를 자동으로 작성하는 강력한 기능입니다.</p>
+<p>이 가이드는 <code>agy</code>에서 딥 리서치 기능을 실행하고 관리하는 구체적인 방법을 다룹니다.</p>
+<hr />
+<h2>1. 💬 대화형 콘솔 (TUI)에서의 실행 방법</h2>
+<p><code>agy</code>를 단독으로 실행한 대화형 터미널 사용자 인터페이스(TUI) 모드에서는 <strong>슬래시 명령어</strong>를 사용해 리서치를 즉시 시작할 수 있습니다.</p>
+<h3>1) 기본 명령어 형식</h3>
+<pre><code class="language-bash">/research [주제 또는 질문]
+</code></pre>
+<ul>
+<li><strong>예시:</strong><br />
+<code>bash
+    /research 2026년 최신 Model Context Protocol (MCP) 명세와 보안 가이드라인</code></li>
+</ul>
+<h3>2) 동작 흐름</h3>
+<ol>
+<li><code>/research</code> 명령어를 입력하면 <code>agy</code> 내부에서 <strong><code>agy:runner</code></strong> 또는 리서치 전문 서브에이전트를 백그라운드에 생성합니다.</li>
+<li>해당 서브에이전트가 백그라운드에서 목표 사이트들을 탐색, 스크랩 및 분석을 비동기(Asynchronous)로 수행합니다.</li>
+<li>리서치가 완료되면 <strong>배경 정보, 핵심 조사 결과, 한계점, 검증된 출처(Citations)가 포함된 체계적인 리포트</strong>를 받아볼 수 있습니다.</li>
+<li>리서치가 진행되는 동안 개발자는 차단(Block)되지 않고 메인 터미널에서 계속 코딩이나 대화를 진행할 수 있습니다.</li>
+</ol>
+<hr />
+<h2>2. 💻 터미널에서의 단발성 실행 방법 (Non-interactive Mode)</h2>
+<p>대화형 콘솔에 들어가지 않고 터미널에서 한 번에 리서치 명령을 보낸 뒤 결과를 텍스트로 바로 출력받을 수 있습니다.</p>
+<pre><code class="language-bash">agy -p &quot;/research [주제]&quot;
+# 또는
+agy --print &quot;/research [주제]&quot;
+</code></pre>
+<ul>
+<li><strong>예시:</strong><br />
+<code>bash
+    agy -p "/research React 19의 변경 사항과 아키텍처적 차이점"</code></li>
+</ul>
+<hr />
+<h2>3. 🔌 Claude Code 등 타 에디터 연동 환경에서의 실행 방법</h2>
+<p><code>antigravity-plugin-cc</code> 등의 플러그인을 사용하여 <strong>Claude Code</strong> 터미널 환경에서 <code>agy</code> 기능을 연동한 경우, 접두사를 붙여 딥 리서치 기능을 수행할 수 있습니다.</p>
+<pre><code class="language-bash">/agy:research [주제]
+</code></pre>
+<ul>
+<li><strong>예시:</strong><br />
+<code>bash
+    /agy:research WebGPU API의 최신 브라우저 지원 현황 및 WebGL 대비 성능 메트릭</code></li>
+<li><strong>장점:</strong> 토큰 소모량이 큰 심층 리포트 작성 작업을 <code>agy</code>(Gemini 백엔드)에 위임(Delegate)하여 자원을 절약하고 보다 풍부한 검색 결과를 획득할 수 있습니다.</li>
+</ul>
+<hr />
+<h2>4. ⚙️ 백그라운드 리서치 모니터링 및 관리</h2>
+<p>딥 리서치는 백그라운드에서 오랜 시간(수십 초 ~ 수 분) 동작할 수 있으므로 관리 명령어를 알아두면 좋습니다.</p>
+<ul>
+<li><strong><code>/agents</code> (또는 <code>/tasks</code>)</strong>: 백그라운드에서 활성화되어 작동 중인 서브에이전트 및 리서치 작업 목록을 조회합니다.</li>
+<li><strong>에이전트 상세보기 (Deep Monitoring)</strong>: <code>/agents</code> 패널에서 동작 중인 특정 서브에이전트를 선택하면 해당 에이전트가 무슨 생각을 하고 있으며 어떤 검색을 수행 중인지 로그와 실행 단계를 실시간으로 모니터링할 수 있습니다.</li>
+<li><strong><code>/delegate [작업]</code></strong>: 리서치 외에 범용적인 백그라운드 작업을 에이전트에게 지시하여 리소스를 유연하게 활용할 수 있습니다.</li>
+</ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

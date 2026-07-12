@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단계3 Tts Voice Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item active"><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🎙️ AI 목소리 생성 가이드 (단계별 실전 매뉴얼)</h1>
+<p>유튜브 한국어 교육 쇼츠 영상에서 3명의 캐릭터가 말할 고품질 원어민 음성(영어 및 한국어)을 기계 느낌 없이 자연스럽게 생성하는 가이드입니다.</p>
+<p>이 가이드는 <strong>ElevenLabs (영어 특화)</strong>와 <strong>Typecast (한국어/감정 표현 특화)</strong> 두 가지 툴의 가입부터 편집, 최종 다운로드까지 다룹니다.</p>
+<hr />
+<h2>1단계: 캐릭터별 성우(AI 목소리) 정의하기</h2>
+<p>쇼츠 영상에 활기를 불어넣기 위해 3명 캐릭터의 목소리 톤을 미리 설정해야 합니다.</p>
+<ul>
+<li><strong>캐릭터 A (한국인 선생님)</strong>: 명확하고 정확한 표준어 발음의 한국어 성우 ➡️ <strong>Typecast 활용</strong></li>
+<li><strong>캐릭터 B (영어 원어민 학생 1)</strong>: 자연스러운 미국식 영어 성우 ➡️ <strong>ElevenLabs 활용</strong></li>
+<li><strong>캐릭터 C (영어 원어민 학생 2)</strong>: 활기차고 다른 톤의 영국식 또는 미국식 성우 ➡️ <strong>ElevenLabs 활용</strong></li>
+</ul>
+<hr />
+<h2>2단계: Typecast(타입캐스트)로 한국인 선생님 음성 만들기</h2>
+<p>한국어의 억양과 미세한 감정(친절함, 화남, 다그침 등) 표현력이 가장 뛰어난 국내 대표 AI 성우 서비스입니다.</p>
+<h3>1. 가입 및 요금제 설정</h3>
+<ol>
+<li><a href="https://typecast.ai/">Typecast 공식 홈페이지</a>에 접속해 가입합니다.</li>
+<li>처음에는 무료 크레딧으로 테스트가 가능하나, 유튜브 업로드 및 저작권 해결을 위해 <strong>Personal 또는 Basic 플랜</strong> 구독을 권장합니다.</li>
+</ol>
+<h3>2. 프로젝트 생성 및 캐릭터 선택</h3>
+<ol>
+<li>로그인 후 <strong>[새 프로젝트 만들기]</strong> ➡️ <strong>[빈 텍스트]</strong>를 선택해 편집 창을 엽니다.</li>
+<li>캐릭터 아이콘을 누르고 <strong>[캐릭터 추가]</strong> 버튼을 클릭합니다.</li>
+<li>필터에서 <strong>[한국어]</strong>, <strong>[교육/강의]</strong> 또는 <strong>[감정 표현 가능]</strong>을 선택해 목소리를 들어보고 선택합니다.</li>
+<li><em>선생님 캐릭터 추천</em>: '주하'(신뢰감 높은 톤), '수진'(친절한 톤) 등</li>
+</ol>
+<h3>3. 스크립트 작성 및 디테일 편집</h3>
+<ol>
+<li>대사를 입력합니다. (예: "오늘 배울 한글 단어는 '사랑'입니다. 따라 해 보세요, Sa-rang!")</li>
+<li><strong>감정(Mood) 조절</strong>: 텍스트 영역을 드래그하거나 캐릭터 이름을 누르고 <strong>[화남/친절함/기쁨/슬픔]</strong> 등 어울리는 감정을 적용합니다.</li>
+<li><strong>속도 및 피치 조절</strong>: 발음을 정확하게 알려주기 위해 한국어 단어 부분은 속도를 조금 늦추고(-5%), 말끝이 기계적으로 툭 끊기지 않게 자연스러운 높낮이를 설정합니다.</li>
+<li><strong>[미리듣기]</strong>를 누르며 대사가 흐 흐르듯 자연스러운지 확인합니다.</li>
+</ol>
+<h3>4. 음원 다운로드</h3>
+<ol>
+<li>자연스럽게 연결된 것을 확인하고 우측 상단의 <strong>[다운로드]</strong>를 누릅니다.</li>
+<li>포맷은 무손실인 <strong>WAV</strong>를 권장하나, 파일 용량을 줄이려면 고음질 <strong>MP3</strong>로 설정해도 무방합니다.</li>
+</ol>
+<hr />
+<h2>3단계: ElevenLabs(일레븐랩스)로 영어 원어민 학생 음성 만들기</h2>
+<p>글로벌 1위의 AI TTS 플랫폼으로, 사람이 실제로 내쉬는 숨소리(Breathing), 억양, 속삭임까지 완벽하게 연출하여 이질감이 0%에 가깝습니다.</p>
+<h3>1. 가입 및 요금제 설정</h3>
+<ol>
+<li><a href="https://elevenlabs.io/">ElevenLabs 공식 홈페이지</a>에 접속해 가입합니다.</li>
+<li><strong>Starter 요금제 ($5/월)</strong>는 첫 달에 $1 프로모션을 자주 하므로 입문하기 가장 좋습니다. (월 30,000자 제공)</li>
+</ol>
+<h3>2. 네이티브 영어 목소리 탐색 (Voice Library)</h3>
+<ol>
+<li>상단 메뉴의 <strong>[Voice Library]</strong> 또는 <strong>[Voices]</strong>로 이동합니다.</li>
+<li>필터에서 <strong>[Language: English]</strong>, <strong>[Gender: Female/Male]</strong>, <strong>[Category: Conversational/Narration]</strong>을 설정합니다.</li>
+<li>재생 버튼을 누르며 가장 자연스러운 실제 청년 원어민 느낌의 목소리를 찾아 <strong>[Add to VoiceLab]</strong> 버튼을 클릭해 내 작업실에 등록합니다.</li>
+<li><em>학생 캐릭터 추천</em>: 'Jessica'(활발한 여학생 톤), 'Adam'(지적인 남학생 톤) 등</li>
+</ol>
+<h3>3. 텍스트 입력 및 세부 감정 설정</h3>
+<ol>
+<li><strong>[Speech Synthesis]</strong> 메뉴로 이동합니다.</li>
+<li>텍스트 창에 영어로 진행될 설명이나 리액션 대사를 입력합니다.</li>
+<li><strong>[Voice Settings]</strong>를 열어 정밀 튜닝을 진행합니다:</li>
+<li><strong>Stability (안정성)</strong>: 값을 낮출수록 감정 변화와 억양이 다이내믹해지며(연기 톤), 높일수록 일관되고 차분한 목소리가 됩니다. 쇼츠 상황극은 <strong>35% ~ 50% 사이</strong>를 추천합니다.</li>
+<li><strong>Clarity + Similarity (명확성/유사성)</strong>: 높일수록 원어민 음색이 선명해집니다. <strong>75% ~ 85% 사이</strong>를 유지합니다.</li>
+<li><strong>Style Exaggeration (스타일 과장)</strong>: 캐릭터가 오버해서 리액션할 때는 10%~20% 정도로 올려 연극 톤을 만듭니다.</li>
+</ol>
+<h3>4. 생성 및 다운로드</h3>
+<ol>
+<li><strong>[Generate]</strong> 버튼을 누르면 AI가 즉석에서 숨소리와 끊어 읽기를 섞어 자연스러운 음성을 뱉어냅니다.</li>
+<li>마음에 들 때까지 한두 번 재성성(Regenerate)한 후, 우측 하단의 <strong>다운로드 아이콘</strong>을 클릭해 저장합니다.</li>
+</ol>
+<hr />
+<h2>💡 오디오 제작 실전 팁 (꿀팁)</h2>
+<ol>
+<li><strong>문장 중간에 쉼표(,)와 마침표(.) 적극 활용</strong>:</li>
+<li>AI는 마침표와 쉼표를 보고 숨을 들이쉬거나(Breathing) 한 템포 쉬어 갑니다. 문장이 너무 쭉 이어지면 기계처럼 느껴지므로, 쉼표를 많이 넣어 자연스럽게 말을 고르는 느낌을 만드세요.</li>
+<li><strong>캐릭터별 개별 파일 저장</strong>:</li>
+<li>3명의 대화 전체를 한 번에 다운로드하지 마세요. 캐릭터 A 대사, 캐릭터 B 대사, 캐릭터 C 대사를 <strong>따로따로 한 문장 단위로 저장</strong>해야 나중에 최종 편집기(CapCut)에서 립싱크 타이밍에 맞게 오디오 위치를 미세 조절하기가 100배 편합니다.</li>
+<li><strong>단어 발음 교육 시 임시 묵음(Silence) 추가</strong>:</li>
+<li>"Hello" 하고 1초 후에 "안녕"이라고 할 때, 음성 생성 시 단어 사이에 충분한 공백을 주거나 편집기에서 1초 띄우고 배치해야 시청자가 따라 할 시간을 벌 수 있습니다.</li>
+</ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

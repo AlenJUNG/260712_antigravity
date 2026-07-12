@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statusbar - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item active"><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h2>요약</h2>
+<p><strong>Python 기반 환경(ZSH, Tmux 등 범용 CLI 연동 가능) 표준</strong>. VS Code Jupyter Notebook(<code>.ipynb</code>)에서 단계별로 복사하여 테스트할 수 있도록 셀 단위로 코드를 나누었으며, 마지막에 최종 병합 스크립트와 검증 방법을 배치했습니다.</p>
+<hr />
+<h2>Python 기반 상태줄 재현 스크립트 (단계별 .ipynb 구성)</h2>
+<h3>1단계: 모듈 임포트 및 상수 정의</h3>
+<pre><code class="language-python">import sys
+import json
+from datetime import datetime, timedelta, timezone
+
+# ANSI 색상 코드 정의
+RESET = '\033[0m'
+BOLD = '\033[1m'
+DIM = '\033[2m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+RED = '\033[31m'
+
+BAR_WIDTH = 10  # 미니 바 폭 (1칸 = 10%)
+
+</code></pre>
+<h3>2단계: 색상 및 프로그레스 바 생성 함수</h3>
+<pre><code class="language-python">def get_bar_color(pct):
+    if pct &gt;= 80:
+        return RED
+    if pct &gt;= 50:
+        return YELLOW
+    return GREEN
+
+def make_bar(pct):
+    units = pct / (100 / BAR_WIDTH)
+    full = int(units)
+    half = '▌' if (units - full) &gt;= 0.5 else ''
+    visual = '█' * full + half
+
+    # 빈 칸 계산 (절반 칸이 있으면 1칸을 차지하는 것으로 처리)
+    has_half = 1 if half else 0
+    empty_count = max(0, BAR_WIDTH - (full + has_half))
+    empty = '░' * empty_count
+
+    return f&quot;{get_bar_color(pct)}{visual}{DIM}{empty}{RESET}&quot;
+
+</code></pre>
+<h3>3단계: KST 기준 시간 포맷팅 함수</h3>
+<pre><code class="language-python">def format_reset(epoch, with_date=False):
+    # Epoch 초를 UTC 기준으로 읽은 뒤 KST(UTC+9)로 변환
+    kst_time = datetime.fromtimestamp(epoch, tz=timezone.utc) + timedelta(hours=9)
+
+    ampm = &quot;pm&quot; if kst_time.hour &gt;= 12 else &quot;am&quot;
+    hr = kst_time.hour % 12
+    hr = 12 if hr == 0 else hr
+
+    if kst_time.minute == 0:
+        time_str = f&quot;{hr}{ampm}&quot;
+    else:
+        time_str = f&quot;{hr}:{kst_time.minute:02d}{ampm}&quot;
+
+    if with_date:
+        month_str = kst_time.strftime('%b')  # Jan, Feb, Mar...
+        return f&quot;{month_str} {kst_time.day} {time_str}&quot;
+    return time_str
+
+</code></pre>
+<h3>4단계: 컴팩트 한 줄 레이아웃 조립 함수</h3>
+<pre><code class="language-python">def make_part(label, win, with_date=False):
+    if not win or 'used_percentage' not in win:
+        return f&quot;{BOLD}{label}{RESET} {DIM}대기중{RESET}&quot;
+
+    pct = win['used_percentage']
+    s = f&quot;{BOLD}{label}{RESET} {make_bar(pct)} {round(pct)}%&quot;
+
+    if 'resets_at' in win and isinstance(win['resets_at'], (int, float)):
+        s += f&quot; {DIM}↻{format_reset(win['resets_at'], with_date)}{RESET}&quot;
+    return s
+
+</code></pre>
+<h3>5단계: 모의 데이터(Mock) 검증 및 출력 테스트</h3>
+<pre><code class="language-python"># 가상의 Claude 상태 JSON 데이터
+mock_input = '{&quot;rate_limits&quot;:{&quot;five_hour&quot;:{&quot;used_percentage&quot;:20,&quot;resets_at&quot;:1751592600},&quot;seven_day&quot;:{&quot;used_percentage&quot;:41,&quot;resets_at&quot;:1751857200}}}'
+
+def render_status_line(json_str):
+    try:
+        data = json.loads(json_str) if json_str.strip() else {}
+    except json.JSONDecodeError:
+        return f&quot;{DIM}사용량 정보 없음{RESET}&quot;
+
+    rl = data.get('rate_limits')
+    if not rl:
+        return f&quot;{DIM}사용량 정보 대기 중 (첫 API 응답 후 표시){RESET}&quot;
+
+    line = (
+        make_part('Session', rl.get('five_hour'), False) +
+        f&quot;  {DIM}·{RESET}  &quot; +
+        make_part('Week', rl.get('seven_day'), True) +
+        f&quot;  {DIM}(KST){RESET}&quot;
+    )
+    return line
+
+print(render_status_line(mock_input))
+
+</code></pre>
+<hr />
+<h2>최종 파일 합치기 및 실행 (CLI 표준 연동형)</h2>
+<p>위의 검증된 로직을 로컬 환경 내부나 터미널 파이프라인(<code>stdin</code>)에서 직접 호출할 수 있도록 하나로 묶은 파이썬 파일용 코드입니다.</p>
+<h3>1. 스크립트 파일 저장 (<code>~/.claude/statusline.py</code>)</h3>
+<pre><code class="language-python">#!/usr/bin/env python3
+import sys
+import json
+from datetime import datetime, timedelta, timezone
+
+RESET = '\033[0m'
+BOLD = '\033[1m'
+DIM = '\033[2m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+RED = '\033[31m'
+BAR_WIDTH = 10
+
+def get_bar_color(pct):
+    if pct &gt;= 80: return RED
+    if pct &gt;= 50: return YELLOW
+    return GREEN
+
+def make_bar(pct):
+    units = pct / (100 / BAR_WIDTH)
+    full = int(units)
+    half = '▌' if (units - full) &gt;= 0.5 else ''
+    visual = '█' * full + half
+    empty = '░' * max(0, BAR_WIDTH - (full + (1 if half else 0)))
+    return f&quot;{get_bar_color(pct)}{visual}{DIM}{empty}{RESET}&quot;
+
+def format_reset(epoch, with_date=False):
+    kst_time = datetime.fromtimestamp(epoch, tz=timezone.utc) + timedelta(hours=9)
+    ampm = &quot;pm&quot; if kst_time.hour &gt;= 12 else &quot;am&quot;
+    hr = 12 if kst_time.hour % 12 == 0 else kst_time.hour % 12
+    time_str = f&quot;{hr}{ampm}&quot; if kst_time.minute == 0 else f&quot;{hr}:{kst_time.minute:02d}{ampm}&quot;
+    return f&quot;{kst_time.strftime('%b')} {kst_time.day} {time_str}&quot; if with_date else time_str
+
+def make_part(label, win, with_date=False):
+    if not win or 'used_percentage' not in win:
+        return f&quot;{BOLD}{label}{RESET} {DIM}대기중{RESET}&quot;
+    pct = win['used_percentage']
+    s = f&quot;{BOLD}{label}{RESET} {make_bar(pct)} {round(pct)}%&quot;
+    if 'resets_at' in win:
+        s += f&quot; {DIM}↻{format_reset(win['resets_at'], with_date)}{RESET}&quot;
+    return s
+
+def main():
+    try:
+        raw = sys.stdin.read()
+        data = json.loads(raw) if raw.strip() else {}
+    except Exception:
+        sys.stdout.write(f&quot;{DIM}사용량 정보 없음{RESET}&quot;)
+        return
+
+    rl = data.get('rate_limits')
+    if not rl:
+        sys.stdout.write(f&quot;{DIM}사용량 정보 대기 중 (첫 API 응답 후 표시){RESET}&quot;)
+        return
+
+    line = f&quot;{make_part('Session', rl.get('five_hour'), False)}  {DIM}·{RESET}  {make_part('Week', rl.get('seven_day'), True)}  {DIM}(KST){RESET}&quot;
+    sys.stdout.write(line)
+
+if __name__ == '__main__':
+    main()
+
+</code></pre>
+<h3>2. 터미널 연동 테스트 및 확인 방법</h3>
+<pre><code class="language-bash">echo '{&quot;rate_limits&quot;:{&quot;five_hour&quot;:{&quot;used_percentage&quot;:20,&quot;resets_at&quot;:1751592600},&quot;seven_day&quot;:{&quot;used_percentage&quot;:41,&quot;resets_at&quot;:1751857200}}}' | python3 ~/.claude/statusline.py
+
+</code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

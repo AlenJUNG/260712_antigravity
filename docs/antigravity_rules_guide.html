@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Rules Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item active"><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>Google Antigravity (AGY) 지침(Rules) 및 설정(Settings) 구성 가이드</h1>
+<p>Google Antigravity(AGY)는 AI 에이전트의 작동 방식과 개발 규칙을 사용자 맞춤형으로 설정할 수 있는 지침(Rules) 및 설정(Settings) 시스템을 지원합니다. 이 가이드는 이를 쉽게 설정하고 사용할 수 있도록 정리한 문서입니다.</p>
+<hr />
+<h2>1. 지침 및 설정의 위치 (어디서 설정하나요?)</h2>
+<h3>① 전역(Global) 범위</h3>
+<p>모든 프로젝트 및 워크스페이스에 공통으로 적용되는 지침과 설정입니다.</p>
+<ul>
+<li><strong>전역 에이전트 지침 (<code>GEMINI.md</code>)</strong>:<ul>
+<li><strong>경로</strong>: <code>~/.gemini/GEMINI.md</code> (Windows: <code>C:\Users\&lt;사용자명&gt;\.gemini\GEMINI.md</code>)</li>
+<li><strong>역할</strong>: 에이전트에게 항상 적용할 나만의 코딩 스타일, 답변 언어 선호도 등의 기본 규칙을 지정합니다.</li>
+</ul>
+</li>
+<li><strong>전역 CLI 설정 (<code>settings.json</code>)</strong>:<ul>
+<li><strong>경로</strong>: <code>~/.gemini/antigravity-cli/settings.json</code></li>
+<li><strong>역할</strong>: API 키, 기본 사용 모델, 로그 수준, 도구 승인 권한 등을 제어합니다.</li>
+</ul>
+</li>
+<li><strong>전역 MCP 설정 (<code>mcp_config.json</code>)</strong>:<ul>
+<li><strong>경로</strong>: <code>~/.gemini/antigravity-cli/mcp_config.json</code></li>
+<li><strong>역할</strong>: 모든 작업 공간에서 사용할 전역 Model Context Protocol(MCP) 서버를 정의합니다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3>② 프로젝트/워크스페이스(Project/Workspace) 범위</h3>
+<p>해당 프로젝트 폴더에서 작업할 때만 적용되는 지침과 설정입니다.</p>
+<ul>
+<li><strong>프로젝트 루트 지침 (<code>GEMINI.md</code>)</strong>:<ul>
+<li><strong>경로</strong>: 프로젝트의 루트 디렉토리 (예: <code>[프로젝트_루트]/GEMINI.md</code>)</li>
+<li><strong>역할</strong>: 해당 프로젝트의 기술 스택, 빌드/테스트 명령어, 디렉토리 구조 등을 기재합니다. 에이전트 시작 시 자동으로 로드됩니다.</li>
+</ul>
+</li>
+<li><strong>워크스페이스 룰 디렉토리 (<code>.agents/rules/</code>)</strong>:<ul>
+<li><strong>경로</strong>: <code>[프로젝트_루트]/.agents/rules/</code> (이전 버전의 경우 <code>.agent/rules/</code>도 지원)</li>
+<li><strong>역할</strong>: 규칙을 여러 개의 마크다운(<code>.md</code>) 파일로 모듈화하여 관리할 수 있습니다.</li>
+</ul>
+</li>
+<li><strong>프로젝트 MCP 설정 (<code>.agents/mcp_config.json</code>)</strong>:<ul>
+<li><strong>경로</strong>: <code>[프로젝트_루트]/.agents/mcp_config.json</code></li>
+<li><strong>역할</strong>: 해당 프로젝트 내에서만 활성화할 로컬 MCP 서버를 지정합니다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>2. 지침(Rules) 작성 방법 및 형식</h2>
+<p>지침 파일(<code>GEMINI.md</code> 및 <code>.agents/rules/*.md</code>)은 <strong>마크다운(Markdown)</strong> 형식으로 자유롭게 작성합니다.</p>
+<p><code>.agents/rules/</code> 내의 파일들은 파일 최상단에 <strong>Frontmatter</strong>를 선언하여 활성화 방식(Trigger)을 제어할 수 있습니다.</p>
+<h3>Frontmatter 선언 예시 (예: <code>.agents/rules/react-style.md</code>)</h3>
+<pre><code class="language-markdown">---
+name: React Coding Style
+description: React 컴포넌트 개발 시 따라야 할 규칙
+globs: [&quot;src/components/**/*.tsx&quot;, &quot;src/hooks/**/*.ts&quot;]
+trigger: &quot;model&quot; # always, model, manual 중 선택
+---
+
+# React 개발 규칙
+- 함수형 컴포넌트는 선언식(`function`) 대신 화살표 함수(`const App = () =&gt; {}`)를 사용한다.
+- UI 로직과 비즈니스 로직(Custom Hooks)을 철저히 분리한다.
+</code></pre>
+<ul>
+<li><strong><code>always</code></strong>: 에이전트와의 모든 대화에 항상 이 지침을 적용합니다.</li>
+<li><strong><code>model</code></strong>: 에이전트가 질문 내용이나 변경 파일을 감지하여 지침을 로드할지 스스로 결정합니다.</li>
+<li><strong><code>glob</code></strong>: <code>globs</code>에 지정된 파일 패턴을 수정하거나 참고할 때만 자동으로 지침이 로드됩니다.</li>
+<li><strong><code>manual</code></strong>: 사용자가 직접 <code>@react-style</code>과 같이 멘션했을 때만 활성화됩니다.</li>
+</ul>
+<hr />
+<h2>3. 현실적인 지침 작성 예시 (바로 적용 가능)</h2>
+<h3>💡 전역 <code>GEMINI.md</code> 예시 (<code>~/.gemini/GEMINI.md</code>)</h3>
+<blockquote>
+<p>에이전트에게 늘 요구하고 싶은 나의 개인 취향</p>
+</blockquote>
+<pre><code class="language-markdown"># 나의 기본 개발 규칙
+
+- 답변은 친절한 인사말을 생략하고, 핵심 코드와 해결법 위주로 짧고 간결하게 작성해줘.
+- 코드를 변경할 때는 변경된 부위만 보여주는 Diff 포맷을 사용해줘.
+- 질문 답변과 코드 내의 모든 주석은 한국어로 작성해줘.
+- 항상 명시적인 에러 처리(`try-catch` 및 예외 던지기)를 포함해줘.
+</code></pre>
+<h3>💡 프로젝트 루트 <code>GEMINI.md</code> 예시 (<code>[Project Root]/GEMINI.md</code>)</h3>
+<blockquote>
+<p>프로젝트의 고유 기술 스택 및 작업 표준</p>
+</blockquote>
+<pre><code class="language-markdown"># 프로젝트 규칙 (TypeScript API Server)
+
+## 기술 스택
+- Core: Node.js (v20+), Fastify, TypeScript
+- ORM: Prisma
+- Test: Vitest
+
+## 디렉토리 규칙
+- API 라우팅 정의는 `/src/routes/` 폴더 하위에 위치한다.
+- 실제 비즈니스 로직은 `/src/services/` 폴더 하위에 위치한다.
+
+## 빌드 및 검증 명령어
+- 빌드: `npm run build`
+- 테스트 실행: `npm run test`
+- 린트 검사: `npm run lint`
+
+## 개발 수칙
+- 새로운 엔드포인트를 구현할 때는 그에 매칭되는 `*.test.ts` 파일을 `tests/` 폴더에 작성해야 한다.
+- 외부 의존성(npm 패키지)을 추가해야 할 때는 사용자에게 먼저 승인을 구한다.
+</code></pre>
+<hr />
+<h2>4. 유용한 팁 &amp; 명령</h2>
+<ul>
+<li><strong>UI에서 관리하기</strong>:<ul>
+<li>에이전트 패널 오른쪽 위의 더보기 버튼(<strong><code>...</code></strong>) -&gt; <strong>Customizations (사용자 정의)</strong> -&gt; <strong>Rules (지침)</strong> 탭을 통해 간편하게 글로벌 및 프로젝트 지침 파일을 생성하고 편집할 수 있습니다.</li>
+</ul>
+</li>
+<li><strong>적용 상태 확인하기</strong>:<ul>
+<li>채팅창에 <strong><code>/memory</code></strong> 또는 <strong><code>/memory show</code></strong> 명령어를 전송하면, 현재 에이전트가 참조하고 있는 모든 <code>GEMINI.md</code> 파일과 활성화된 규칙 파일 리스트를 직접 조회할 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

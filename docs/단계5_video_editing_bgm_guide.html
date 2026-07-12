@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단계5 Video Editing Bgm Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item "><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item active"><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🎬 비디오 최종 편집 및 BGM/자막 합성 가이드 (5단계 실전 매뉴얼)</h1>
+<p>이 단계는 각각 준비된 캐릭터 애니메이션 비디오(4단계), 목소리(3단계), 배경 이미지(2단계)를 한군데에 모아 <strong>유튜브 규격(9:16)에 맞게 최종 합성하고 배경음악과 동적 자막을 입히는 단계</strong>입니다.</p>
+<p>이 가이드는 <strong>Soundraw (AI 배경음악)</strong>, <strong>Vrew (자동 자막)</strong>, <strong>CapCut (최종 영상 합성/편집)</strong>의 단계별 사용법을 다룹니다.</p>
+<hr />
+<h2>1. 사운드로우 (Soundraw)로 맞춤형 AI 배경음악(BGM) 만들기</h2>
+<p>저작권 걱정 없이 영상 분위기와 길이에 딱 맞는 음악을 AI로 즉석 제작합니다.</p>
+<h3>1단계: 가입 및 작곡 창 이동</h3>
+<ol>
+<li><a href="https://soundraw.io/">Soundraw 공식 홈페이지</a>에 접속하여 가입합니다.</li>
+<li>메인 화면의 <strong>[Create Music]</strong> 버튼을 클릭해 작곡 컨트롤러를 엽니다.</li>
+</ol>
+<h3>2단계: 음악 스타일 지정</h3>
+<ol>
+<li><strong>[Length]</strong>: 유튜브 쇼츠 길이에 맞게 <strong>[1:00] (1분)</strong>으로 설정합니다.</li>
+<li><strong>[Tempo]</strong>: 강의 분위기에 맞춰 <strong>[Normal]</strong> 또는 조금 활기찬 <strong>[Fast]</strong>를 선택합니다.</li>
+<li><strong>[Mood]</strong>: 교육 콘텐츠에 어울리는 <strong>[Cute]</strong>, <strong>[Happy]</strong>, 혹은 편안한 <strong>[Lo-Fi]</strong> 스타일 중 하나를 선택합니다.</li>
+<li>AI가 즉시 수십 개의 후보 음악 리스트를 만들어 냅니다. 재생 버튼을 누르며 채널 무드에 맞는 곡을 고릅니다.</li>
+</ol>
+<h3>3단계: 곡 구조 튜닝 및 다운로드</h3>
+<ol>
+<li>선택한 곡 하단의 편집 막대에서 곡의 부분별 <strong>에너지 레벨(볼륨 및 악기 수)</strong>을 마우스 클릭으로 조절합니다.</li>
+<li><em>추천</em>: 인트로 부분은 잔잔하게(Low), 메인 본문(Body)은 리듬감 있게(High), 아웃트로는 정리하는 느낌(Medium)으로 에너지를 설정합니다.</li>
+<li>우측 상단의 <strong>[Download]</strong> 아이콘을 클릭하여 음원을 내려받습니다. (저작권 라이선스는 창작용 요금제 구독 시 유튜브 등록이 안전합니다.)</li>
+</ol>
+<hr />
+<h2>2. 브루 (Vrew)로 자동 자막 및 동적 스타일 입히기</h2>
+<p>말하는 목소리를 AI가 분석해 자동으로 자막 대본을 생성하고, 쇼츠용 예쁜 폰트와 효과를 입혀줍니다.</p>
+<h3>1단계: 프로젝트 생성</h3>
+<ol>
+<li><a href="https://vrew.ai/">Vrew 다운로드 페이지</a>에서 소프트웨어를 내려받아 설치하고 로그인합니다.</li>
+<li><strong>[새로 만들기]</strong> ➡️ <strong>[음성 분석 시작하기]</strong>를 눌러 합성한 캐릭터 오디오 파일들을 불러옵니다.</li>
+<li>언어 설정에서 <strong>[한국어]</strong> 또는 <strong>[영어]</strong>를 선택하면 자동으로 말 자막이 텍스트로 전환됩니다.</li>
+</ol>
+<h3>2단계: 자막 편집 및 디자인</h3>
+<ol>
+<li>오타가 난 텍스트가 있다면 더블클릭하여 고쳐줍니다.</li>
+<li><strong>자막 스타일 디자인</strong>:</li>
+<li><strong>폰트 추천</strong>: 굵고 잘 보이는 <strong>'G마켓 산스 Bold'</strong>, <strong>'네이버 나눔스퀘어'</strong>, 혹은 캐주얼한 <strong>'메이플스토리체'</strong>를 설정합니다.</li>
+<li><strong>자막 효과</strong>: 자막 탭에서 <strong>'동적 자막(애니메이션 자막)'</strong> 효과를 켜서 단어가 말할 때마다 톡톡 튀어 오르는 효과를 줍니다.</li>
+<li><strong>자동 이모지</strong>: 자막 내용에 맞는 적절한 아이콘/이모지를 매칭해 주는 기능을 적용해 가독성을 높입니다.</li>
+<li><strong>자막 위치 고정</strong>: 세로 쇼츠의 우측 하단 버튼들에 가리지 않도록 <strong>화면 정중앙에서 살짝 아래(Y축 65~70% 지점)</strong>에 자막을 세팅합니다.</li>
+</ol>
+<h3>3단계: 자막만 내보내기 (또는 Vrew에서 컷 편집 진행)</h3>
+<ul>
+<li>CapCut에서 최종 합성을 할 예정이므로, Vrew에서는 자막 텍스트만 투명 배경 비디오로 내보내거나(Green Screen 자막), 자막 위치 확인용으로 사용합니다. (Vrew에서 대화 순서대로 컷 편집을 먼저 끝내고 통째로 영상을 뽑아도 무방합니다.)</li>
+</ul>
+<hr />
+<h2>3. 캡컷 (CapCut)에서 크로마키 합성 및 최종 연출하기</h2>
+<p>배경 위에 캐릭터들을 올리고, 크로마키로 초록색 배경을 지운 뒤 최종 편집을 마칩니다.</p>
+<h3>1단계: 프로젝트 비율 세팅</h3>
+<ol>
+<li><strong>CapCut PC</strong> 버전을 실행하고 <strong>[새 프로젝트]</strong>를 생성합니다.</li>
+<li>플레이어 화면 하단의 비율 설정을 <strong>[9:16 (세로 화면)]</strong>으로 맞춥니다.</li>
+<li>Midjourney로 만든 교실 배경 이미지를 메인 트랙에 배치하고 영상 끝부분까지 길이를 늘려줍니다.</li>
+</ol>
+<h3>2단계: 크로마키(Chroma Key) 캐릭터 합성</h3>
+<ol>
+<li>4단계에서 헤이젠/헤드라로 뽑은 <strong>그린스크린 캐릭터 영상</strong>들을 오버레이(Overlay/PIP) 트랙에 가져와 배경 위에 얹습니다.</li>
+<li>각 캐릭터 비디오 클립을 선택한 후 우측 설정 창에서 <strong>[오려내기]</strong> ➡️ <strong>[크로마키]</strong>를 체크합니다.</li>
+<li><strong>[컬러 피커 (스포이트)]</strong>로 영상의 초록색 배경을 콕 찍은 뒤, <strong>[강도(Strength)]</strong> 슬라이더를 서서히 올려 초록색 배경이 완전히 사라지고 캐릭터만 깨끗하게 남을 때까지 조절합니다.</li>
+<li>캐릭터들을 화면의 좌/우/중앙에 알맞게 크기를 조정해 배치합니다.</li>
+</ol>
+<h3>3단계: 가상 카메라 워킹 및 오디오 믹싱</h3>
+<ol>
+<li><strong>컷(Cut) 나누기</strong>: 한 캐릭터가 계속 서서 말하면 지루하므로, 말하는 주체에 따라 화면을 2~3초 간격으로 크롭(Crop)하거나 키프레임을 주어 얼굴을 줌인(Zoom-in)해 줍니다.</li>
+<li><strong>오디오 더킹 (Audio Ducking) 적용</strong>:</li>
+<li>사운드로우에서 만든 BGM을 오디오 트랙에 추가합니다.</li>
+<li>BGM 클립을 선택하고 우측 음향 설정에서 <strong>[더킹(Ducking)]</strong> 기능을 활성화한 뒤, 캐릭터 음성 트랙을 매칭합니다.</li>
+<li>캐릭터가 말할 때는 음악 소리가 자동으로 스르륵 내려가고, 말이 끝날 때는 다시 웅장하게 올라가도록 감도를 조절합니다.</li>
+<li><strong>효과음(SFX) 매칭</strong>: 단어 그래픽 카드가 뜨거나 중요 설명 자막이 팝업될 때 캡컷 기본 라이브러리의 <strong>'Pop'</strong>, <strong>'Ding'</strong>, <strong>'Click'</strong> 효과음을 짧게 배치합니다.</li>
+</ol>
+<h3>4단계: 최종 렌더링</h3>
+<ul>
+<li>우측 상단의 <strong>[내보내기 (Export)]</strong>를 눌러 <strong>해상도: 1080p</strong>, <strong>프레임 레이트: 60fps</strong>, <strong>포맷: MP4</strong>로 설정한 후 최종 렌더링합니다. 완성된 영상은 유튜브 쇼츠에 바로 업로드할 수 있습니다.</li>
+</ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

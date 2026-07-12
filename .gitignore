@@ -1,0 +1,7 @@
+__pycache__/
+.netlify/
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store

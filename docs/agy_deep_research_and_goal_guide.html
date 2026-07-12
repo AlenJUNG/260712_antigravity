@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Google Antigravity CLI - Deep Research & Goal Manual</title>
+  <meta name="description" content="Google Antigravity CLI (agy)에서 자연어 딥 리서치 및 Goal 모드를 마스터하는 상세 매뉴얼">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ----------------------------------------------------
+       Core Design System & Variables
+       ---------------------------------------------------- */
+    :root {
+      --bg-base: #07090e;
+      --bg-surface: rgba(17, 22, 37, 0.65);
+      --bg-card: rgba(22, 28, 48, 0.4);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(59, 130, 246, 0.4);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --secondary: #a855f7;
+      --secondary-glow: rgba(168, 85, 247, 0.25);
+      --accent: #10b981;
+      
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-base);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, rgba(7, 9, 14, 1) 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 100px;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* ----------------------------------------------------
+       Typography & Headers
+       ---------------------------------------------------- */
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #fff 30%, var(--primary) 70%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 30px rgba(59, 130, 246, 0.15);
+    }
+
+    /* ----------------------------------------------------
+       Layout & Navigation
+       ---------------------------------------------------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7, 9, 14, 0.75);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    .main-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .intro-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* ----------------------------------------------------
+       Tabs & Interactive Toggle Section
+       ---------------------------------------------------- */
+    .tabs-wrapper {
+      margin-bottom: 40px;
+    }
+
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 8px 24px;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----------------------------------------------------
+       Glow Card Components
+       ---------------------------------------------------- */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-span-2 {
+        grid-column: span 2;
+      }
+    }
+
+    .card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(225deg, transparent 80%, rgba(59, 130, 246, 0.05) 100%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.08);
+    }
+
+    .card-title-icon {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card-title-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--primary);
+      filter: drop-shadow(0 0 8px var(--primary-glow));
+    }
+
+    .card h2 {
+      font-size: 1.6rem;
+      color: var(--text-main);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-size: 0.98rem;
+    }
+
+    /* ----------------------------------------------------
+       Instructions & Step-by-Step UI
+       ---------------------------------------------------- */
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--secondary);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content strong {
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* ----------------------------------------------------
+       Code Block Elements
+       ---------------------------------------------------- */
+    .code-container {
+      background: #0b0e14;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-top-left-radius: var(--radius-md);
+      border-top-right-radius: var(--radius-md);
+    }
+
+    .code-lang {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .copy-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent);
+    }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      border-bottom-left-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    code {
+      font-family: 'Fira Code', Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .token.keyword { color: #f43f5e; }
+    .token.string { color: #10b981; }
+    .token.comment { color: #475569; }
+
+    /* ----------------------------------------------------
+       Interactive Prompt Builder
+       ---------------------------------------------------- */
+    .builder-section {
+      margin-top: 60px;
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .builder-grid {
+        grid-template-columns: 4fr 5fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: var(--transition-fast);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-label input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    .output-box-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .output-textarea {
+      flex-grow: 1;
+      min-height: 200px;
+      background: #0b0e14;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      color: #38bdf8;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+      resize: none;
+      line-height: 1.5;
+    }
+
+    .builder-action-bar {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .glow-button {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .glow-button:hover {
+      box-shadow: 0 6px 24px rgba(59, 130, 246, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .glow-button:active {
+      transform: translateY(0);
+    }
+
+    /* Info Alerts */
+    .alert-info {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .alert-info svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .alert-info p {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Premium Header -->
+  <header>
+    <div class="logo-container">
+      <span class="logo-badge">AGY</span>
+      <span class="logo-text">Google Antigravity CLI</span>
+    </div>
+    <div class="logo-text" style="font-size: 0.9rem; opacity: 0.6;">Interactive manual</div>
+  </header>
+
+  <div class="main-container">
+    
+    <!-- Intro Header -->
+    <div class="intro-section">
+      <h1>Deep Research & Goal Mode</h1>
+      <p class="subtitle">Google Antigravity CLI(agy)에서 최상의 개발 분석 및 자율 조사 성과를 도출해내는 심층 제어 매뉴얼</p>
+    </div>
+
+    <!-- Toggle Tabs -->
+    <div class="tabs-wrapper">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-research')">자연어 딥 리서치</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-goal')">/goal 모드 자동화</button>
+      </div>
+
+      <!-- TAB 1: Deep Research -->
+      <div id="tab-research" class="tab-content active">
+        <div class="grid-layout">
+          
+          <div class="card">
+            <div class="card-title-icon">
+              <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <h2>자연어 리서치 지시 방법</h2>
+            </div>
+            <p>agy 에이전트는 별도의 셸 명령어 대신, 자연어 질문에 포함된 '리서치', '검색', '스펙 조사'와 같은 맥락을 스스로 판단하여 다단계 웹 검색 및 문서 조합 태스크를 시작합니다.</p>
+            <p>단순 검색에 그치지 않고 여러 블로그나 문서를 서로 교차 분석하여 정확한 결론을 도출합니다.</p>
+            
+            <div class="alert-info">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              <p>에이전트는 내부적으로 <strong>research</strong>라는 특수한 읽기 전용 서브에이전트 인스턴스를 생성해 웹에 접근하므로 안전성이 보장됩니다.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              <h2>실전 명령어 형태</h2>
+            </div>
+            <p>TUI 콘솔 내 혹은 외부 터미널 셸(Shell)에서 각각 다음과 같이 지시할 수 있습니다.</p>
+            
+            <div class="step-list">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <div class="step-content">
+                  <strong>TUI 대화형 모드</strong>
+                  <p>agy 프롬프트 창에 바로 리서치 대상을 설명합니다.</p>
+                  <div class="code-container">
+                    <pre><code>"LivePortrait의 요구 리소스를 조사해줘."</code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <div class="step-content">
+                  <strong>터미널 비대화형 모드 (Headless)</strong>
+                  <p>터미널에서 1회성 출력을 즉시 받고 싶을 때 사용합니다.</p>
+                  <div class="code-container">
+                    <pre><code>agy -p "Next.js 15 App Router 변경사항 조사"</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: /goal Command -->
+      <div id="tab-goal" class="tab-content">
+        <div class="grid-layout">
+          
+          <div class="card">
+            <div class="card-title-icon">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+              <h2>/goal 명령어의 이해</h2>
+            </div>
+            <p>/goal 명령어는 에이전트에게 <strong>'목표가 완수되어 모든 테스트와 검증을 끝마칠 때까지 포기하지 말고 반복 루프를 가동하라'</strong>고 명시하는 궁극적인 자동화 도구입니다.</p>
+            <p>특히 조사 항목이 방대하고 최종적으로 마크다운 문서 작성이나 스크립트 빌드까지 완료해야 할 때 베스트입니다.</p>
+            
+            <div class="step-list">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <div class="step-content">
+                  <strong>목표 설정 구체화</strong>
+                  <p>단순 질문보다는 '목표 + 제약사항 + 최종 산출물 규격'을 한꺼번에 적어야 최고의 효율이 납니다.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <div class="step-content">
+                  <strong>실행 관리</strong>
+                  <p>루프가 가동되는 동안 메인 창을 나가거나 다른 터미널에서 작업해도 비동기 백그라운드 태스크로 에이전트가 알아서 동작합니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              <h2>골 모드 실전 사용 예시</h2>
+            </div>
+            <p>TUI 내에서 실행하는 시나리오와 최종 결과 리포트를 작성하게 하는 커맨드 구조입니다.</p>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-lang">Interactive Session</span>
+                <button class="copy-btn" onclick="copyText(this, 'goal-example')">복사</button>
+              </div>
+              <pre><code id="goal-example">User > /goal
+Agent > 무엇을 달성하고 싶으신가요?
+User > 목표: LivePortrait와 live2d의 구동 메커니즘을 심도 있게 비교 분석해줘. 두 기술의 장단점 분석표를 포함한 보고서를 작성해 `./docs/comparison.md`에 저장해.</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Prompt Builder (WOW factor utility) -->
+    <div class="card builder-section">
+      <div class="card-title-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <h2>Interactive Prompt Builder</h2>
+      </div>
+      <p style="margin-bottom: 30px;">아래 폼에 원하는 조건을 지정하면 agy 콘솔에 복사하여 즉시 붙여넣을 수 있는 최적의 딥 리서치/Goal 전용 프롬프트를 자동으로 조립해 줍니다.</p>
+      
+      <div class="builder-grid">
+        
+        <!-- Left Column: Inputs -->
+        <div>
+          <div class="form-group">
+            <label for="input-topic">리서치 핵심 주제</label>
+            <input type="text" id="input-topic" class="form-control" placeholder="예: Lipsync AI 모델 및 LivePortrait 비교" oninput="generatePrompt()">
+          </div>
+
+          <div class="form-group">
+            <label for="select-depth">리서치 수준(Depth)</label>
+            <select id="select-depth" class="form-control" onchange="generatePrompt()">
+              <option value="basic">기본 정보 탐색 및 요약</option>
+              <option value="standard" selected>교차 검증 및 장단점 표 포함 (추천)</option>
+              <option value="deep">심층 분석 및 실제 테스트용 예제 코드 포함</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>요구 제약 사항</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="check-citation" checked onchange="generatePrompt()"> 모든 내용마다 신뢰할 수 있는 출처/링크(Citation) 매칭
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="check-table" checked onchange="generatePrompt()"> 핵심 차이점을 한눈에 보여주는 비교표(Table) 작성
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="check-file" checked onchange="generatePrompt()"> 결과물을 `./docs/` 아래의 마크다운 파일로 저장
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Output Prompt -->
+        <div class="output-box-wrapper">
+          <label style="font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">완성된 프롬프트 (agy TUI나 CLI에 복사하세요)</label>
+          <textarea id="output-prompt" class="output-textarea" readonly></textarea>
+          
+          <div class="builder-action-bar">
+            <button class="glow-button" onclick="copyText(this, 'output-prompt')">
+              <svg style="width: 18px; height: 18px; fill: #fff;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              프롬프트 복사하기
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Tab switching logic
+    function switchTab(evt, tabId) {
+      const contents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+      
+      const tablinks = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+      }
+      
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+
+    // Text copy function
+    function copyText(button, elementId) {
+      let text = "";
+      const element = document.getElementById(elementId);
+      if (element.tagName === "TEXTAREA" || element.tagName === "INPUT") {
+        text = element.value;
+      } else {
+        text = element.innerText;
+      }
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const originalHTML = button.innerHTML;
+        button.innerHTML = "복사 완료!";
+        button.classList.add("copied");
+        setTimeout(() => {
+          button.innerHTML = originalHTML;
+          button.classList.remove("copied");
+        }, 2000);
+      });
+    }
+
+    // Dynamic prompt generator
+    function generatePrompt() {
+      const topic = document.getElementById("input-topic").value.trim() || "[여기에 리서치 주제 입력]";
+      const depth = document.getElementById("select-depth").value;
+      const citation = document.getElementById("check-citation").checked;
+      const table = document.getElementById("check-table").checked;
+      const saveFile = document.getElementById("check-file").checked;
+
+      let prompt = `질문: '${topic}'에 대해 심층 조사를 해줘.\n`;
+      
+      // Depth configuration
+      if (depth === "basic") {
+        prompt += `- 주요 개념을 핵심 위주로 명확하고 간결하게 요약해줘.\n`;
+      } else if (depth === "standard") {
+        prompt += `- 기술의 구동 메커니즘, 장단점 분석을 포함해 표준 포맷으로 리서치해줘.\n`;
+      } else {
+        prompt += `- 동작 원리, 최신 트렌드뿐만 아니라 현업에 적용하기 위한 실전 환경 셋업 가이드 및 예시 코드/스니펫을 상세히 서술해줘.\n`;
+      }
+
+      // Constraints
+      if (citation) {
+        prompt += `- 리서치한 내용의 각 주장에 대해 출처(공식 사이트 및 깃허브 링크)를 Citation 형태로 반드시 포함해줘.\n`;
+      }
+      if (table) {
+        prompt += `- 분석 대상간 핵심 속성을 비교하는 테이블(Table) 요약표를 제공해줘.\n`;
+      }
+      if (saveFile) {
+        const cleanName = topic.toLowerCase().replace(/[^a-z0-9가-힣]+/g, "_");
+        prompt += `- 조사 보고서는 마크다운 형식으로 최종 정리하여 \`./docs/research_${cleanName || "report"}.md\` 경로에 저장해줘.\n`;
+      }
+
+      document.getElementById("output-prompt").value = prompt;
+    }
+
+    // Initialize prompt on page load
+    window.onload = function() {
+      generatePrompt();
+    };
+  </script>
+
+</body>
+</html>

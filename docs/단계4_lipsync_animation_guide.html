@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단계4 Lipsync Animation Guide - AI Video Production Guide</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2F6;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --important: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown Content Reset & Styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1E293B;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #334155;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.75rem;
+            color: #334155;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .markdown-body a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Block Styling */
+        .markdown-body pre {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .markdown-body code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            color: #E11D48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* Table Styling */
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Blockquote / Alert Styling */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-light);
+            color: #475569;
+            margin-bottom: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Alert Callouts custom parsing */
+        .alert-box {
+            padding: 1rem 1.25rem;
+            border-left: 4px solid;
+            margin-bottom: 1.25rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .alert-box.tip {
+            background-color: #ECFDF5;
+            border-color: var(--success);
+            color: #065F46;
+        }
+        
+        .alert-box.important {
+            background-color: #FEF2F2;
+            border-color: var(--important);
+            color: #991B1B;
+        }
+
+        /* Mermaid Graph Styling */
+        .mermaid-container {
+            background-color: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Mermaid.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            🤖 AI Video Studio
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item "><a href="ai_video_pipeline.html">🎬 메인 파이프라인 가이드</a></li>
+<li class="nav-item "><a href="ai_automation_strategy.html">🤖 AI 자동화 전략 가이드</a></li>
+<li class="nav-item "><a href="단계2_midjourney_character_guide.html">🎨 단계2: 미드저니 캐릭터</a></li>
+<li class="nav-item "><a href="단계3_tts_voice_guide.html">🎙️ 단계3: TTS 음성 생성</a></li>
+<li class="nav-item active"><a href="단계4_lipsync_animation_guide.html">📹 단계4: 립싱크 애니메이션</a></li>
+<li class="nav-item "><a href="단계5_video_editing_bgm_guide.html">🎞️ 단계5: 편집 및 BGM 합성</a></li>
+<li class="nav-item "><a href="antigravity_cli_guide.html">💻 AGY CLI 사용 가이드</a></li>
+<li class="nav-item "><a href="antigravity_deep_research_guide.html">antigravity deep research guide</a></li>
+<li class="nav-item "><a href="antigravity_rules_guide.html">⚙️ AGY 규칙/설정 가이드</a></li>
+<li class="nav-item "><a href="antigravity_statusline_setup.html">antigravity statusline setup</a></li>
+<li class="nav-item "><a href="statusbar.html">📊 상태 바 가이드</a></li>
+<li class="nav-item "><a href="인수인계.html">📋 작업 인수인계서</a></li>
+
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="markdown-body">
+                <h1>🎬 캐릭터 애니메이션 및 립싱크 가이드 (4단계 실전 매뉴얼)</h1>
+<p>미드저니에서 생성한 캐릭터 이미지(2단계)와 생성한 목소리 파일(3단계)을 결합하여, 캐릭터가 진짜로 말하는 <strong>립싱크 영상 소스</strong>를 만드는 가이드입니다. </p>
+<p>비원어민의 입모양 한계를 보완하기 위해, 직접 촬영 없이 목소리 파일만 넣으면 자동으로 원어민의 완벽한 입모양을 그려내는 <strong>오디오 구동형 AI(HeyGen / Hedra)</strong> 위주로 설명합니다.</p>
+<hr />
+<h2>1. 헤이젠 (HeyGen) 단계별 사용법 (가장 추천 / 고품질)</h2>
+<p>유튜버들이 고화질 캐릭터 상황극 영상을 만들 때 가장 많이 사용하는 업계 표준 립싱크 툴입니다.</p>
+<h3>1단계: 가입 및 에셋 업로드</h3>
+<ol>
+<li><a href="https://www.heygen.com/">HeyGen 공식 홈페이지</a>에 가입 후 로그인합니다.</li>
+<li>왼쪽 메뉴에서 <strong>[Avatars]</strong> ➡️ <strong>[Photo Avatar]</strong>로 이동합니다.</li>
+<li><strong>[Upload Talking Photo]</strong> 버튼을 누르고, 2단계에서 미드저니로 생성한 캐릭터의 '마스터 이미지'를 업로드합니다.</li>
+</ol>
+<h3>2단계: 비디오 템플릿 생성 및 세팅</h3>
+<ol>
+<li>업로드된 내 캐릭터 카드를 클릭한 후 <strong>[Create Video]</strong> ➡️ <strong>[Vertical (9:16)]</strong> 비율을 선택해 편집 화면으로 진입합니다.</li>
+<li><strong>배경색 그린스크린 설정 (매우 중요)</strong>:</li>
+<li>나중에 편집기에서 배경을 깔끔하게 지우기 위해 캐릭터의 배경을 단색 초록색으로 만들어야 합니다.</li>
+<li>우측 메뉴의 배경색 설정에서 <strong>원색 초록색 (<code>#00FF00</code> 또는 <code>#04FF00</code>)</strong>을 지정해 줍니다.</li>
+</ol>
+<h3>3단계: 목소리 매칭 및 렌더링</h3>
+<ol>
+<li>하단 오디오 트랙 영역에서 <strong>[Audio Script]</strong> 탭을 선택하고 <strong>[Upload Audio]</strong>를 클릭합니다.</li>
+<li>3단계(TTS)에서 ElevenLabs나 Typecast로 뽑아놓은 캐릭터 전용 목소리 파일(mp3)을 업로드합니다.</li>
+<li>우측 상단의 <strong>[Submit]</strong> 버튼을 클릭합니다. </li>
+<li>AI가 약 1~2분간 얼굴 고정 및 입술 움직임 동기화 연산을 마치면 원어민 입모양의 춤추는 비디오가 완성됩니다. 완료 후 <strong>MP4 파일로 다운로드</strong>합니다.</li>
+</ol>
+<hr />
+<h2>2. 헤드라 (Hedra) 단계별 사용법 (가성비 / 빠른 렌더링)</h2>
+<p>최근 떠오르는 AI 툴로, 생성 속도가 매우 빠르고 캐릭터의 표정과 머리 꺾임 등이 역동적이며 요금이 상대적으로 저렴합니다.</p>
+<h3>1단계: 가입 및 화면 진입</h3>
+<ol>
+<li><a href="https://www.hedra.com/">Hedra 공식 홈페이지</a>에 가입 후 로그인합니다.</li>
+<li>메인 페이지의 작업 공간(Workspace)으로 이동합니다.</li>
+</ol>
+<h3>2단계: 이미지와 소리 입력</h3>
+<ol>
+<li><strong>[Character]</strong> 탭에서 업로드 버튼을 눌러 내 캐릭터 이미지를 올립니다.</li>
+<li><strong>[Audio]</strong> 탭을 클릭하여 오디오 파일(TTS mp3)을 업로드합니다.</li>
+<li><strong>[Prompt]</strong> 란에는 캐릭터의 행동 스타일(예: "friendly smiling, teaching")을 영어로 간단히 적어줍니다.</li>
+</ol>
+<h3>3단계: 비디오 생성</h3>
+<ol>
+<li>하단의 <strong>[Generate Video]</strong> 버튼을 클릭합니다.</li>
+<li>보통 30초 내외로 빠른 처리가 완료됩니다.</li>
+<li>출력된 영상을 확인하고 우측의 <strong>Download</strong>를 누릅니다. </li>
+<li><em>주의</em>: Hedra는 기본적으로 배경이 이미지 원본의 배경을 따라가므로, 미드저니에서 마스터 이미지를 뽑을 때 흰색 배경을 완전 깔끔하게 유지해서 생성하는 것이 핵심입니다.</li>
+</ol>
+<hr />
+<h2>3. 라이브포트레이트 (LivePortrait) 사용법 (표정 연출용 / 고급형)</h2>
+<p>실제 본인 또는 원어민의 표정 변화(눈썹 찌푸림, 리액션)를 그대로 이미지에 씌우는 모션 트랜스퍼 기술입니다. 대사 립싱크보다는 캐릭터의 <strong>"무말어 리액션(예: 끄덕임, 미소, 황당한 표정)"</strong> 클립을 만들 때 효과적입니다.</p>
+<h3>1단계: 플랫폼 접속</h3>
+<ul>
+<li>개인 고성능 그래픽 카드가 없는 경우, 클라우드 실행 플랫폼인 <a href="https://replicate.com/kwai/liveportrait">Replicate (LivePortrait 페이지)</a>에 가입하여 소액의 이용료(초당 몇 원 수준)를 내고 웹에서 실행합니다.</li>
+</ul>
+<h3>2단계: 이미지와 가이드 비디오 세팅</h3>
+<ol>
+<li><strong>[img]</strong> 슬롯에 캐릭터 마스터 이미지를 올립니다.</li>
+<li><strong>[driving_video]</strong> 슬롯에 본인이나 네이티브 가이드가 눈을 깜빡이거나 리액션하는 짧은 영상(5초 내외)을 올립니다.</li>
+<li>입모양과 눈 크기 조절 옵션을 조정한 뒤 <strong>[Run]</strong>을 누릅니다.</li>
+</ol>
+<h3>3단계: 결과 확인</h3>
+<ul>
+<li>가이드 비디오의 고개 끄덕임, 미세한 입꼬리 씰룩임이 캐릭터에 완벽하게 카피된 초자연적인 리액션 비디오가 생성됩니다.</li>
+</ul>
+<hr />
+<h2>💡 4단계 작업 시 필수 체크리스트</h2>
+<ol>
+<li><strong>캐릭터별로 따로 뽑기</strong>: 3명의 캐릭터 비디오를 템플릿 하나에 같이 렌더링하지 말고, <strong>캐릭터 A 비디오, 캐릭터 B 비디오를 각각 그린스크린 영상으로 단독 출력</strong>해야 나중에 레이아웃 배치와 편집이 자유롭습니다.</li>
+<li><strong>첫/끝 1초 여유</strong>: 오디오 파일 앞뒤에 아주 미세한 무음이 섞여 있어야 립싱크 비디오의 첫 부분과 끝부분이 부자연스럽게 잘리지 않습니다.</li>
+</ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
