@@ -1,0 +1,16 @@
+{
+  "name": "forest-finder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "숲나들e(foresttrip.go.kr) 전국 자연휴양림 날짜·시도별 예약가능 조회 PoC",
+  "scripts": {
+    "serve": "node src/server.js",
+    "collect": "node src/collectNationalYears.js",
+    "catalog": "node src/poc.js catalog",
+    "search": "node src/poc.js search"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}

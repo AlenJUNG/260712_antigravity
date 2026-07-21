@@ -1,0 +1,382 @@
+{
+  "source": "https://huyang.forest.go.kr/kfsweb/kfi/kfs/cms/cmsView.do?mn=HUYG_01_03&cmsId=FC_000762",
+  "count": 47,
+  "forests": [
+    {
+      "name": "유명산",
+      "key": "유명산",
+      "designated": 1991,
+      "built": 1988,
+      "opened": 1989,
+      "location": "경기 가평 설악 유명산길79-53"
+    },
+    {
+      "name": "산음",
+      "key": "산음",
+      "designated": 1991,
+      "built": 1997,
+      "opened": 2000,
+      "location": "경기 양평 단월 고북길347"
+    },
+    {
+      "name": "중미산",
+      "key": "중미산",
+      "designated": 1991,
+      "built": 1989,
+      "opened": 1991,
+      "location": "경기 양평 옥천 중미산로1152"
+    },
+    {
+      "name": "운악산",
+      "key": "운악산",
+      "designated": 2004,
+      "built": 2005,
+      "opened": 2007,
+      "location": "경기 포천 화현 화동로184"
+    },
+    {
+      "name": "속리산말티재",
+      "key": "속리산말티재",
+      "designated": 1996,
+      "built": 1997,
+      "opened": 2002,
+      "location": "충북 보은 장안 속리산로256"
+    },
+    {
+      "name": "오서산",
+      "key": "오서산",
+      "designated": 1997,
+      "built": 1998,
+      "opened": 2001,
+      "location": "충남 보령 청라 오서산길531"
+    },
+    {
+      "name": "희리산해송",
+      "key": "희리산해송",
+      "designated": 1991,
+      "built": 1996,
+      "opened": 1999,
+      "location": "충남 서천 종천 희리산길206"
+    },
+    {
+      "name": "용현",
+      "key": "용현",
+      "designated": 2000,
+      "built": 2003,
+      "opened": 2005,
+      "location": "충남 서산 운산 마애삼존불길339"
+    },
+    {
+      "name": "상당산성",
+      "key": "상당산성",
+      "designated": 2005,
+      "built": 2007,
+      "opened": 2012,
+      "location": "충북 청주 내수 덕암2길162"
+    },
+    {
+      "name": "아세안",
+      "key": "아세안",
+      "designated": 2011,
+      "built": 2012,
+      "opened": 2015,
+      "location": "경기 양주 백석 기산로 472"
+    },
+    {
+      "name": "무의도",
+      "key": "무의도",
+      "designated": 2003,
+      "built": 2018,
+      "opened": 2022,
+      "location": "인천 중구 하나개로 74"
+    },
+    {
+      "name": "청태산",
+      "key": "청태산",
+      "designated": 1991,
+      "built": 1990,
+      "opened": 1993,
+      "location": "강원 횡성 둔내 청태산로610"
+    },
+    {
+      "name": "복주산",
+      "key": "복주산",
+      "designated": 1991,
+      "built": 1998,
+      "opened": 2003,
+      "location": "강원 철원 근남 하오재로818"
+    },
+    {
+      "name": "용화산",
+      "key": "용화산",
+      "designated": 1991,
+      "built": 2004,
+      "opened": 2006,
+      "location": "강원 춘천 사북 사여골길294"
+    },
+    {
+      "name": "백운산",
+      "key": "백운산",
+      "designated": 1991,
+      "built": 2004,
+      "opened": 2006,
+      "location": "강원 원주 판부 백운산길81"
+    },
+    {
+      "name": "삼봉",
+      "key": "삼봉",
+      "designated": 1991,
+      "built": 1991,
+      "opened": 1992,
+      "location": "강원 홍천 내 삼봉휴양길276"
+    },
+    {
+      "name": "용대",
+      "key": "용대",
+      "designated": 1991,
+      "built": 1992,
+      "opened": 1994,
+      "location": "강원 인제 북연 연화동길7"
+    },
+    {
+      "name": "방태산",
+      "key": "방태산",
+      "designated": 1991,
+      "built": 1995,
+      "opened": 1997,
+      "location": "강원 인제 기린 방태산길241"
+    },
+    {
+      "name": "대관령",
+      "key": "대관령",
+      "designated": 1991,
+      "built": 1988,
+      "opened": 1989,
+      "location": "강원 강릉 성산 삼포암길133"
+    },
+    {
+      "name": "미천골",
+      "key": "미천골",
+      "designated": 1991,
+      "built": 1991,
+      "opened": 1993,
+      "location": "강원 양양 서 미천골길115"
+    },
+    {
+      "name": "두타산",
+      "key": "두타산",
+      "designated": 2003,
+      "built": 2003,
+      "opened": 2008,
+      "location": "강원 평창 진부 아차골길132"
+    },
+    {
+      "name": "가리왕산",
+      "key": "가리왕산",
+      "designated": 1991,
+      "built": 1992,
+      "opened": 1993,
+      "location": "강원 정선 정선 가리왕산로707"
+    },
+    {
+      "name": "검봉산",
+      "key": "검봉산",
+      "designated": 1991,
+      "built": 2006,
+      "opened": 2008,
+      "location": "강원 삼척 원덕 임원안길525-145"
+    },
+    {
+      "name": "화천야영장",
+      "key": "화천야영장",
+      "designated": null,
+      "built": 2016,
+      "opened": 2018,
+      "location": "강원 화천 간동 배후령길 1144"
+    },
+    {
+      "name": "대야산",
+      "key": "대야산",
+      "designated": 1996,
+      "built": 2007,
+      "opened": 2009,
+      "location": "경북 문경 가은 용추길31-35"
+    },
+    {
+      "name": "칠보산",
+      "key": "칠보산",
+      "designated": 1992,
+      "built": 1992,
+      "opened": 1993,
+      "location": "경북 영덕 병곡 칠보산길587"
+    },
+    {
+      "name": "청옥산",
+      "key": "청옥산",
+      "designated": 1991,
+      "built": 1990,
+      "opened": 1991,
+      "location": "경북 봉화 청옥로1552-163"
+    },
+    {
+      "name": "검마산",
+      "key": "검마산",
+      "designated": 1994,
+      "built": 1995,
+      "opened": 1997,
+      "location": "경북 영양 수비 검마산길191"
+    },
+    {
+      "name": "통고산",
+      "key": "통고산",
+      "designated": 1991,
+      "built": 1991,
+      "opened": 1992,
+      "location": "경북 울진 금강송 불영계곡로 880"
+    },
+    {
+      "name": "운문산",
+      "key": "운문산",
+      "designated": 1992,
+      "built": 1997,
+      "opened": 2000,
+      "location": "경북 청도 운문 운문로763"
+    },
+    {
+      "name": "신불산폭포",
+      "key": "신불산폭포",
+      "designated": 1991,
+      "built": 1988,
+      "opened": 1989,
+      "location": "울산 울주 상북 청수골길 175"
+    },
+    {
+      "name": "김천숲속야영장",
+      "key": "김천숲속야영장",
+      "designated": null,
+      "built": 2019,
+      "opened": 2024,
+      "location": "경북 김천시 대덕면 조룡길 865"
+    },
+    {
+      "name": "황정산",
+      "key": "황정산",
+      "designated": 2004,
+      "built": 2005,
+      "opened": 2007,
+      "location": "충북 단양 대강 황정산로239-11"
+    },
+    {
+      "name": "달음산",
+      "key": "달음산",
+      "designated": 2013,
+      "built": 2013,
+      "opened": 2018,
+      "location": "부산 가장군 일광면 화용길 299-106"
+    },
+    {
+      "name": "용지봉",
+      "key": "용지봉",
+      "designated": 2018,
+      "built": 2018,
+      "opened": 2022,
+      "location": "경남 김해 대청계곡길 170-36"
+    },
+    {
+      "name": "방장산",
+      "key": "방장산",
+      "designated": 1998,
+      "built": 1998,
+      "opened": 2000,
+      "location": "전남 장성 북이 방장로353"
+    },
+    {
+      "name": "덕유산",
+      "key": "덕유산",
+      "designated": 1991,
+      "built": 1992,
+      "opened": 1993,
+      "location": "전북 무주 무풍 구천동로530-62"
+    },
+    {
+      "name": "운장산",
+      "key": "운장산",
+      "designated": 1994,
+      "built": 1998,
+      "opened": 2000,
+      "location": "전북 진안 정천 휴양림길77"
+    },
+    {
+      "name": "지리산",
+      "key": "지리산",
+      "designated": 1994,
+      "built": 1994,
+      "opened": 1996,
+      "location": "경남 함양 마천 음정길152"
+    },
+    {
+      "name": "남해편백",
+      "key": "남해편백",
+      "designated": 1991,
+      "built": 1996,
+      "opened": 1998,
+      "location": "경남 남해 삼동 금암로658"
+    },
+    {
+      "name": "회문산",
+      "key": "회문산",
+      "designated": 1991,
+      "built": 1992,
+      "opened": 1993,
+      "location": "전분 순창 구림 안심길214"
+    },
+    {
+      "name": "천관산",
+      "key": "천관산",
+      "designated": 1991,
+      "built": 1993,
+      "opened": 1995,
+      "location": "전남 장흥 관산 칠관로842-1150"
+    },
+    {
+      "name": "낙안민속",
+      "key": "낙안민속",
+      "designated": 1999,
+      "built": 2001,
+      "opened": 2004,
+      "location": "전남 순천 낙안민속마을길1600"
+    },
+    {
+      "name": "변산",
+      "key": "변산",
+      "designated": 2009,
+      "built": 2011,
+      "opened": 2015,
+      "location": "전북 부안 변산 변산로 3768"
+    },
+    {
+      "name": "금산",
+      "key": "금산",
+      "designated": 2025,
+      "built": 2025,
+      "opened": 2025,
+      "location": "충남 금산군 남이면 구석리 산159"
+    },
+    {
+      "name": "진도",
+      "key": "진도",
+      "designated": 2012,
+      "built": 2017,
+      "opened": 2017,
+      "location": "전남 진도 임회 동령개길 1-92"
+    },
+    {
+      "name": "신시도",
+      "key": "신시도",
+      "designated": 2007,
+      "built": 2019,
+      "opened": 2021,
+      "location": "전북 군산시 옥도면 신시도길 271"
+    }
+  ]
+}
