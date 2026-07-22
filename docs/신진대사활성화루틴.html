@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42세 중년기 신진대사 활성화 및 체질 개선 프로토콜</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --gradient-text: linear-gradient(135deg, #60a5fa, #c084fc);
+            --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(228,100%,74%,0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            word-break: keep-all;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin: 0 auto 1rem auto;
+            word-break: keep-all;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            font-size: 1.6rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            word-break: keep-all;
+        }
+        
+        .section h3 {
+            font-size: 1.3rem;
+            color: #a78bfa;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            word-break: keep-all;
+        }
+
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            background: rgba(15, 23, 42, 0.5);
+            font-size: 0.95rem;
+            vertical-align: top;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.9);
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--card-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.25rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 2px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        
+        .timeline-item:hover::before {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+        }
+
+        .timeline-time {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-content {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--card-border);
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateX(5px);
+            background: rgba(30, 41, 59, 0.8);
+        }
+        
+        .timeline-content p {
+            margin-bottom: 0.5rem;
+        }
+        .timeline-content p:last-child {
+            margin-bottom: 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        ul.styled-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        ul.styled-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        ul.styled-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+        
+        ul.styled-list li strong {
+            color: #93c5fd;
+        }
+
+        .cite {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .section { padding: 1.5rem; }
+            th, td { padding: 0.75rem; font-size: 0.85rem; }
+            .header h1 { font-size: 1.8rem; }
+            .timeline::before { left: 0.5rem; }
+            .timeline-item::before { left: -1.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>42세 중년기 대사 및 인지 기능 저하의 생리학적 실체와 뇌과학 기반의 체질 개선 프로토콜</h1>
+        <p>42세 중년은 불가항력적인 쇠퇴기가 아닙니다. 신체 근세포량의 능동적 복원, 영양 구조 개선, 글림프 정화 시스템의 온전한 수면 확보, 그리고 뇌과학 기반의 루틴 통합으로 대사 효율과 정서적·생리적 피크를 다시 한번 재정렬할 수 있습니다.</p>
+    </header>
+
+    <section class="section delay-1">
+        <h2>1. 40대 대사 저하의 통념에 대한 신경내분비학적 재평가</h2>
+        <p>흔히 40대에 접어들면서 겪는 체중 증가와 피로감을 노화로 인한 기초대사량 저하 탓으로 돌립니다. 그러나 듀크 대학의 대규모 연구에 따르면, 실질적인 대사량 하락은 <span class="highlight">60세 이후에야 발생</span>합니다. 20~60세 사이의 총일일에너지소비량(TEE)과 기초대사율(BMR)은 극히 안정적입니다.</p>
+        <p>즉, 42세의 주관적인 대사 저하는 '노화' 자체라기보다 근육 손실, 신체 활동(NEAT) 급감, 미토콘드리아 비효율성, 성호르몬 감소에 따른 <strong>'이차적 노화(Secondary aging)'</strong>의 결과입니다. 세포 수준에서 대사 인프라를 재건하면 20~30대 수준의 대사 활성을 회복할 수 있습니다.</p>
+    </section>
+
+    <section class="section delay-2">
+        <h2>2. 근감소증과 미토콘드리아 퇴화 방어 전략</h2>
+        <p>40대의 대사 퇴화는 <strong>근감소증(Sarcopenia)</strong>과 세포 내 발전소인 <strong>미토콘드리아의 기능 저하</strong>에서 기인합니다. 성호르몬 감소로 인한 미토콘드리아 항상성 붕괴를 막기 위해 다음의 필수 영양 인자 공급이 필요합니다.</p>
+        
+        <ul class="styled-list">
+            <li><strong>류신 (Leucine):</strong> mTOR 경로를 활성화하여 근육 단백질 합성을 자극하고 근감소증을 예방합니다.</li>
+            <li><strong>코엔자임 Q10 (CoQ10):</strong> 전자전달계에서 ATP 생성을 촉진하며 산화 스트레스로부터 세포막을 보존합니다.</li>
+            <li><strong>알파리포산 (ALA):</strong> 포도당 대사를 개선하고 인슐린 감수성을 향상해 대사 효율을 보존합니다.</li>
+            <li><strong>마그네슘 (Magnesium):</strong> ATP와 결합해 에너지를 활성화하며 신경계 흥분 독성을 완화합니다.</li>
+        </ul>
+
+        <h3>대사 효율 재건을 위한 운동 및 영양 제어</h3>
+        <p>단순한 칼로리 제한이 아닌 인프라 재건이 필요합니다. <span class="highlight">편심성 수축</span>(천천히 무게를 버티며 내리는 동작) 중심의 저항성 운동은 안정시대사율(RMR)을 최대 72시간 상승시킵니다. 여기에 매끼 30g 이상의 양질의 단백질 분산 섭취, 일상 속 걷거나 서 있는 NEAT 활동이 결합되면 대사가 극대화됩니다.</p>
+
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>MIND 식단 권장 식품군</th>
+                        <th>섭취 표준 가이드라인</th>
+                        <th>대사 조절 및 뇌 세포막 보호 기전</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>녹색 잎채소</strong> (Leafy Greens)</td>
+                        <td>주 6회 이상 섭취</td>
+                        <td>엽산, 카로티노이드, 비타민 E 공급을 통해 뇌 위축 지연 및 호모시스테인 조절</td>
+                    </tr>
+                    <tr>
+                        <td><strong>베리류</strong> (Berries)</td>
+                        <td>주 2회 이상 섭취</td>
+                        <td>안토시아닌과 엘라그산 성분이 만성 염증 억제 및 시냅스 연결성 강화</td>
+                    </tr>
+                    <tr>
+                        <td><strong>통곡물</strong> (Whole Grains)</td>
+                        <td>매일 3회 이상 섭취</td>
+                        <td>섬유질 공급으로 인슐린 감수성 정상화 및 혈당 스파이크 차단</td>
+                    </tr>
+                    <tr>
+                        <td><strong>생선류</strong> (Fish, Non-fried)</td>
+                        <td>주 1회 이상 메인 요리</td>
+                        <td>오메가-3(DHA, EPA)가 신경 세포막 유동성 증강 및 신경 염증 예방</td>
+                    </tr>
+                    <tr>
+                        <td><strong>견과류 & 올리브유</strong></td>
+                        <td>견과류 주 5회, 올리브유 사용</td>
+                        <td>불포화 지방과 비타민 E가 대사 변성 예방 및 인지 예비능 자극</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section delay-3">
+        <h2>3. 야간 뇌 해독 프로토콜: 글림프 시스템 최적화</h2>
+        <p>깊은 서파 수면(N3) 단계에서는 뇌세포가 축소되고 뇌척수액(CSF)이 <span class="highlight">글림프 시스템(Glymphatic System)</span>을 통해 알츠하이머의 원인인 베타-아밀로이드와 같은 신경 독성 노폐물을 씻어냅니다. 수면 장애는 이 청소 과정을 차단합니다.</p>
+        
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>수면 결핍 구분</th>
+                        <th>생리학적 위험도 수치</th>
+                        <th>뇌 및 신체 대사 영향</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>수면 시간 5시간 이하</strong></td>
+                        <td>폐렴 감염률 70% 증가</td>
+                        <td>선천 면역 방어망 붕괴 및 호흡기계 대사 조절 능력 약화</td>
+                    </tr>
+                    <tr>
+                        <td><strong>단 하루 4시간 수면 제한</strong></td>
+                        <td>자연살해(NK) 세포 활성도 70% 감소</td>
+                        <td>암세포/병원체를 제어하는 면역 감시망 급격 무력화</td>
+                    </tr>
+                    <tr>
+                        <td><strong>수면 종결 2시간 단축</strong></td>
+                        <td>야간 REM 수면의 80% 상실</td>
+                        <td>감정 완충 작용 및 장기 기억 공고화 경로 차단</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="styled-list">
+            <li><strong>측와위(옆으로 눕기):</strong> 해부학적 저항을 줄여 뇌 독소 배출 효율을 극대화합니다.</li>
+            <li><strong>온도 및 심부 체온 제어:</strong> 취침 전 미지근한 샤워로 피부 혈관을 열어 심부 체온을 1~2도 낮추고 침실은 18~22도로 유지합니다.</li>
+            <li><strong>멜라토닌 조절 및 전자기기 차단:</strong> 야간 청색광을 차단하여 멜라토닌 생성을 보호하기 위해 취침 전 '광학적 단절 의식(Light down)'을 수행합니다.</li>
+        </ul>
+    </section>
+
+    <section class="section delay-4">
+        <h2>4. 전전두엽 피질(PFC) 배터리 보존 및 도파민 디톡스</h2>
+        <p>전전두엽 피질은 매 결정마다 에너지를 소모합니다. 또한 과도한 숏폼 미디어 시청은 뇌의 보상 감수성 기준점을 높여 <strong>'기저 불감증'</strong> 체질을 유발합니다. 일상을 자동 주행 시스템으로 돌려 에너지를 보존하고 도파민 회로를 복원해야 합니다.</p>
+
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>도파민 디톡스 단계</th>
+                        <th>핵심 설계 및 통제 변수</th>
+                        <th>뇌 신경학적 복원 효과</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1: 자극 박탈 (1~3일차)</strong></td>
+                        <td>SNS 삭제, 멀티태스킹 전면 금지</td>
+                        <td>하향 조절된 D2 도파민 수용체 상향 발현 자극</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2: 감각 재조정 (4~14일차)</strong></td>
+                        <td>독서, 산책 등 저강도 활동 강제 배치</td>
+                        <td>소소한 일상적 자극에서의 도파민 분비 기능 회복</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3: 장기 강화 (15~30일차)</strong></td>
+                        <td>환경 정비 및 마찰 공학 도입</td>
+                        <td>시냅스 전수용체 정상화를 통한 동기부여 복원</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section delay-5">
+        <h2>5. 뇌 가소성과 인지 예비능 강화 습관</h2>
+        <p>아침 미지근한 물 한 잔으로 대뇌 탈수를 해소하고, 철저한 양치/치실 사용으로 잇몸균의 뇌 침투를 막는 것이 기초입니다. 이에 더해 <span class="highlight">2+5+7 규칙</span>과 <span class="highlight">10분 복원 루틴</span>을 적용합니다.</p>
+
+        <h3>2 + 5 + 7 인지 훈련 규칙</h3>
+        <ul class="styled-list">
+            <li><strong>2:</strong> 하루 2회, 기존 방식에서 벗어나 뇌가 새로운 노력을 요하는 다차원적이고 어려운 복잡 과제에 의도적으로 도전.</li>
+            <li><strong>5:</strong> 하루 5회, 기기를 끄고 뇌에 완전한 빈 공간을 허락하는 명상/휴식으로 전두엽 충전.</li>
+            <li><strong>7:</strong> 난관에 부딪혔을 때, 7가지 이상의 다각적인 대체 해결 시나리오를 시뮬레이션하여 인지 유연성 훈련.</li>
+        </ul>
+
+        <h3>서울시 진료실 임상 가이드: 10분 복원 루틴</h3>
+        <ul class="styled-list">
+            <li><strong>움직임 10분:</strong> 가벼운 계단 오르기나 도보로 심박수를 높여 뇌 각성 획득.</li>
+            <li><strong>기억 10분:</strong> 매일 밤 핵심 인물 3명이나 낮에 읽은 기사의 핵심 2줄을 눈 감고 스스로 인출(Retrieval)해보기.</li>
+            <li><strong>호흡·주의 10분:</strong> 4초 마시고 6초 뱉는 호흡으로 교감신경을 진정시키고 폭주하는 뇌파 안정화.</li>
+            <li><strong>관계 10분:</strong> 매일 지인에게 감사 메시지 전송 및 미시 감사(Micro-gratitudes) 작성으로 정서 예비력 고양.</li>
+        </ul>
+        <p>매일의 고정 루틴 안에 평소와 다른 출퇴근 경로, 왼손 사용, 새로운 요리 도전 등 정교한 <strong>'낯선 변화(Novelty)'</strong>를 가미하면 시냅스망이 생동감 있게 연결됩니다.</p>
+    </section>
+
+    <section class="section delay-6">
+        <h2>6. 24시간 신진대사 및 인지 피크 정렬 시간표</h2>
+        <p>일주기 생체 시계와 신경 호르몬 분비 곡선을 장악하여 설계된 종합 24시간 루틴입니다.</p>
+
+        <div class="timeline">
+            <!-- 06:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">06:00 - 06:30</div>
+                <div class="timeline-title">생체 시계 정렬 및 CAR 활성화</div>
+                <div class="timeline-content">
+                    <p>미지근한 전해질 수분 섭취, 선글라스 없이 10~30분 일광 노출. 스마트폰 격리.</p>
+                    <p>→ 멜라토닌 차단, 코르티솔 각성 반응(CAR) 최대화, 야간 탈수 해소. <span class="cite">[cite: 45, 64]</span></p>
+                </div>
+            </div>
+
+            <!-- 07:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">07:00 - 07:30</div>
+                <div class="timeline-title">대사 엔진 부스팅 및 신경망 가속</div>
+                <div class="timeline-content">
+                    <p>실내 자전거 등 6분 초고강도 인터벌 운동(HIIT). 저항성 slow negative 이행.</p>
+                    <p>→ 혈중 젖산 분비로 뇌 BDNF를 4~5배 폭증시켜 인지 유연성 활성화. <span class="cite">[cite: 45, 67]</span></p>
+                </div>
+            </div>
+
+            <!-- 07:30 -->
+            <div class="timeline-item">
+                <div class="timeline-time">07:30 - 08:30</div>
+                <div class="timeline-title">내분비계 정밀 조율</div>
+                <div class="timeline-content">
+                    <p>계란, 그릭 요거트, 아보카도, 베리류의 MIND 아침 식사. 최초 카페인 섭취 지연.</p>
+                    <p>→ 인슐린 급증 방지, 카페인 지연으로 오후 피로(크래시) 완벽 예방. <span class="cite">[cite: 41, 71]</span></p>
+                </div>
+            </div>
+
+            <!-- 09:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">09:00 - 13:00</div>
+                <div class="timeline-title">전전두엽 초집중 골든 타임</div>
+                <div class="timeline-content">
+                    <p>최고난도 기획 업무 배치, 외부 디지털 연락 완전 차단. 모니터를 눈높이 위로 정렬.</p>
+                    <p>→ 배터리 전력 집중 투여, 노르에피네프린 및 도파민 주의력 최대 활용. <span class="cite">[cite: 41, 46, 74]</span></p>
+                </div>
+            </div>
+
+            <!-- 13:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">13:00 - 14:00</div>
+                <div class="timeline-title">MIND 영양 보충 및 뇌 자극 통제</div>
+                <div class="timeline-content">
+                    <p>가금류, 연어, 녹색 채소 중심 점심. 식사 중 스마트폰 시청 원천 금지.</p>
+                    <p>→ 다차원 시각 정보 수용 차단으로 뇌 피로 방지 및 심부 체온 제어. <span class="cite">[cite: 41, 47]</span></p>
+                </div>
+            </div>
+
+            <!-- 14:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">14:00 - 14:30</div>
+                <div class="timeline-title">중추 도파민 풀 급속 충전</div>
+                <div class="timeline-content">
+                    <p>소파/누운 자세에서 10~20분간 비수면 깊은 휴식(NSDR) 및 4-4-4-4 박스 호흡.</p>
+                    <p>→ 기저 도파민 65% 회복, 뇌파를 알파-세타파로 동기화하여 의지력 리셋. <span class="cite">[cite: 41, 76]</span></p>
+                </div>
+            </div>
+
+            <!-- 14:30 -->
+            <div class="timeline-item">
+                <div class="timeline-time">14:30 - 18:00</div>
+                <div class="timeline-title">단순 및 소통 세션</div>
+                <div class="timeline-content">
+                    <p>수동적 소통, 이메일, 회의, 단순 업무 배정. 스탠딩 데스크 및 NEAT 자극 공급.</p>
+                    <p>→ 전두엽 포도당 저하 시점 대처 및 골격근 수축을 통한 대사 고조. <span class="cite">[cite: 41, 74]</span></p>
+                </div>
+            </div>
+
+            <!-- 18:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">18:00 - 20:00</div>
+                <div class="timeline-title">일주기 진정 및 일몰광 포착</div>
+                <div class="timeline-content">
+                    <p>복합 탄수화물을 포함한 저녁 식사. 일몰광 야외에서 약 10~15분 포착.</p>
+                    <p>→ 세로토닌 합성으로 밤 멜라토닌 확보, 광 인지 리셋으로 청색광 방어력 구축. <span class="cite">[cite: 41, 71]</span></p>
+                </div>
+            </div>
+
+            <!-- 20:00 -->
+            <div class="timeline-item">
+                <div class="timeline-time">20:00 - 22:30</div>
+                <div class="timeline-title">생체 릴렉스 및 침실 정비</div>
+                <div class="timeline-content">
+                    <p>취침 90분 전 스마트기기 끄기, 미지근한 샤워. 조명 웜톤 전환 및 조도 낮춤.</p>
+                    <p>→ 혈관 확장으로 심부 체온 1~2도 하강 가속화, 활성 호르몬 진정. <span class="cite">[cite: 29, 41]</span></p>
+                </div>
+            </div>
+
+            <!-- 22:30 -->
+            <div class="timeline-item">
+                <div class="timeline-time">22:30 - 06:00</div>
+                <div class="timeline-title">글림프 가동 야간 대청소</div>
+                <div class="timeline-content">
+                    <p>완벽한 암전 및 서늘한 온도, 측와위(옆으로) 수면. 주말에도 기상 +/- 1시간 유지.</p>
+                    <p>→ 뇌척수액 순환을 통한 아밀로이드 독소 정화 메커니즘 가동. <span class="cite">[cite: 32, 34]</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="disclaimer">
+        본 정보는 정보 제공만을 목적으로 합니다. 의학적 조언이나 진단이 필요하신 경우 전문의와 상담하시기 바랍니다.
+    </div>
+
+</body>
+</html>

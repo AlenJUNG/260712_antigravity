@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뇌과학 기반 두뇌 발달 루틴</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --gradient-text: linear-gradient(135deg, #60a5fa, #c084fc);
+            --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(228,100%,74%,0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            word-break: keep-all;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin: 0 auto 1rem auto;
+            word-break: keep-all;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            font-size: 1.7rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            word-break: keep-all;
+        }
+        
+        .section h3 {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #a78bfa;
+        }
+        
+        .section h4 {
+            font-size: 1.1rem;
+            color: #93c5fd;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            word-break: keep-all;
+        }
+
+        .highlight {
+            color: #93c5fd;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            background: rgba(15, 23, 42, 0.5);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.9);
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--card-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.25rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 2px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        
+        .timeline-item:hover::before {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+        }
+
+        .timeline-time {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-content {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--card-border);
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateX(5px);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .timeline-content ul {
+            list-style-type: none;
+        }
+
+        .timeline-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.6rem;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .timeline-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+        
+        .cite {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        ul.styled-list {
+            list-style: none;
+        }
+        ul.styled-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+        }
+        ul.styled-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .section { padding: 1.5rem; }
+            th, td { padding: 0.75rem; font-size: 0.85rem; }
+            .header h1 { font-size: 1.8rem; }
+            .timeline::before { left: 0.5rem; }
+            .timeline-item::before { left: -1.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>뇌 가소성 극대화와 인지 예비능 구축을 위한<br>생애주기별 맞춤형 데일리 루틴</h1>
+        <p>인간의 인지 기능은 단순히 유전이나 초기 발달에 의해서만 결정되지 않으며, 매일 반복하는 행동 방식, 즉 루틴을 통해 끊임없이 재구성됩니다.</p>
+        <p>현대 뇌과학은 인간의 뇌가 평생에 걸쳐 자극과 경험에 반응하여 스스로의 물리적 구조를 변화시키는 <strong>신경 가소성(Neuroplasticity)</strong>을 지니고 있음을 명백히 밝히고 있습니다. 이 가소성을 활용하여 <strong>전전두엽(PFC)</strong>의 작업 기억 용량을 극대화하고, <strong>인지 예비능(Cognitive Reserve)</strong>을 조기에 적립하기 위해서는 개개인의 생애주기적 특성에 최적화된 행동 백서가 요구됩니다.</p>
+    </header>
+
+    <section class="section delay-1">
+        <h2>1. 청·장년기 (20~30대) 고성능 최적화 루틴</h2>
+        <p>청·장년기의 뇌는 최상의 작업 효율과 고도의 인지 복잡성을 처리할 수 있는 <span class="highlight">전전두엽 가동성의 극대화</span>를 목표로 합니다. 과도한 멀티태스킹과 디지털 과자극으로 인한 '인지적 간섭' 현상을 방어하고, 집중 효율의 극대화와 도파민 수용체 감수성 보존이 핵심 과제입니다.</p>
+
+        <h3>아침 서카디안 정렬 및 도파민 최적화 프로토콜</h3>
+        <p>기상 후 첫 2시간의 행동은 하루의 각성도와 수면 진입 효율을 결정합니다. 기상 직후 30분간 겪는 '수면 관성(Sleep Inertia)'을 극복하기 위해 구체적인 행동 신호 설정과 환경적 통제가 필요합니다.</p>
+        
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>단계</th>
+                        <th>구체적 행동 강령</th>
+                        <th>정량적 기준 수치</th>
+                        <th>신경생리학적 타겟 및 기전</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>행동 실행율 안착</strong></td>
+                        <td>물체 사진 촬영 및 수학 방정식 풀이</td>
+                        <td>사진 촬영 성공률: 94.2%<br>수학 문제 성공률: 87.5%</td>
+                        <td>수면 관성 극복 및 행동 조절 제어의 Dorsal Striatum 전환 촉진</td>
+                    </tr>
+                    <tr>
+                        <td><strong>각성 수분 보충</strong></td>
+                        <td>전해질(소량의 천연염) 혼합 미지근한 물 섭취</td>
+                        <td>16~20 oz (0.5~0.6 L)</td>
+                        <td>야간 탈수 현상 복구, 대뇌 관류압 개선 및 마이크로 독소 제거 활성화</td>
+                    </tr>
+                    <tr>
+                        <td><strong>서카디안 타임스탬프</strong></td>
+                        <td>선글라스 미착용 상태로 야외 자연광 주시</td>
+                        <td>맑은 날: 5~10분<br>흐린 날: 10~15분<br>우천 시: 20~30분</td>
+                        <td>시교차상핵(SCN) 자극을 통한 멜라토닌 하향 조절 및 화학적 각성 제어</td>
+                    </tr>
+                    <tr>
+                        <td><strong>모닝 커피/카페인 유예</strong></td>
+                        <td>기상 후 커피 및 홍차 등 카페인 음료 섭취 지연</td>
+                        <td>기상 후 90~120분 지연</td>
+                        <td>자연스러운 코르티솔 분비 지지 및 아데노신의 자발적 분해 유도</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>전전두엽 배터리 보존과 주의력 방어</h3>
+        <p>전전두엽은 매 순간 결정을 내릴 때마다 에너지가 고갈되는 아날로그 배터리와 같습니다. 의사결정 피로(Decision Fatigue)를 방어하기 위해 의도적인 루틴화가 필수적입니다.</p>
+        <ul class="styled-list">
+            <li>동일한 아침 습관을 66일 이상 유지하여 전전두엽의 제어권을 기저핵 및 등쪽 선조체로 이관하여 인지 능력을 보존합니다.</li>
+            <li>일과 중에는 <span class="highlight">90분 단위의 울트라디안 주기(Ultradian Cycle)</span> 기반의 고도 몰입 세션과 중간 휴식을 배치합니다.</li>
+            <li>매일 10~12분간의 <strong>마음챙김 명상(Mindfulness)</strong>으로 인지적 간섭(Interference)을 소거합니다.</li>
+            <li>오후 인지 저하 시점에는 누운 자세로 10~20분간 <span class="highlight">NSDR(비수면 깊은 휴식)</span>을 진행하여 선조체 도파민 수치를 최대 65% 회복시킵니다.</li>
+        </ul>
+    </section>
+
+    <section class="section delay-2">
+        <h2>2. 중·장년 및 노년기 (40~60대 이상) 예비능 강화 루틴</h2>
+        <p>나이가 들며 뇌 세포막 탄력성이 저하되고 인지 손실 속도가 빨라지지만, 현재 영위하는 <span class="highlight">'다각적 일상 활동의 결합'</span> 강도가 중년 이후 인지 예비능을 결정짓는 핵심 방어 기제로 작용합니다.</p>
+
+        <h3>초단기 고강도 운동(HIE)을 통한 BDNF 폭발 기전</h3>
+        <p>대뇌 영양 비료라 불리는 <strong>BDNF(뇌 유래 신경 영양 인자)</strong>는 중년 이후 급속히 저하되나, 극한의 물리적 강도 자극 시 폭발적으로 생성됩니다.</p>
+        <ul class="styled-list">
+            <li>단 <strong>6분간의 고강도 인터벌 실내 사이클링</strong>(1분 전력질주 후 가벼운 페달링 6회 반복)은 말초 혈중 BDNF 수치를 무려 4~5배 증가시킵니다.</li>
+            <li>이때 대뇌는 포도당 대신 대사 부산물인 <strong>젖산(Lactate)</strong>을 긴급 에너지로 수용하며, 혈소판 순환을 활성화해 뇌 신경 촉진 비료를 주입합니다.</li>
+            <li>공복 상태에서의 운동은 케톤체를 추가 생성해 알츠하이머 계열 신경 병변에 강력한 내성을 부여합니다.</li>
+        </ul>
+
+        <h3>글림프 시스템 가동 최적화를 통한 독성 정화</h3>
+        <p>수면 중에만 작동하는 <span class="highlight">글림프 시스템(Glymphatic System)</span>은 치매 원인 물질인 베타-아밀로이드를 외부로 완전 배출하는 고유의 노폐물 청정 유체 순환계입니다. 이를 최적화하기 위한 야간 해독 프로토콜입니다.</p>
+        <ul class="styled-list">
+            <li><strong>조도 감량:</strong> 취침 1시간 전 스마트폰 알람과 함께 실내 직접 조명을 차단하고 밝기를 반감시켜 멜라토닌 상승을 유도.</li>
+            <li><strong>심부 체온 하강:</strong> 취침 1시간 전 따뜻한 온수 샤워로 모세혈관을 확장시켜 체온을 신속히 떨어뜨리고 침실 온도를 18°C 내외로 유지.</li>
+            <li><strong>측와위 수면:</strong> 옆으로 누워 자는 자세는 뇌 림프 흐름 및 뇌척수액 배출 도관 저항을 최소화하여 정화 효율을 높임.</li>
+            <li><strong>20~30분 퇴거 규칙:</strong> 입면에 실패하면 즉시 침대를 벗어나 이완 후 졸릴 때 복귀해 '침실=각성' 조건화를 방지.</li>
+            <li><strong>구강 위생:</strong> 치주 박테리아의 혈액-뇌 장벽(BBB) 통과를 막기 위한 완벽한 취침 전 칫솔질 및 치실 사용.</li>
+        </ul>
+    </section>
+
+    <section class="section delay-3">
+        <h2>3. 생애 전주기 통합 전략: MIND 영양 요법 및 인지 자극</h2>
+
+        <h3>마인드(MIND) 식이 요법</h3>
+        <p>마인드 식단은 지중해식 식단과 DASH 식단을 결합한 뇌 특화 가이드라인으로, 알츠하이머 발병 위험을 최대 53%까지 낮춥니다.</p>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>핵심 식품 분류</th>
+                        <th>권장 섭취 기준</th>
+                        <th>타겟 영양학적 분자</th>
+                        <th>대뇌 생화학적 예방 기전</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>녹색 잎채소</strong> (케일, 시금치)</td>
+                        <td>주 6회 이상</td>
+                        <td>엽산, 루테인, 비타민 E</td>
+                        <td>신경 퇴행성 염증 반응 차단, 아밀로이드 플라크 침착 저해</td>
+                    </tr>
+                    <tr>
+                        <td><strong>베리류</strong> (블루베리, 딸기)</td>
+                        <td>주 2회 이상</td>
+                        <td>안토시아닌, 플라보노이드</td>
+                        <td>BBB 통과, 해마 세포 항산화 보호, 시냅스 활성</td>
+                    </tr>
+                    <tr>
+                        <td><strong>견과류</strong> (호두, 아몬드)</td>
+                        <td>주 5회 이상</td>
+                        <td>오메가-3, 폴리페놀</td>
+                        <td>미세혈관 탄력 보존, 신경 세포막 안정화 복구</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Seafood</strong> (연어 등, 튀기지 않은 것)</td>
+                        <td>주 1회 이상</td>
+                        <td>DHA/EPA 오메가-3</td>
+                        <td>신경 세포막 유동성 촉진, 신경 흥분 독성 제어</td>
+                    </tr>
+                    <tr>
+                        <td><strong>통곡물</strong> (오트밀, 통밀)</td>
+                        <td>일 3회 이상</td>
+                        <td>복합 탄수화물, 섬유질</td>
+                        <td>혈당 서지 제어, 뇌 인슐린 저항성 예방</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>다차원 인지 자극: "2 + 5 + 7" 프레임워크와 이중 과제</h3>
+        <ul class="styled-list">
+            <li><strong>2 (일 2회 혁신적 실행):</strong> 하루 두 번, 주도적 한계를 상회하는 난해하고 가치 있는 인지적 대형 과제 수행.</li>
+            <li><strong>5 (일 5회 인지 휴식):</strong> 매일 5번, 시청각 자극을 완벽히 차단한 채 3~5분간 멍하게 눈을 감아 뇌 완전 자율 방전(Stimulus free break) 부여.</li>
+            <li><strong>7 (7가지 가능성 모색):</strong> 문제 직면 시 7가지 이상의 창의적 대안 솔루션을 의도적으로 브레인스토밍.</li>
+            <li><strong>이중 과제 훈련:</strong> 걷기나 계단 오르기를 하며 단어를 거꾸로 말하거나 숫자를 역산하는 등 인지와 운동 피질 동시 활성화.</li>
+        </ul>
+    </section>
+
+    <section class="section delay-4">
+        <h2>4. 데일리 정밀 일과표 (종합 결론)</h2>
+        <p>단순한 건강 상식의 피상적 수용이 아닌 <strong>'구조화된 고순도 라이프스타일'</strong>만이 신경을 젊게 보존하는 열쇠입니다. 아래의 생애주기 통합 행동 표준 일과표를 참고하여 일상을 내재화하십시오.</p>
+
+        <div class="timeline">
+            <!-- Morning -->
+            <div class="timeline-item">
+                <div class="timeline-time">AM 06:00 ~ 08:30</div>
+                <div class="timeline-title">서카디안 리듬 정렬 및 대사 깨우기</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>눈뜨자마자 침대에서 떨어진 사물 사진 촬영으로 수면 관성 타파</li>
+                        <li>천연 정제염을 가미한 물 20 oz 섭취로 대뇌 탈수 해결</li>
+                        <li>30분 이내 야외로 나가 선글라스를 벗고 실외 자연광 수용 (5~30분)</li>
+                        <li>15분간 가벼운 보행으로 코르티솔 정점 유도</li>
+                        <li>기상 후 90~120분 동안 카페인 일체 섭취 유예 <span class="cite">[cite: 12, 16, 19]</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deep Work -->
+            <div class="timeline-item">
+                <div class="timeline-time">AM 08:30 ~ PM 12:00</div>
+                <div class="timeline-title">전전두엽 최고 가동 및 딥 워크 실행</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>전전두엽이 완충된 시간대, 가장 복잡하고 창의적인 과업 집중 <span class="cite">[cite: 18, 23]</span></li>
+                        <li>90분 집중 후 10분 휴식의 울트라디안 주기 프레임워크 고수 <span class="cite">[cite: 24]</span></li>
+                        <li>인지적 간섭 차단을 위한 일절의 스마트폰 알림 비활성화</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Afternoon Reset -->
+            <div class="timeline-item">
+                <div class="timeline-time">PM 12:00 ~ PM 03:00</div>
+                <div class="timeline-title">대사 연료 보완 및 도파민 수용체 리셋</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>MIND 기반 고단백/식이섬유 식단 섭취 (단순당 배제) <span class="cite">[cite: 25, 55]</span></li>
+                        <li>식후 무력감 시점에 조용한 환경에서 15분간 NSDR(비수면 깊은 휴식) 수행</li>
+                        <li>기저핵 도파민 기초 강도 최대 65% 충전하여 오후 인지 재부팅 <span class="cite">[cite: 26, 27, 30]</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Afternoon Task -->
+            <div class="timeline-item">
+                <div class="timeline-time">PM 03:00 ~ PM 07:00</div>
+                <div class="timeline-title">단순 행정 처리 및 신경 가소성 자극</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>고도의 주의력이 불필요한 일상 서류, 회의, 이메일 처리 <span class="cite">[cite: 23, 60]</span></li>
+                        <li>정서 예비력 고양을 위한 15분간 가족/친구 밀접 소통 <span class="cite">[cite: 15, 50]</span></li>
+                        <li>보행 시 100-7-7 역산 등 이중 과제 훈련 10분 수행</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Evening -->
+            <div class="timeline-item">
+                <div class="timeline-time">PM 07:00 ~ PM 10:00</div>
+                <div class="timeline-title">영양 보호 투하 및 BDNF 최대 자극</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>녹색 잎채소와 블루베리 기반 항산화 저녁 식사 <span class="cite">[cite: 52, 56]</span></li>
+                        <li>식사 전후 공복 시 단 6분간 실내 고강도 인터벌 운동(HIE) 감행</li>
+                        <li>젖산 스위칭 기전 트리거로 혈중 BDNF 농도를 4~5배 폭발시킴</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Night -->
+            <div class="timeline-item">
+                <div class="timeline-time">PM 10:00 ~ PM 11:30</div>
+                <div class="timeline-title">야간 글림프 뇌 대청소 정화</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>취침 1시간 전 간접 조명 전환 및 전자기기 차단 <span class="cite">[cite: 39, 44, 48]</span></li>
+                        <li>미지근한 샤워로 말초 모세혈관 열어 심부 온도 하강 촉진 <span class="cite">[cite: 39, 44]</span></li>
+                        <li>완벽한 치실/양치질로 잇몸 구강균 뇌 침투 봉쇄</li>
+                        <li>측와위(옆으로 눕기) 자세로 완만히 입면 진입 <span class="cite">[cite: 43, 44, 49]</span></li>
+                        <li>20~30분 내 입면 실패 시 침대 탈출, 이완 후 졸릴 때 복귀 원칙</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="disclaimer">
+        본 내용은 정보 제공만을 목적으로 합니다. 의학적 소견이나 진단은 전문 의료인과 상의하십시오.
+    </div>
+
+</body>
+</html>
