@@ -5,3 +5,20 @@ __pycache__/
 *.pyo
 *.pyd
 .DS_Store
+
+# 260721_foresttrip ignores
+260721_foresttrip/artifacts/
+260721_foresttrip/node_modules/
+260721_foresttrip/.env
+260721_foresttrip/auth.json
+260721_foresttrip/*.log
+260721_foresttrip/*.db
+
+# 02_구현 ignores
+260721_foresttrip/02_구현/node_modules/
+260721_foresttrip/02_구현/artifacts/
+260721_foresttrip/02_구현/.env
+260721_foresttrip/02_구현/auth.json
+260721_foresttrip/02_구현/*.log
+260721_foresttrip/02_구현/*.db
+260721_foresttrip/02_구현/data/*.db
