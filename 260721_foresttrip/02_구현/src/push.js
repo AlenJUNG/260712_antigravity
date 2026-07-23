@@ -32,12 +32,16 @@ export function isMuted(device, urgent, at = new Date()) {
  * @param {{title:string, body:string, payload?:object, urgent?:boolean}} msg
  */
 export async function sendPush(device, { title, body, payload = {}, urgent = false }) {
+  const enrichedPayload = {
+    landingUrl: "https://www.foresttrip.go.kr/rep/or/fcfsRsrvtMain.do?hmpgId=FRIP&menuId=001001",
+    ...payload,
+  };
   const line = JSON.stringify({
     at: nowIso(),
     deviceId: device?.device_id ?? null,
     fcmToken: device?.fcm_token ? "(설정됨)" : null,   // 토큰 원문은 로그에 남기지 않는다
     channel: urgent ? "urgent" : "normal",
-    title, body, payload,
+    title, body, payload: enrichedPayload,
   });
   try {
     mkdirSync("data", { recursive: true });

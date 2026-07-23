@@ -13,7 +13,24 @@ import {
 } from "./scheduler.js";
 import { ingestScan } from "./transitions.js";
 import { tryConsume, GOODS_POLL_COST, settle } from "./rateBudget.js";
-import { todayYmd, addDays, isYmd, nowIso } from "./dates.js";
+import { todayYmd, addDays, isYmd, nowIso, daysUntil } from "./dates.js";
+
+const OFFICIAL_LANDING_URL = "https://www.foresttrip.go.kr/rep/or/fcfsRsrvtMain.do?hmpgId=FRIP&menuId=001001";
+
+function buildHandoff({ forestName, roomDetail, date, nights, nofpr, waitDeadline }) {
+  const parts = ["[숲나들e 검색 가이드]"];
+  if (forestName) parts.push(`휴양림: ${forestName}`);
+  if (roomDetail) parts.push(`객실: ${roomDetail}`);
+  if (date) parts.push(`날짜: ${date}${nights ? ` (${nights}박)` : ""}`);
+  if (nofpr) parts.push(`인원: ${nofpr}인`);
+
+  return {
+    landingUrl: OFFICIAL_LANDING_URL,
+    copyGuideText: parts.join("\n"),
+    waitDeadlineRemainingDays: waitDeadline ? daysUntil(waitDeadline) : null,
+  };
+}
+
 
 const PORT = Number(process.env.PORT || 3000);
 
@@ -394,6 +411,7 @@ function handleSearch(url, res) {
     const dayKind = calStmt.get(f.instt_id, date)?.kind || "선착순";
     kindCount.set(dayKind, (kindCount.get(dayKind) || 0) + 1);
 
+    const waitDeadline = addDays(date, -2);
     return {
       insttId: f.instt_id,
       name: f.name,
@@ -409,6 +427,7 @@ function handleSearch(url, res) {
       waitCovered: covered,
       waitSnapshotAt: lastScan ? lastScan.scanned_at : null,
       availSnapshotAt: avail ? avail.scanned_at : null,
+      handoff: buildHandoff({ forestName: f.name, date, nights, nofpr, waitDeadline }),
     };
   });
 
@@ -468,6 +487,7 @@ async function handleRooms(insttId, url, res) {
     });
     const scannedAt = db.prepare(`SELECT scanned_at FROM scan WHERE id = ?`).get(scanId).scanned_at;
 
+    const waitDeadline = addDays(date, -2);
     return json(res, 200, {
       insttId, date, nights, nofpr,
       fetchedAt: scannedAt,
@@ -478,6 +498,11 @@ async function handleRooms(insttId, url, res) {
         capacity: r.capacity, price: r.price,
         status: r.status, reservable: !!r.available, waitable: !!r.waitable,
         waitRank: r.waitRank ?? null,
+        handoff: buildHandoff({
+          forestName: forest.name,
+          roomDetail: r.detail || r.facility,
+          date, nights, nofpr, waitDeadline,
+        }),
       })),
     });
   } catch (err) {
@@ -561,12 +586,24 @@ function serializeWatch(w, { includeEvents = false } = {}) {
   const overdueMs = target ? Date.now() - new Date(target.next_due_at).getTime() : 0;
   const pollingDelayed = !!target && target.active === 1 && overdueMs > target.interval_sec * 1000;
 
+  const forestRow = db.prepare(`SELECT name FROM forest WHERE instt_id = ?`).get(w.instt_id);
+  const forestName = forestRow?.name || w.instt_id;
+  const handoff = buildHandoff({
+    forestName,
+    roomDetail: w.room_label,
+    date: w.date,
+    nights: w.nights,
+    nofpr: w.nofpr,
+    waitDeadline: w.wait_deadline,
+  });
+
   const out = {
     id: w.id, deviceId: w.device_id, type: w.type,
     insttId: w.instt_id, goodsId: w.goods_id, roomLabel: w.room_label,
     date: w.date, rangeStart: w.range_start, rangeEnd: w.range_end,
     nights: w.nights, nofpr: w.nofpr,
     weekdayFilter: w.weekday_filter, priority: w.priority,
+    isUrgent: w.priority === "urgent",
     notifyGrades: grades, waitDeadline: w.wait_deadline,
     active: !!w.active, paused: !!w.paused,
     currentStatus: w.last_status ?? null,
@@ -576,6 +613,7 @@ function serializeWatch(w, { includeEvents = false } = {}) {
     lastNotifiedAt: w.last_notified_at ?? null,
     pollingDelayed,
     lastPolledAt: target?.last_polled_at ?? null,
+    handoff,
   };
   if (includeEvents) out.recentEvents = watchEvents(w, 20);
   return out;
