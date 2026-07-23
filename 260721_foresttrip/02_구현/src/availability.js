@@ -8,6 +8,29 @@ import { BASE, ENDPOINTS, UA } from "./constants.js";
 import { getBrowser } from "./browser.js";
 import { withOpenYear } from "./openYear.js";
 
+// 결과 목록 DOM에서 휴양림 목록을 추출한다. (page.evaluate 로 브라우저 컨텍스트에서 실행)
+//   각 .rc_item = 휴양림 하나
+//     .rc_ti i   → "[예약가능]/[예약불가]" 등 상태
+//     .rc_ti b   → "[공립](홍천군)가리산자연휴양림"
+//     .stay_info → "[객실] N개"
+// ※ goods.extractRooms() 와 같은 패턴의 "순수 파서"다 — 셀렉터가 여기 한 곳에 격리되어야
+//   사이트 개편 시 파서 회귀 테스트(test/parser.test.mjs)가 정확히 이 함수를 짚어준다.
+export function extractForests() {
+  const parseType = (s) => (s.match(/^\[(국립|공립|사립)\]/) || [])[1] ?? null;
+  return [...document.querySelectorAll(".rc_item")].map((item) => {
+    const status = item.querySelector(".rc_ti i")?.textContent?.replace(/[\[\]]/g, "").trim() ?? null;
+    const rawName = item.querySelector(".rc_ti b")?.textContent?.trim() ?? "";
+    const rooms = item.querySelector(".stay_info")?.textContent?.match(/\[객실\]\s*(\d+)개/)?.[1] ?? null;
+    return {
+      name: rawName.replace(/^\[(국립|공립|사립)\]/, ""),
+      type: parseType(rawName),
+      status,
+      available: status === "예약가능",
+      rooms: rooms ? Number(rooms) : null,
+    };
+  });
+}
+
 /**
  * 지역(시/도) + 날짜로 예약가능 휴양림 목록을 조회한다.
  * @param {object} opts
@@ -69,24 +92,8 @@ export async function searchRegionAvailability(opts) {
       await page.screenshot({ path: "artifacts/result.png", fullPage: true });
     }
 
-    // 결과 항목 파싱: 각 .rc_item = 휴양림 하나 + 예약가능 배지
-    //   .rc_ti i  → "[예약가능]/[예약불가]" 등 상태
-    //   .rc_ti b  → "[공립](홍천군)가리산자연휴양림"
-    const forests = await page.evaluate(() => {
-      const parseType = (s) => s.match(/^\[(국립|공립|사립)\]/)?.[1] ?? null;
-      return [...document.querySelectorAll(".rc_item")].map((item) => {
-        const status = item.querySelector(".rc_ti i")?.textContent?.replace(/[\[\]]/g, "").trim() ?? null;
-        const rawName = item.querySelector(".rc_ti b")?.textContent?.trim() ?? "";
-        const rooms = item.querySelector(".stay_info")?.textContent?.match(/\[객실\]\s*(\d+)개/)?.[1] ?? null;
-        return {
-          name: rawName.replace(/^\[(국립|공립|사립)\]/, ""),
-          type: parseType(rawName),
-          status,
-          available: status === "예약가능",
-          rooms: rooms ? Number(rooms) : null,
-        };
-      });
-    });
+    // 결과 항목 파싱(순수 파서는 위 extractForests 로 분리 — 회귀 테스트 대상)
+    const forests = await page.evaluate(extractForests);
 
     // 국립 휴양림에 한해 개장연도(openYear)/신축여부(isNew) 부착
     const enriched = forests.map(withOpenYear);

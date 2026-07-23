@@ -11,7 +11,10 @@
     "serve": "node src/server.js",
     "collect": "node src/collectNationalYears.js",
     "catalog": "node src/poc.js catalog",
-    "search": "node src/poc.js search"
+    "search": "node src/poc.js search",
+    "test": "node --test test/parser.test.mjs",
+    "test:live": "node test/live-selectors.mjs",
+    "test:fixtures": "node test/make-fixtures.mjs"
   },
   "dependencies": {
     "playwright": "^1.48.0"

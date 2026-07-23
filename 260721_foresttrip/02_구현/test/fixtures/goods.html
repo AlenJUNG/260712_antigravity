@@ -1,0 +1,549 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>fixture: goods rooms</title></head><body>
+<div class="goods_list_area">
+                        
+                        
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+        if($('#chk_wtng_yn').is(":checked")) {
+            $("[class='txtRsrvt']").css('display', 'none');
+            $("[class='txtWtng']").css('display', 'block');
+        } else {
+            $("[class='txtRsrvt']").css('display', 'block');
+            $("[class='txtWtng']").css('display', 'none');
+        }
+});
+
+function click_go_mobileRsrvt(goodsId) {
+    fn_goDtlGoodsInfo(goodsId);
+
+    var sclTarget = $('.stay_right');
+    var fsSearch = $('#flowting_search .fs_wrap');
+
+    $('html, body').stop(1, 1).animate({ scrollTop: sclTarget.offset().top-fsSearch.outerHeight()-20 }, 500, 'easeOutCubic');
+}
+</script>
+
+<div class="regend_icGroup">
+    <span class="ti"><b>범례(예시) : </b></span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_2.png" alt=""> 에어컨</span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_3.png" alt=""> 반려견</span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt=""> 전기</span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt=""> 온수</span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_6.png" alt=""> 장애인시설</span>
+    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_7.png" alt=""> 바우처 </span>
+</div>
+<div>
+    <b class="l">※전기, 온수는 <span style="color: red;">야영시설에만</span> 해당됩니다. 반려견 표시가 없는 시설은 반려견 동반 입실이 불가능합니다.</b><br>
+    <b class="l">※반려견 표시가 된 시설에만 반려견 동반입실이 가능합니다.</b>
+</div>
+<div class="goods_list_area">
+    <div class="communication_list ">
+        
+            
+                <div class="list_box type02 choice">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300139', true);" data-value="G01110200200300139">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(101)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300139');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300139', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300140', true);" data-value="G01110200200300140">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(102)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">3순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300140');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300140', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300141', true);" data-value="G01110200200300141">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(103)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300141');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300141', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300142', true);" data-value="G01110200200300142">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(104)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300142');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300142', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300143', true);" data-value="G01110200200300143">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(105)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300143');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300143', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300144', true);" data-value="G01110200200300144">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(106)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300144');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300144', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300149', true);" data-value="G01110200200300149">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(107)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">3순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300149');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300149', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300150', true);" data-value="G01110200200300150">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(108)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300150');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300150', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300151', true);" data-value="G01110200200300151">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(109)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300151');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300151', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+                <div class="list_box type02">
+                    <a class="item" href="#bb" onclick="fn_goDtlGoodsInfo('G01110200200300152', true);" data-value="G01110200200300152">
+                        <div class="opt_group">
+                            <div class="opt1">
+    		                    <span class="icon_group">
+    		                        <span class="hide">사용가능 시설</span>
+                                        
+                                        
+                                        
+                                        
+                                            
+                                                <img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt="전기">
+                                            
+                                        
+                                        
+                                            <img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt="온수">
+                                        
+                                        
+                                        
+    		                    </span>
+                                [야영데크]야영데크(110)
+                            </div>
+                            <div class="opt2">
+                                
+                                
+                                6/6인실(13㎡)
+                                
+                            </div>
+                            <div class="opt3">
+                                
+                                
+                                    1박(주말)16,500원
+                                
+                            </div>
+                            
+                            <div class="opt4">2순위</div>
+                            
+                        </div>
+                    </a>
+                    <div class="btn_group">
+                        <a href="javascript:;" class="defBtn board" onclick="click_go_mobileRsrvt('G01110200200300152');"><span class="txtRsrvt" style="display: none;">예약하기</span><span class="txtWtng" style="display: block;">대기신청</span></a>
+                        <a href="#cc" class="more" onclick="return runParse('/pot/rm/fa/selectFcltsArmpDtlView.do?insttId=0111&amp;goodsId=G01110200200300152', '.layer_wrap', [openLayer, activePgSlideShow, photoWrapSlide], this, true);"><img src="/portal/images/common/icon_idSch.png" alt="상세보기"></a>
+                    </div>
+                </div>
+            
+        
+    </div>
+</div>
+
+<div class="page_list">
+    
+
+    
+
+    
+
+    
+        
+            <strong class="ds_number">1</strong>
+        
+        
+    
+        
+        
+            <a class="ds_number" href="#goPage" onclick="fn_goPage('2'); return false;">2</a>
+        
+    
+        
+        
+            <a class="ds_number" href="#goPage" onclick="fn_goPage('3'); return false;">3</a>
+        
+    
+
+    <span class="paging_count">(1/3)
+    </span>
+
+    
+	    <span class="mo_p_next">
+	        <a href="#goNextPage" onclick="fn_goPageMob(1, 'N'); return false;">
+	          <img src="/images/board/btn_next_bg.gif" alt="다음으로">
+	        </a>
+	    </span>
+    
+
+    
+
+    
+        <span class="p_end">
+            <a href="#goPageLast" onclick="fn_goPage('3'); return false;"><img src="https://image.foresttrip.go.kr/images/board/btn_end_bg.gif" alt="제일마지막으로"></a>
+        </span>
+    
+</div>
+                    </div>
+</body></html>
