@@ -158,7 +158,16 @@
       **정확히 40개 = 실제 nofpr=6 결과와 집합 완전 일치**(누락 0, 초과 0). ADR-0006 실측 §.
 
 ### 라이브 검증 필요 (미완 — 릴리스 차단 항목)
-- [ ] `[B]` 파서 회귀 테스트: `availability`/`goods` 셀렉터가 라이브에서 정상(사이트 개편 감지).
+- [x] `[B]` **파서 회귀 테스트** — 2계층 구성:
+      - **오프라인**(`npm test`, `test/parser.test.mjs`): `test/fixtures/`의 저장 DOM에 실제
+        파서(`extractForests`/`extractRooms`)를 돌려 스냅샷+구조 불변식 검증. 무네트워크·결정적.
+        셀렉터가 깨지면 카운트 0으로 떨어져 즉시 실패. availability 파서를 `extractForests`로
+        분리(goods 패턴과 통일)해 셀렉터를 한 곳에 격리.
+      - **라이브**(`npm run test:live`, `test/live-selectors.mjs`): 실제 사이트에서 카탈로그
+        엔드포인트·`.rc_item`·`.goods_list_area` 셀렉터 개별 점검(사이트 개편 감지). 세션 만료·
+        재고 없음은 SKIP(개편 아님), 실제 셀렉터 깨짐만 FAIL·exit 1. **2026-07-24 실행: 카탈로그
+        4종 + 가용성 PASS, goods는 세션 만료로 SKIP**(auth.json 갱신 후 재확인).
+      - fixture 재생성: `npm run test:fixtures`(`artifacts/` 저장 DOM → PII 제거 fragment 추출).
 - [ ] `[B]` 레이트버짓 하에서 지속 폴링 24h — 세션에러/계정잠금 0 확인(보수적 주기부터).
       **이 통과 전에는 `RATE_LIMIT_PER_MIN`을 올리지 않는다.**
 - [ ] `[B→A]` 실제 취소표 1건에 대해 감지→푸시→핸드오프 **엔드투엔드** 성공.

@@ -18,7 +18,10 @@ npx playwright install chromium        # Playwright는 최초 1회 브라우저 
 
 - **Node 20.6+ 필수** — `process.loadEnvFile()`로 루트 `.env`를 로드한다(`type: module` ESM).
 - 자격증명: 루트 `.env`에 `ID` / `PW`(또는 `FOREST_ID`/`FOREST_PW`). `.gitignore`로 커밋 제외.
-- **자동화 테스트 없음.** 파서 검증은 라이브 실행 후 `artifacts/`의 저장 DOM/스크린샷으로 눈확인한다.
+- **파서 회귀 테스트 있음**(`02_구현/`): `npm test`(오프라인, `test/fixtures/` 저장 DOM에 실제
+  파서를 돌려 스냅샷·구조 검증, 무네트워크·결정적) / `npm run test:live`(라이브 셀렉터 헬스체크,
+  사이트 개편 감지 — 세션만료·재고없음은 SKIP, 실제 셀렉터 깨짐만 FAIL) / `npm run test:fixtures`
+  (`artifacts/` 저장 DOM → PII 제거 fragment 로 fixture 재생성). 백엔드 서비스 로직 검증은 별도.
 
 ### 명령 (CLI: `node src/poc.js <cmd>`)
 
