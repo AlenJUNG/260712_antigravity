@@ -1,16 +1,30 @@
+import "./env.js";   // 반드시 첫 임포트 — ENCRYPTION_KEY 를 모듈 스코프에서 읽는다
 import { DatabaseSync } from "node:sqlite";
 import { mkdirSync, existsSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import crypto from "node:crypto";
 
-// Ensure data folder exists
-const dbPath = "data/forest.db";
+// DB 경로는 프로젝트 루트 기준으로 고정한다. 상대경로("data/forest.db")로 두면
+// 실행 디렉터리에 따라 빈 DB가 새로 생겨 감시가 통째로 사라진다.
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const dbPath = process.env.DB_PATH || join(ROOT, "data", "forest.db");
 const dir = dirname(dbPath);
 if (!existsSync(dir)) {
   mkdirSync(dir, { recursive: true });
 }
 
 export const db = new DatabaseSync(dbPath);
+db.exec("PRAGMA journal_mode = WAL;");
+db.exec("PRAGMA busy_timeout = 5000;");
+db.exec("PRAGMA foreign_keys = ON;");
+
+/** 기존 DB에 없는 컬럼만 추가한다(마이그레이션 최소 대체). */
+function addColumnIfMissing(table, column, decl) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all();
+  if (cols.some((c) => c.name === column)) return;
+  db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${decl}`);
+}
 
 // Initialize DB schema
 export function initDb() {
@@ -29,6 +43,10 @@ export function initDb() {
       updated_at   TEXT NOT NULL
     );
   `);
+  // 달력 메타(휴양림별 최대 숙박일수/예약주기). DB스키마.md 초안 이후 추가된 컬럼이라
+  // 기존 DB에도 적용되도록 ALTER 로 보강한다. (하드코딩 maxNights=3 제거용)
+  addColumnIfMissing("forest", "max_nights", "INTEGER");
+  addColumnIfMissing("forest", "cycle_type", "TEXT");
 
   // 2. forest_calendar table
   db.exec(`
@@ -213,17 +231,33 @@ export function initDb() {
   `);
 }
 
-// Cryptography Helpers for password encryption
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "森林trip_secure_enc_key_2026_default";
-const KEY = crypto.scryptSync(ENCRYPTION_KEY, 'salt-salt-salt', 32);
+// ── 자격증명 암호화 (ADR-0002 / DB스키마 §2) ────────────────────────────────
+//
+// 키를 소스에 기본값으로 박아두면 리포지토리 + forest.db 만으로 누구나 복호화할 수
+// 있어 암호화가 장식이 된다. 키가 없으면 **기동을 거부**한다.
+// 운영 권장: Windows DPAPI(사용자 계정 바인딩)로 보호한 값을 프로세스 환경으로 주입.
+// 같은 PC에 평문 키 파일을 두지 말 것.
+
+const RAW_KEY = process.env.ENCRYPTION_KEY;
+if (!RAW_KEY || RAW_KEY.length < 16) {
+  throw new Error(
+    "ENCRYPTION_KEY 환경변수가 없거나 너무 짧습니다(16자 이상 필요).\n" +
+    "  숲나들e 비밀번호를 암호화해 저장하는 키입니다. 기본값은 제공하지 않습니다.\n" +
+    "  생성 예: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"\n" +
+    "  키를 분실하면 저장된 자격증명은 복호화 불가 → /v1/auth/forest-login 으로 재등록하세요."
+  );
+}
+// salt 도 키에서 파생시켜 배포마다 달라지게 한다(고정 salt 'salt-salt-salt' 제거).
+const SALT = crypto.createHash("sha256").update(`foresttrip:kdf:${RAW_KEY}`).digest();
+const KEY = crypto.scryptSync(RAW_KEY, SALT, 32);
 
 export function encryptPassword(password) {
-  const iv = crypto.randomBytes(16);
+  const iv = crypto.randomBytes(12); // GCM 표준 nonce 길이
   const cipher = crypto.createCipheriv('aes-256-gcm', KEY, iv);
   let encrypted = cipher.update(password, 'utf8', 'hex');
   encrypted += cipher.final('hex');
   const authTag = cipher.getAuthTag().toString('hex');
-  return JSON.stringify({ iv: iv.toString('hex'), encrypted, authTag });
+  return JSON.stringify({ v: 2, iv: iv.toString('hex'), encrypted, authTag });
 }
 
 export function decryptPassword(encText) {
@@ -234,7 +268,7 @@ export function decryptPassword(encText) {
     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
-  } catch (e) {
-    return null;
+  } catch {
+    return null; // 키 교체·손상 시 null → 호출부가 재로그인 유도
   }
 }

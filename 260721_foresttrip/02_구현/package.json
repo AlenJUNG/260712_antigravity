@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "숲나들e(foresttrip.go.kr) 전국 자연휴양림 날짜·시도별 예약가능 조회 PoC",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "serve": "node src/server.js",
     "collect": "node src/collectNationalYears.js",
