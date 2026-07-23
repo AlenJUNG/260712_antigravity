@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DB 쿼리 5일 완성 (Day 1~5)</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f0f2f5;
+    --ink:#1a1d24; --ink-soft:#454c59; --muted:#6b7280; --border:#e2e6ec;
+    --accent:#0e7c86; --accent-ink:#0a5d64; --accent-tint:#e2f1f2;
+    --beginner:#2e7d54; --beginner-tint:#e6f4ec;
+    --intermediate:#b0741a; --intermediate-tint:#f9efdd;
+    --advanced:#c0435b; --advanced-tint:#fbe7ec;
+    --code-bg:#182230; --code-ink:#dfe7f0; --code-comment:#7f93a8; --code-kw:#7fd1c4;
+    --warn:#c0435b;
+    --shadow:0 1px 2px rgba(20,25,35,.05), 0 8px 24px rgba(20,25,35,.06);
+    --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",Roboto,sans-serif;
+    --font-mono:ui-monospace,"Cascadia Code","D2Coding",Consolas,"Courier New",monospace;
+    --maxw:820px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12151b; --surface:#1b1f27; --surface-2:#232833;
+      --ink:#e9ebef; --ink-soft:#b6bdc9; --muted:#8b93a1; --border:#2c323d;
+      --accent:#3bb6ae; --accent-ink:#5ecfc6; --accent-tint:#16302f;
+      --beginner:#5cc186; --beginner-tint:#173026;
+      --intermediate:#e0a94a; --intermediate-tint:#332813;
+      --advanced:#e77088; --advanced-tint:#331a20;
+      --code-bg:#0d141d; --code-ink:#d7e0ec; --code-comment:#6d8199; --code-kw:#79d3c6;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f0f2f5;
+    --ink:#1a1d24; --ink-soft:#454c59; --muted:#6b7280; --border:#e2e6ec;
+    --accent:#0e7c86; --accent-ink:#0a5d64; --accent-tint:#e2f1f2;
+    --beginner:#2e7d54; --beginner-tint:#e6f4ec;
+    --intermediate:#b0741a; --intermediate-tint:#f9efdd;
+    --advanced:#c0435b; --advanced-tint:#fbe7ec;
+    --code-bg:#182230; --code-ink:#dfe7f0; --code-comment:#7f93a8; --code-kw:#7fd1c4;
+    --shadow:0 1px 2px rgba(20,25,35,.05), 0 8px 24px rgba(20,25,35,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151b; --surface:#1b1f27; --surface-2:#232833;
+    --ink:#e9ebef; --ink-soft:#b6bdc9; --muted:#8b93a1; --border:#2c323d;
+    --accent:#3bb6ae; --accent-ink:#5ecfc6; --accent-tint:#16302f;
+    --beginner:#5cc186; --beginner-tint:#173026;
+    --intermediate:#e0a94a; --intermediate-tint:#332813;
+    --advanced:#e77088; --advanced-tint:#331a20;
+    --code-bg:#0d141d; --code-ink:#d7e0ec; --code-comment:#6d8199; --code-kw:#79d3c6;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-sans); line-height:1.72; font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- top nav ---------- */
+  header.topnav{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter:saturate(1.4) blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .topnav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:10px 20px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand{font-weight:750; letter-spacing:-.01em; font-size:15px; color:var(--ink); white-space:nowrap;}
+  .brand .dot{color:var(--accent);}
+  .navlinks{display:flex; gap:4px; margin-left:auto; flex-wrap:wrap;}
+  .navlinks a{
+    text-decoration:none; color:var(--ink-soft); font-size:13px; font-weight:600;
+    padding:4px 10px; border-radius:999px; border:1px solid transparent;
+  }
+  .navlinks a:hover{background:var(--surface-2); color:var(--accent-ink); border-color:var(--border);}
+  .navlinks a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  /* ---------- layout ---------- */
+  main{max-width:var(--maxw); margin:0 auto; padding:0 20px 100px;}
+  .hero{padding:52px 0 28px; border-bottom:1px solid var(--border); margin-bottom:8px;}
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:.14em; font-size:12px; font-weight:700;
+    color:var(--accent); margin:0 0 12px;
+  }
+  h1{
+    font-size:clamp(30px,5.5vw,44px); line-height:1.12; margin:0 0 14px;
+    letter-spacing:-.02em; text-wrap:balance; font-weight:800;
+  }
+  .lede{font-size:18px; color:var(--ink-soft); margin:0; max-width:60ch;}
+  .meta-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:22px;}
+  .tag{
+    font-size:12.5px; font-weight:600; color:var(--ink-soft);
+    background:var(--surface); border:1px solid var(--border);
+    padding:4px 11px; border-radius:999px;
+  }
+
+  section{padding-top:14px;}
+  h2.day{
+    font-size:26px; letter-spacing:-.02em; margin:56px 0 6px; scroll-margin-top:70px;
+    display:flex; align-items:baseline; gap:12px; font-weight:800; text-wrap:balance;
+  }
+  h2.day .dnum{
+    font-size:13px; font-weight:800; color:#fff; background:var(--accent);
+    padding:3px 10px; border-radius:8px; letter-spacing:.02em; transform:translateY(-3px);
+  }
+  h2.plain{font-size:24px; margin:52px 0 10px; letter-spacing:-.02em; font-weight:800; scroll-margin-top:70px;}
+  .day-sub{color:var(--muted); margin:.1em 0 0; font-size:15px;}
+  h3{font-size:19px; margin:34px 0 8px; letter-spacing:-.01em; font-weight:750; text-wrap:balance;}
+  h4{font-size:15.5px; margin:22px 0 6px; font-weight:700; color:var(--ink-soft);}
+  p{margin:.55em 0;}
+  a{color:var(--accent-ink);}
+  hr{border:none; border-top:1px solid var(--border); margin:38px 0;}
+
+  /* ---------- difficulty chip + card ---------- */
+  .level{margin:26px 0; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:var(--shadow); overflow:hidden;}
+  .level-head{display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--border);}
+  .chip{font-size:12.5px; font-weight:800; padding:4px 11px; border-radius:999px; letter-spacing:.02em; white-space:nowrap;}
+  .chip.beg{color:var(--beginner); background:var(--beginner-tint);}
+  .chip.mid{color:var(--intermediate); background:var(--intermediate-tint);}
+  .chip.adv{color:var(--advanced); background:var(--advanced-tint);}
+  .level-head .lv-title{font-weight:700; font-size:15.5px;}
+  .level-body{padding:6px 18px 18px;}
+  .level.beg{border-top:3px solid var(--beginner);}
+  .level.mid{border-top:3px solid var(--intermediate);}
+  .level.adv{border-top:3px solid var(--advanced);}
+
+  /* ---------- code ---------- */
+  pre{
+    background:var(--code-bg); color:var(--code-ink); border-radius:10px;
+    padding:15px 16px; overflow-x:auto; font-family:var(--font-mono);
+    font-size:13.5px; line-height:1.62; margin:12px 0; border:1px solid rgba(255,255,255,.06);
+    -webkit-font-smoothing:auto; tab-size:2;
+  }
+  pre .c{color:var(--code-comment); font-style:italic;}
+  pre .k{color:var(--code-kw); font-weight:600;}
+  code.inl{
+    font-family:var(--font-mono); font-size:.88em; background:var(--surface-2);
+    border:1px solid var(--border); padding:1px 6px; border-radius:6px; color:var(--accent-ink);
+    word-break:break-word;
+  }
+
+  /* ---------- callouts ---------- */
+  .note{border-left:3px solid var(--accent); background:var(--accent-tint); color:var(--ink);
+    padding:11px 15px; border-radius:0 8px 8px 0; margin:14px 0; font-size:14.5px;}
+  .warn{border-left:3px solid var(--warn); background:var(--advanced-tint); color:var(--ink);
+    padding:11px 15px; border-radius:0 8px 8px 0; margin:14px 0; font-size:14.5px;}
+  .note strong,.warn strong{color:var(--ink);}
+
+  /* ---------- tables ---------- */
+  .tablewrap{overflow-x:auto; margin:14px 0;}
+  table{border-collapse:collapse; width:100%; font-size:14px; min-width:420px;}
+  th,td{border:1px solid var(--border); padding:8px 11px; text-align:left; vertical-align:top;}
+  thead th{background:var(--surface-2); font-weight:700; color:var(--ink); white-space:nowrap;}
+  tbody tr:nth-child(even){background:color-mix(in srgb, var(--surface-2) 55%, transparent);}
+  td.num{font-variant-numeric:tabular-nums; text-align:right;}
+
+  /* ---------- exercises ---------- */
+  details.ex{border:1px dashed var(--border); border-radius:10px; padding:4px 14px; margin:14px 0; background:var(--surface-2);}
+  details.ex summary{cursor:pointer; font-weight:700; font-size:14px; color:var(--accent-ink); padding:8px 0; list-style:none;}
+  details.ex summary::-webkit-details-marker{display:none;}
+  details.ex summary::before{content:"▸ "; color:var(--accent);}
+  details.ex[open] summary::before{content:"▾ ";}
+  .qlist{margin:6px 0 12px; padding-left:22px;}
+  .qlist li{margin:4px 0;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{margin:20px 0; padding:18px; background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; box-shadow:var(--shadow); overflow-x:auto;}
+  figure.diagram svg{display:block; max-width:100%; height:auto; margin:0 auto;}
+  figcaption{font-size:13px; color:var(--muted); text-align:center; margin-top:12px;}
+  .svg-box{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .svg-hd{fill:var(--accent);}
+  .svg-hd-t{fill:#fff; font-weight:700; font-size:13px; font-family:var(--font-mono);}
+  .svg-col{fill:var(--ink-soft); font-size:12px; font-family:var(--font-mono);}
+  .svg-pk{fill:var(--accent-ink); font-weight:700;}
+  .svg-line{stroke:var(--ink-soft); stroke-width:1.6; fill:none;}
+  .svg-card{fill:var(--surface-2); stroke:var(--accent); stroke-width:1.4;}
+  .svg-t{fill:var(--ink); font-size:13px;}
+  .svg-t-s{fill:var(--ink-soft); font-size:12px;}
+  .svg-lbl{fill:var(--muted); font-size:12px; font-weight:700;}
+  .v-out{fill:none; stroke:var(--accent); stroke-width:2;}
+  .v-fill{fill:var(--accent); opacity:.32;}
+  .v-lbl{fill:var(--ink); font-weight:800; font-size:15px; text-anchor:middle;}
+  .v-cap{fill:var(--ink); font-size:13px; font-weight:700; text-anchor:middle;}
+  .v-sub{fill:var(--muted); font-size:11.5px; text-anchor:middle;}
+  .pipe{fill:var(--accent-tint); stroke:var(--accent); stroke-width:1.4;}
+  .pipe-n{fill:var(--accent); font-weight:800; font-size:13px; text-anchor:middle;}
+  .pipe-t{fill:var(--ink); font-size:12px; font-weight:600; text-anchor:middle;}
+  .arrow{stroke:var(--ink-soft); stroke-width:1.8; fill:none; marker-end:url(#ah);}
+  figure.diagram svg{font-family:var(--font-sans);}
+  .mono{font-family:var(--font-mono);}
+  .mk{fill:var(--ink-soft);}
+  .mk-a{fill:var(--accent);}
+  .flowline{stroke:var(--accent); stroke-width:1.8;}
+  .flowline line{stroke:var(--accent);}
+
+  /* ---------- overview cards ---------- */
+  .roadmap{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:22px 0;}
+  .rm-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:6px; text-decoration:none; color:inherit;}
+  .rm-card:hover{border-color:var(--accent); transform:translateY(-2px); transition:.15s;}
+  .rm-card .d{font-size:12px; font-weight:800; color:var(--accent); letter-spacing:.05em;}
+  .rm-card .t{font-weight:750; font-size:15px; line-height:1.3;}
+  .rm-card .lv{display:flex; gap:5px; margin-top:2px;}
+  .dotlv{width:9px; height:9px; border-radius:50%;}
+  .dotlv.b{background:var(--beginner);} .dotlv.m{background:var(--intermediate);} .dotlv.a{background:var(--advanced);}
+
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); margin:10px 0 0;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+
+  ul.clean{list-style:none; padding-left:0; margin:12px 0;}
+  ul.clean li{padding:7px 0 7px 30px; position:relative; border-bottom:1px solid var(--border); font-size:15px;}
+  ul.clean li:last-child{border-bottom:none;}
+  ul.clean li::before{content:"✓"; position:absolute; left:4px; top:7px; color:var(--accent); font-weight:800;}
+
+  ul.body, ol.body{padding-left:22px;} ul.body li, ol.body li{margin:5px 0;}
+  .kbd{font-family:var(--font-mono); font-size:.85em; background:var(--surface-2); border:1px solid var(--border);
+    border-bottom-width:2px; padding:1px 6px; border-radius:5px;}
+
+  footer{max-width:var(--maxw); margin:0 auto; padding:30px 20px 60px; color:var(--muted); font-size:13px; border-top:1px solid var(--border);}
+
+  @media (max-width:560px){
+    body{font-size:15px;}
+    .navlinks{width:100%; margin-left:0; overflow-x:auto;}
+    h2.day{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <span class="brand">DB 쿼리 <span class="dot">·</span> 5일 완성</span>
+    <nav class="navlinks" aria-label="Day 이동">
+      <a href="#overview">개요</a>
+      <a href="#schema">스키마</a>
+      <a href="#day1">Day 1</a>
+      <a href="#day2">Day 2</a>
+      <a href="#day3">Day 3</a>
+      <a href="#day4">Day 4</a>
+      <a href="#day5">Day 5</a>
+      <a href="#summary">총정리</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <p class="eyebrow">SQL 학습 · Beginner → Advanced</p>
+    <h1>DB 쿼리 5일 완성</h1>
+    <p class="lede">기본 조회부터 윈도우 함수까지 — 하루에 <strong>초급·중급·고급</strong> 세 단계씩,
+      다이어그램과 예제로 눈에 그려지는 SQL 학습 자료.</p>
+    <div class="meta-row">
+      <span class="tag">MySQL 8.0+ / PostgreSQL 12+ 기준</span>
+      <span class="tag">예제 즉시 실습 가능</span>
+      <span class="tag">작성일 2026-07-24</span>
+    </div>
+  </div>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section id="overview">
+    <h2 class="plain">📚 커리큘럼 한눈에 보기</h2>
+    <p class="day-sub">난이도는 하루 안에서도(초→중→고), 5일에 걸쳐서도(Day1→Day5) 자연스럽게 올라갑니다.</p>
+    <div class="roadmap">
+      <a class="rm-card" href="#day1"><span class="d">DAY 1</span><span class="t">데이터 조회 첫걸음</span><span class="lv"><i class="dotlv b"></i><i class="dotlv m"></i><i class="dotlv a"></i></span></a>
+      <a class="rm-card" href="#day2"><span class="d">DAY 2</span><span class="t">함수와 데이터 가공</span><span class="lv"><i class="dotlv b"></i><i class="dotlv m"></i><i class="dotlv a"></i></span></a>
+      <a class="rm-card" href="#day3"><span class="d">DAY 3</span><span class="t">집계와 그룹화</span><span class="lv"><i class="dotlv b"></i><i class="dotlv m"></i><i class="dotlv a"></i></span></a>
+      <a class="rm-card" href="#day4"><span class="d">DAY 4</span><span class="t">여러 테이블 (JOIN)</span><span class="lv"><i class="dotlv b"></i><i class="dotlv m"></i><i class="dotlv a"></i></span></a>
+      <a class="rm-card" href="#day5"><span class="d">DAY 5</span><span class="t">서브쿼리·윈도우 함수</span><span class="lv"><i class="dotlv b"></i><i class="dotlv m"></i><i class="dotlv a"></i></span></a>
+    </div>
+    <div class="legend">
+      <span><i class="dotlv b"></i> 초급</span>
+      <span><i class="dotlv m"></i> 중급</span>
+      <span><i class="dotlv a"></i> 고급</span>
+    </div>
+  </section>
+
+  <!-- ============ SCHEMA ============ -->
+  <section id="schema">
+    <h2 class="plain">🗂️ 실습용 샘플 스키마 (전 Day 공통)</h2>
+    <p>모든 예제는 아래 전자상거래 미니 DB 4개 테이블을 사용합니다. 한 명의 고객은 여러 주문을 하고,
+      한 주문은 여러 상품을 담습니다.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 860 360" role="img" aria-label="테이블 관계 ER 다이어그램">
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" class="mk"/>
+          </marker>
+        </defs>
+        <!-- customers -->
+        <g>
+          <rect class="svg-box" x="30" y="60" width="200" height="118" rx="9"/>
+          <path class="svg-hd" d="M30,69 a9,9 0 0 1 9,-9 h182 a9,9 0 0 1 9,9 v18 h-200 z"/>
+          <text class="svg-hd-t" x="46" y="82">customers</text>
+          <text class="svg-col svg-pk" x="46" y="108">customer_id (PK)</text>
+          <text class="svg-col" x="46" y="128">name</text>
+          <text class="svg-col" x="46" y="148">city</text>
+          <text class="svg-col" x="46" y="168">signup_date</text>
+        </g>
+        <!-- orders -->
+        <g>
+          <rect class="svg-box" x="330" y="40" width="205" height="138" rx="9"/>
+          <path class="svg-hd" d="M330,49 a9,9 0 0 1 9,-9 h187 a9,9 0 0 1 9,9 v18 h-205 z"/>
+          <text class="svg-hd-t" x="346" y="62">orders</text>
+          <text class="svg-col svg-pk" x="346" y="88">order_id (PK)</text>
+          <text class="svg-col" x="346" y="108">customer_id (FK)</text>
+          <text class="svg-col" x="346" y="128">order_date</text>
+          <text class="svg-col" x="346" y="148">amount</text>
+          <text class="svg-col" x="346" y="168">status</text>
+        </g>
+        <!-- order_items -->
+        <g>
+          <rect class="svg-box" x="330" y="228" width="205" height="112" rx="9"/>
+          <path class="svg-hd" d="M330,237 a9,9 0 0 1 9,-9 h187 a9,9 0 0 1 9,9 v18 h-205 z"/>
+          <text class="svg-hd-t" x="346" y="250">order_items</text>
+          <text class="svg-col svg-pk" x="346" y="276">order_item_id (PK)</text>
+          <text class="svg-col" x="346" y="296">order_id (FK)</text>
+          <text class="svg-col" x="346" y="316">product_id (FK)</text>
+        </g>
+        <!-- products -->
+        <g>
+          <rect class="svg-box" x="640" y="228" width="190" height="112" rx="9"/>
+          <path class="svg-hd" d="M640,237 a9,9 0 0 1 9,-9 h172 a9,9 0 0 1 9,9 v18 h-190 z"/>
+          <text class="svg-hd-t" x="656" y="250">products</text>
+          <text class="svg-col svg-pk" x="656" y="276">product_id (PK)</text>
+          <text class="svg-col" x="656" y="296">product_name</text>
+          <text class="svg-col" x="656" y="316">price</text>
+        </g>
+        <!-- relations -->
+        <path class="arrow" d="M230,110 H332"/>
+        <text class="svg-lbl" x="252" y="102">1</text><text class="svg-lbl" x="312" y="102">N</text>
+        <path class="arrow" d="M432,178 V226"/>
+        <text class="svg-lbl" x="440" y="196">1</text><text class="svg-lbl" x="440" y="222">N</text>
+        <path class="arrow" d="M640,284 H537"/>
+        <text class="svg-lbl" x="618" y="277">1</text><text class="svg-lbl" x="548" y="277">N</text>
+      </svg>
+      <figcaption>1:N 관계 · PK=기본키, FK=외래키(다른 테이블을 가리키는 열). 화살표는 "1 → N" 방향.</figcaption>
+    </figure>
+
+    <pre><span class="c">-- 핵심 테이블 정의 (일부)</span>
+<span class="k">CREATE TABLE</span> customers (customer_id <span class="k">INT PRIMARY KEY</span>, name <span class="k">VARCHAR</span>(50), city <span class="k">VARCHAR</span>(50), signup_date <span class="k">DATE</span>);
+<span class="k">CREATE TABLE</span> orders (order_id <span class="k">INT PRIMARY KEY</span>, customer_id <span class="k">INT</span>, order_date <span class="k">DATE</span>, amount <span class="k">INT</span>, status <span class="k">VARCHAR</span>(20));
+<span class="k">CREATE TABLE</span> products (product_id <span class="k">INT PRIMARY KEY</span>, product_name <span class="k">VARCHAR</span>(50), category <span class="k">VARCHAR</span>(30), price <span class="k">INT</span>);
+<span class="k">CREATE TABLE</span> order_items (order_item_id <span class="k">INT PRIMARY KEY</span>, order_id <span class="k">INT</span>, product_id <span class="k">INT</span>, quantity <span class="k">INT</span>);</pre>
+
+    <details class="ex">
+      <summary>샘플 데이터 (복사해서 바로 실습)</summary>
+      <pre><span class="k">INSERT INTO</span> customers <span class="k">VALUES</span>
+(1,'김서준','서울','2025-01-05'),(2,'이하은','부산','2025-02-11'),
+(3,'박도윤','서울','2025-03-20'),(4,'최지우','대구','2025-05-02'),(5,'정유나','부산','2025-06-15');
+
+<span class="k">INSERT INTO</span> orders <span class="k">VALUES</span>
+(101,1,'2025-06-01',45000,'PAID'),(102,1,'2025-06-18',12000,'PAID'),
+(103,2,'2025-06-03',89000,'PAID'),(104,2,'2025-07-01',30000,'CANCELLED'),
+(105,3,'2025-06-25',150000,'PAID'),(106,3,'2025-07-05',22000,'REFUNDED'),
+(107,4,'2025-07-08',67000,'PAID'),(108,1,'2025-07-10',98000,'PAID');
+<span class="c">-- 고객 5(정유나)는 아직 주문 없음</span>
+
+<span class="k">INSERT INTO</span> products <span class="k">VALUES</span>
+(10,'무선마우스','전자',25000),(11,'기계식키보드','전자',89000),
+(12,'텀블러','생활',18000),(13,'노트북거치대','생활',32000);
+
+<span class="k">INSERT INTO</span> order_items <span class="k">VALUES</span>
+(1001,101,10,1),(1002,101,12,1),(1003,103,11,1),(1004,105,11,1),
+(1005,105,13,2),(1006,108,10,2),(1007,108,13,1);</pre>
+    </details>
+  </section>
+
+  <hr>
+
+  <!-- ==================== DAY 1 ==================== -->
+  <section id="day1">
+    <h2 class="day"><span class="dnum">DAY 1</span> 데이터 조회의 첫걸음</h2>
+    <p class="day-sub">SELECT · WHERE · ORDER BY — 조회의 뼈대는 <code class="inl">SELECT 컬럼 FROM 테이블 WHERE 조건 ORDER BY 정렬</code></p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 190" role="img" aria-label="SELECT 문장 해부도">
+        <rect class="svg-card" x="20" y="30" width="150" height="34" rx="7"/>
+        <text class="svg-t mono" x="34" y="52">SELECT name,city</text>
+        <rect class="svg-card" x="185" y="30" width="150" height="34" rx="7"/>
+        <text class="svg-t mono" x="199" y="52">FROM customers</text>
+        <rect class="svg-card" x="350" y="30" width="180" height="34" rx="7"/>
+        <text class="svg-t mono" x="364" y="52">WHERE city='서울'</text>
+        <rect class="svg-card" x="545" y="30" width="185" height="34" rx="7"/>
+        <text class="svg-t mono" x="559" y="52">ORDER BY name</text>
+        <!-- connectors -->
+        <path class="svg-line" d="M95,64 V92"/><path class="svg-line" d="M260,64 V92"/>
+        <path class="svg-line" d="M440,64 V92"/><path class="svg-line" d="M637,64 V92"/>
+        <text class="svg-lbl" x="95" y="112" text-anchor="middle">무엇을</text>
+        <text class="svg-t-s" x="95" y="130" text-anchor="middle">보여줄 열</text>
+        <text class="svg-lbl" x="260" y="112" text-anchor="middle">어디서</text>
+        <text class="svg-t-s" x="260" y="130" text-anchor="middle">대상 테이블</text>
+        <text class="svg-lbl" x="440" y="112" text-anchor="middle">어떤 조건</text>
+        <text class="svg-t-s" x="440" y="130" text-anchor="middle">행을 걸러냄</text>
+        <text class="svg-lbl" x="637" y="112" text-anchor="middle">어떻게</text>
+        <text class="svg-t-s" x="637" y="130" text-anchor="middle">결과 정렬</text>
+      </svg>
+      <figcaption>SELECT 문장 해부도 — 각 절이 "무엇을" 담당하는지 위치로 기억하기</figcaption>
+    </figure>
+
+    <!-- 초급 -->
+    <div class="level beg">
+      <div class="level-head"><span class="chip beg">초급</span><span class="lv-title">SELECT와 WHERE 기본</span></div>
+      <div class="level-body">
+        <h4>전체 / 특정 컬럼 조회</h4>
+        <pre><span class="k">SELECT</span> * <span class="k">FROM</span> customers;              <span class="c">-- 모든 컬럼</span>
+<span class="k">SELECT</span> name, city <span class="k">FROM</span> customers;   <span class="c">-- 원하는 컬럼만 (실무 권장)</span></pre>
+        <h4>WHERE로 조건 걸기</h4>
+        <pre><span class="k">SELECT</span> name, city <span class="k">FROM</span> customers <span class="k">WHERE</span> city = '서울';   <span class="c">-- 문자열은 작은따옴표</span>
+<span class="k">SELECT</span> order_id, amount <span class="k">FROM</span> orders <span class="k">WHERE</span> amount &gt;= 50000; <span class="c">-- 숫자는 따옴표 X</span></pre>
+        <p>비교 연산자: <code class="inl">=</code>, <code class="inl">&lt;&gt;</code>(같지 않다), <code class="inl">&gt;</code>, <code class="inl">&lt;</code>, <code class="inl">&gt;=</code>, <code class="inl">&lt;=</code></p>
+        <details class="ex"><summary>연습 · '전자' 카테고리 상품의 이름과 가격을 조회하라</summary>
+          <pre><span class="k">SELECT</span> product_name, price <span class="k">FROM</span> products <span class="k">WHERE</span> category = '전자';</pre></details>
+      </div>
+    </div>
+
+    <!-- 중급 -->
+    <div class="level mid">
+      <div class="level-head"><span class="chip mid">중급</span><span class="lv-title">여러 조건 조합하기</span></div>
+      <div class="level-body">
+        <h4>AND / OR / NOT</h4>
+        <pre><span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">WHERE</span> status = 'PAID' <span class="k">AND</span> amount &gt;= 50000;
+<span class="k">SELECT</span> * <span class="k">FROM</span> customers <span class="k">WHERE</span> city = '서울' <span class="k">OR</span> city = '부산';</pre>
+        <div class="warn"><strong>⚠️ 우선순위</strong> — <code class="inl">AND</code>가 <code class="inl">OR</code>보다 먼저 계산됨. 헷갈리면 괄호로 명시: <code class="inl">(a OR b) AND c</code></div>
+        <h4>BETWEEN / IN / LIKE</h4>
+        <pre><span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">WHERE</span> amount <span class="k">BETWEEN</span> 30000 <span class="k">AND</span> 100000;  <span class="c">-- 양끝 포함</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> customers <span class="k">WHERE</span> city <span class="k">IN</span> ('서울','부산');       <span class="c">-- OR을 깔끔하게</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> products <span class="k">WHERE</span> product_name <span class="k">LIKE</span> '%키보드%'; <span class="c">-- 포함</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> customers <span class="k">WHERE</span> name <span class="k">LIKE</span> '김%';           <span class="c">-- 시작</span></pre>
+        <p><code class="inl">%</code> = 아무 문자 0개 이상, <code class="inl">_</code> = 아무 문자 딱 1개</p>
+        <details class="ex"><summary>연습 · ①20,000~90,000원 주문 ②'박'으로 시작하는 고객</summary>
+          <pre><span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">WHERE</span> amount <span class="k">BETWEEN</span> 20000 <span class="k">AND</span> 90000;
+<span class="k">SELECT</span> * <span class="k">FROM</span> customers <span class="k">WHERE</span> name <span class="k">LIKE</span> '박%';</pre></details>
+      </div>
+    </div>
+
+    <!-- 고급 -->
+    <div class="level adv">
+      <div class="level-head"><span class="chip adv">고급</span><span class="lv-title">정렬 · 개수 제한 · 중복 제거 · NULL</span></div>
+      <div class="level-body">
+        <pre><span class="c">-- 다중 정렬</span>
+<span class="k">SELECT</span> name, city, signup_date <span class="k">FROM</span> customers <span class="k">ORDER BY</span> city <span class="k">ASC</span>, signup_date <span class="k">DESC</span>;
+<span class="c">-- 상위 N개 / 페이징</span>
+<span class="k">SELECT</span> order_id, amount <span class="k">FROM</span> orders <span class="k">ORDER BY</span> amount <span class="k">DESC</span> <span class="k">LIMIT</span> 3;
+<span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">ORDER BY</span> order_id <span class="k">LIMIT</span> 3 <span class="k">OFFSET</span> 3;   <span class="c">-- 4~6번째</span>
+<span class="c">-- 중복 제거 / NULL</span>
+<span class="k">SELECT DISTINCT</span> city <span class="k">FROM</span> customers;
+<span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">WHERE</span> status <span class="k">IS NULL</span>;   <span class="c">-- = NULL 아님!</span></pre>
+        <div class="warn"><strong>⚠️ NULL 함정</strong> — <code class="inl">= NULL</code>은 항상 거짓. 반드시 <code class="inl">IS NULL</code> / <code class="inl">IS NOT NULL</code> 사용.</div>
+        <div class="note"><strong>📌 DBMS 차이</strong> — 상위 N개: SQL Server <code class="inl">TOP 3</code>, Oracle <code class="inl">FETCH FIRST 3 ROWS ONLY</code></div>
+        <details class="ex"><summary>연습 · ①금액 상위 2건 ②고객 도시 종류(중복 없이)</summary>
+          <pre><span class="k">SELECT</span> * <span class="k">FROM</span> orders <span class="k">ORDER BY</span> amount <span class="k">DESC</span> <span class="k">LIMIT</span> 2;
+<span class="k">SELECT DISTINCT</span> city <span class="k">FROM</span> customers;</pre></details>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ==================== DAY 2 ==================== -->
+  <section id="day2">
+    <h2 class="day"><span class="dnum">DAY 2</span> 함수와 데이터 가공</h2>
+    <p class="day-sub">저장된 값을 그대로 보는 데서 나아가, 함수로 <strong>가공·계산</strong>해 원하는 형태로 뽑는다.</p>
+
+    <div class="level beg">
+      <div class="level-head"><span class="chip beg">초급</span><span class="lv-title">산술 연산과 별칭(AS)</span></div>
+      <div class="level-body">
+        <pre><span class="k">SELECT</span> product_name, price, price * 1.1 <span class="k">AS</span> price_with_vat <span class="k">FROM</span> products;  <span class="c">-- 부가세 10%</span>
+<span class="k">SELECT</span> <span class="k">CONCAT</span>(name, '(', city, ')') <span class="k">AS</span> label <span class="k">FROM</span> customers;         <span class="c">-- 김서준(서울)</span></pre>
+        <div class="note"><strong>📌 DBMS 차이</strong> — Oracle·PostgreSQL은 <code class="inl">name || '(' || city || ')'</code> (<code class="inl">||</code> 연결)도 가능</div>
+        <details class="ex"><summary>연습 · 배송비 3,000원 뺀 값을 net_amount로</summary>
+          <pre><span class="k">SELECT</span> order_id, amount, amount - 3000 <span class="k">AS</span> net_amount <span class="k">FROM</span> orders;</pre></details>
+      </div>
+    </div>
+
+    <div class="level mid">
+      <div class="level-head"><span class="chip mid">중급</span><span class="lv-title">문자열 · 숫자 함수</span></div>
+      <div class="level-body">
+        <div class="tablewrap"><table>
+          <thead><tr><th>분류</th><th>함수</th><th>결과 예시</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="4">문자열</td><td><code class="inl">UPPER / LOWER</code></td><td>'sql' → 'SQL' / 'SQL' → 'sql'</td></tr>
+            <tr><td><code class="inl">LENGTH(x)</code></td><td>글자 수</td></tr>
+            <tr><td><code class="inl">SUBSTRING(x,1,1)</code></td><td>첫 글자(성)</td></tr>
+            <tr><td><code class="inl">REPLACE / TRIM</code></td><td>치환 / 앞뒤 공백 제거</td></tr>
+            <tr><td rowspan="5">숫자</td><td><code class="inl">ROUND(12345.6,0)</code></td><td class="num">12346</td></tr>
+            <tr><td><code class="inl">CEIL(12.1)</code></td><td class="num">13</td></tr>
+            <tr><td><code class="inl">FLOOR(12.9)</code></td><td class="num">12</td></tr>
+            <tr><td><code class="inl">ABS(-500)</code></td><td class="num">500</td></tr>
+            <tr><td><code class="inl">MOD(10,3)</code></td><td class="num">1</td></tr>
+          </tbody>
+        </table></div>
+        <details class="ex"><summary>연습 · 이름 첫 글자(성)와 글자 수를 함께</summary>
+          <pre><span class="k">SELECT</span> name, <span class="k">SUBSTRING</span>(name,1,1) <span class="k">AS</span> surname, <span class="k">LENGTH</span>(name) <span class="k">AS</span> len <span class="k">FROM</span> customers;</pre></details>
+      </div>
+    </div>
+
+    <div class="level adv">
+      <div class="level-head"><span class="chip adv">고급</span><span class="lv-title">날짜 함수 · CASE · NULL 함수</span></div>
+      <div class="level-body">
+        <h4>날짜 다루기 & CASE WHEN</h4>
+        <pre><span class="k">SELECT</span> order_id, amount,
+    <span class="k">CASE</span>
+        <span class="k">WHEN</span> amount &gt;= 100000 <span class="k">THEN</span> 'VIP'
+        <span class="k">WHEN</span> amount &gt;= 50000  <span class="k">THEN</span> '일반'
+        <span class="k">ELSE</span> '소액'
+    <span class="k">END</span> <span class="k">AS</span> grade,
+    <span class="k">YEAR</span>(order_date) <span class="k">AS</span> y, <span class="k">MONTH</span>(order_date) <span class="k">AS</span> m
+<span class="k">FROM</span> orders;</pre>
+        <p><code class="inl">CASE</code>는 if-else처럼 위에서부터 처음 맞는 조건을 채택합니다.</p>
+        <pre><span class="k">SELECT</span> order_id, <span class="k">COALESCE</span>(status, '미정') <span class="k">AS</span> status <span class="k">FROM</span> orders;  <span class="c">-- NULL이면 '미정'</span></pre>
+        <div class="note"><strong>📌 DBMS 차이</strong> — 날짜 추출: PostgreSQL <code class="inl">EXTRACT(YEAR FROM order_date)</code> · 날짜 차이: MySQL <code class="inl">DATEDIFF(a,b)</code>, PostgreSQL <code class="inl">a - b</code></div>
+        <details class="ex"><summary>연습 · 금액별 VIP(10만↑)/일반/소액(5만↓) 분류</summary>
+          <pre><span class="k">SELECT</span> order_id, amount,
+    <span class="k">CASE WHEN</span> amount&gt;=100000 <span class="k">THEN</span> 'VIP'
+         <span class="k">WHEN</span> amount&gt;=50000 <span class="k">THEN</span> '일반' <span class="k">ELSE</span> '소액' <span class="k">END</span> <span class="k">AS</span> grade
+<span class="k">FROM</span> orders;</pre></details>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ==================== DAY 3 ==================== -->
+  <section id="day3">
+    <h2 class="day"><span class="dnum">DAY 3</span> 집계와 그룹화</h2>
+    <p class="day-sub">여러 행을 <strong>하나로 요약</strong>하는 것이 집계. "무엇을 기준으로 묶을지"가 GROUP BY.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 780 300" role="img" aria-label="GROUP BY 동작 도식">
+        <text class="svg-lbl" x="90" y="24">원본 행 (orders)</text>
+        <text class="svg-lbl" x="360" y="24">GROUP BY customer_id</text>
+        <text class="svg-lbl" x="650" y="24">결과</text>
+        <!-- source rows -->
+        <g class="mono" font-size="12">
+          <rect class="svg-box" x="20" y="40" width="150" height="26"/><text class="svg-t" x="32" y="57">고객1 · 45000</text>
+          <rect class="svg-box" x="20" y="70" width="150" height="26"/><text class="svg-t" x="32" y="87">고객1 · 12000</text>
+          <rect class="svg-box" x="20" y="100" width="150" height="26"/><text class="svg-t" x="32" y="117">고객1 · 98000</text>
+          <rect class="svg-box" x="20" y="140" width="150" height="26"/><text class="svg-t" x="32" y="157">고객2 · 89000</text>
+          <rect class="svg-box" x="20" y="170" width="150" height="26"/><text class="svg-t" x="32" y="187">고객2 · 30000</text>
+          <rect class="svg-box" x="20" y="210" width="150" height="26"/><text class="svg-t" x="32" y="227">고객3 · 150000</text>
+          <rect class="svg-box" x="20" y="240" width="150" height="26"/><text class="svg-t" x="32" y="257">고객3 · 22000</text>
+        </g>
+        <!-- baskets -->
+        <path class="arrow" d="M175,100 H300"/>
+        <path class="arrow" d="M175,175 H300"/>
+        <path class="arrow" d="M175,240 H300"/>
+        <g class="mono" font-size="11.5">
+          <rect class="svg-card" x="305" y="72" width="170" height="52" rx="8"/><text class="svg-t-s" x="318" y="92">🧺 고객1 바구니</text><text class="svg-t-s" x="318" y="112">45000·12000·98000</text>
+          <rect class="svg-card" x="305" y="150" width="170" height="52" rx="8"/><text class="svg-t-s" x="318" y="170">🧺 고객2 바구니</text><text class="svg-t-s" x="318" y="190">89000·30000</text>
+          <rect class="svg-card" x="305" y="214" width="170" height="52" rx="8"/><text class="svg-t-s" x="318" y="234">🧺 고객3 바구니</text><text class="svg-t-s" x="318" y="254">150000·22000</text>
+        </g>
+        <!-- result -->
+        <path class="arrow" d="M480,98 H560"/><text class="svg-lbl" x="512" y="90" text-anchor="middle">SUM</text>
+        <path class="arrow" d="M480,176 H560"/>
+        <path class="arrow" d="M480,240 H560"/>
+        <g class="mono" font-size="12">
+          <rect class="svg-box" x="565" y="72" width="185" height="52" rx="8"/><text class="svg-pk" x="578" y="92">고객1</text><text class="svg-t" x="578" y="112">3건 · 합 155000</text>
+          <rect class="svg-box" x="565" y="150" width="185" height="52" rx="8"/><text class="svg-pk" x="578" y="170">고객2</text><text class="svg-t" x="578" y="190">2건 · 합 119000</text>
+          <rect class="svg-box" x="565" y="214" width="185" height="52" rx="8"/><text class="svg-pk" x="578" y="234">고객3</text><text class="svg-t" x="578" y="254">2건 · 합 172000</text>
+        </g>
+      </svg>
+      <figcaption>같은 값끼리 바구니에 담고, 바구니마다 집계 함수를 적용 → 그룹 1개당 결과 1행</figcaption>
+    </figure>
+
+    <div class="level beg">
+      <div class="level-head"><span class="chip beg">초급</span><span class="lv-title">집계 함수 5종</span></div>
+      <div class="level-body">
+        <pre><span class="k">SELECT</span> <span class="k">COUNT</span>(*) <span class="k">AS</span> 주문건수, <span class="k">SUM</span>(amount) <span class="k">AS</span> 총매출,
+       <span class="k">AVG</span>(amount) <span class="k">AS</span> 평균금액, <span class="k">MAX</span>(amount) <span class="k">AS</span> 최고, <span class="k">MIN</span>(amount) <span class="k">AS</span> 최저
+<span class="k">FROM</span> orders;</pre>
+        <p><code class="inl">COUNT(*)</code>는 행 수, <code class="inl">COUNT(컬럼)</code>은 <strong>NULL이 아닌</strong> 값의 수.</p>
+        <details class="ex"><summary>연습 · PAID 주문의 건수와 총매출</summary>
+          <pre><span class="k">SELECT</span> <span class="k">COUNT</span>(*) <span class="k">AS</span> cnt, <span class="k">SUM</span>(amount) <span class="k">AS</span> total <span class="k">FROM</span> orders <span class="k">WHERE</span> status='PAID';</pre></details>
+      </div>
+    </div>
+
+    <div class="level mid">
+      <div class="level-head"><span class="chip mid">중급</span><span class="lv-title">GROUP BY로 묶어서 집계</span></div>
+      <div class="level-body">
+        <pre><span class="k">SELECT</span> customer_id, <span class="k">COUNT</span>(*) <span class="k">AS</span> 주문수, <span class="k">SUM</span>(amount) <span class="k">AS</span> 총결제액
+<span class="k">FROM</span> orders <span class="k">GROUP BY</span> customer_id;</pre>
+        <div class="warn"><strong>⚠️ 규칙</strong> — <code class="inl">SELECT</code>에 오는 컬럼은 <em>집계 함수</em>이거나 <code class="inl">GROUP BY</code>에 있어야 합니다.</div>
+        <details class="ex"><summary>연습 · 주문 상태(status)별 건수</summary>
+          <pre><span class="k">SELECT</span> status, <span class="k">COUNT</span>(*) <span class="k">AS</span> cnt <span class="k">FROM</span> orders <span class="k">GROUP BY</span> status;</pre></details>
+      </div>
+    </div>
+
+    <div class="level adv">
+      <div class="level-head"><span class="chip adv">고급</span><span class="lv-title">HAVING · WHERE vs HAVING</span></div>
+      <div class="level-body">
+        <pre><span class="k">SELECT</span> customer_id, <span class="k">SUM</span>(amount) <span class="k">AS</span> 총결제액
+<span class="k">FROM</span> orders
+<span class="k">WHERE</span> status = 'PAID'            <span class="c">-- ① 개별 행 필터 (집계 전)</span>
+<span class="k">GROUP BY</span> customer_id
+<span class="k">HAVING</span> <span class="k">SUM</span>(amount) &gt;= 100000;   <span class="c">-- ② 집계 결과 필터 (집계 후)</span></pre>
+
+        <figure class="diagram">
+          <svg viewBox="0 0 780 130" role="img" aria-label="쿼리 실행 순서 파이프라인">
+            <defs>
+              <marker id="ah2" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="mk-a"/></marker>
+            </defs>
+            <g class="mono" text-anchor="middle">
+              <rect class="pipe" x="10"  y="35" width="92" height="46" rx="9"/><text class="pipe-n" x="56"  y="56">①FROM</text><text class="pipe-t" x="56"  y="72">테이블</text>
+              <rect class="pipe" x="120" y="35" width="92" height="46" rx="9"/><text class="pipe-n" x="166" y="56">②WHERE</text><text class="pipe-t" x="166" y="72">행 필터</text>
+              <rect class="pipe" x="230" y="35" width="104" height="46" rx="9"/><text class="pipe-n" x="282" y="56">③GROUP</text><text class="pipe-t" x="282" y="72">그룹 묶기</text>
+              <rect class="pipe" x="352" y="35" width="100" height="46" rx="9"/><text class="pipe-n" x="402" y="56">④HAVING</text><text class="pipe-t" x="402" y="72">그룹 필터</text>
+              <rect class="pipe" x="470" y="35" width="96" height="46" rx="9"/><text class="pipe-n" x="518" y="56">⑤SELECT</text><text class="pipe-t" x="518" y="72">열 계산</text>
+              <rect class="pipe" x="584" y="35" width="96" height="46" rx="9"/><text class="pipe-n" x="632" y="56">⑥ORDER</text><text class="pipe-t" x="632" y="72">정렬</text>
+              <rect class="pipe" x="698" y="35" width="72" height="46" rx="9"/><text class="pipe-n" x="734" y="56">⑦LIMIT</text><text class="pipe-t" x="734" y="72">개수</text>
+            </g>
+            <g class="flowline" marker-end="url(#ah2)">
+              <line x1="102" y1="58" x2="118" y2="58"/><line x1="212" y1="58" x2="228" y2="58"/>
+              <line x1="334" y1="58" x2="350" y2="58"/><line x1="452" y1="58" x2="468" y2="58"/>
+              <line x1="566" y1="58" x2="582" y2="58"/><line x1="680" y1="58" x2="696" y2="58"/>
+            </g>
+            <text class="v-sub" x="390" y="20">우리는 SELECT부터 쓰지만, DB는 이 순서로 처리한다 (작성 순서 ≠ 실행 순서)</text>
+          </svg>
+          <figcaption>실행 순서: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</figcaption>
+        </figure>
+
+        <div class="tablewrap"><table>
+          <thead><tr><th>구분</th><th>시점</th><th>조건 대상</th><th>집계 함수</th></tr></thead>
+          <tbody>
+            <tr><td><code class="inl">WHERE</code></td><td>그룹 묶기 <strong>전</strong> (②)</td><td>개별 행</td><td>사용 불가</td></tr>
+            <tr><td><code class="inl">HAVING</code></td><td>그룹 묶은 <strong>후</strong> (④)</td><td>집계 결과</td><td><code class="inl">SUM,COUNT</code> 가능</td></tr>
+          </tbody>
+        </table></div>
+        <details class="ex"><summary>연습 · 주문 2건 이상인 고객의 id와 주문 수</summary>
+          <pre><span class="k">SELECT</span> customer_id, <span class="k">COUNT</span>(*) <span class="k">AS</span> cnt
+<span class="k">FROM</span> orders <span class="k">GROUP BY</span> customer_id <span class="k">HAVING</span> <span class="k">COUNT</span>(*) &gt;= 2;</pre></details>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ==================== DAY 4 ==================== -->
+  <section id="day4">
+    <h2 class="day"><span class="dnum">DAY 4</span> 여러 테이블 다루기 (JOIN)</h2>
+    <p class="day-sub">흩어진 테이블을 <strong>공통 키</strong>로 연결해 하나의 결과로 합치는 것이 JOIN.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 720 210" role="img" aria-label="JOIN 종류 벤 다이어그램">
+        <defs>
+          <clipPath id="cB1"><circle cx="145" cy="88" r="46"/></clipPath>
+        </defs>
+        <!-- INNER -->
+        <circle class="v-out" cx="95" cy="88" r="46"/><circle class="v-out" cx="145" cy="88" r="46"/>
+        <circle class="v-fill" cx="95" cy="88" r="46" clip-path="url(#cB1)"/>
+        <text class="v-lbl" x="72" y="46">A</text><text class="v-lbl" x="168" y="46">B</text>
+        <text class="v-cap" x="120" y="172">INNER JOIN</text>
+        <text class="v-sub" x="120" y="190">양쪽 다 있는 행만</text>
+        <!-- LEFT -->
+        <circle class="v-fill" cx="335" cy="88" r="46"/>
+        <circle class="v-out" cx="335" cy="88" r="46"/><circle class="v-out" cx="385" cy="88" r="46"/>
+        <text class="v-lbl" x="312" y="46">A</text><text class="v-lbl" x="408" y="46">B</text>
+        <text class="v-cap" x="360" y="172">LEFT JOIN</text>
+        <text class="v-sub" x="360" y="190">A 전부 + 겹치는 B</text>
+        <!-- RIGHT -->
+        <circle class="v-fill" cx="625" cy="88" r="46"/>
+        <circle class="v-out" cx="575" cy="88" r="46"/><circle class="v-out" cx="625" cy="88" r="46"/>
+        <text class="v-lbl" x="552" y="46">A</text><text class="v-lbl" x="648" y="46">B</text>
+        <text class="v-cap" x="600" y="172">RIGHT JOIN</text>
+        <text class="v-sub" x="600" y="190">B 전부 + 겹치는 A</text>
+      </svg>
+      <figcaption>색칠된 영역이 결과에 포함 · 짝이 없으면 반대편 컬럼은 NULL</figcaption>
+    </figure>
+    <div class="note"><strong>활용</strong> — <code class="inl">customers LEFT JOIN orders</code>: 주문 없는 정유나도 나오고 주문 열은 NULL.
+      그래서 "주문 안 한 고객 찾기"는 <code class="inl">LEFT JOIN … WHERE order_id IS NULL</code> 패턴.</div>
+
+    <div class="level beg">
+      <div class="level-head"><span class="chip beg">초급</span><span class="lv-title">INNER JOIN</span></div>
+      <div class="level-body">
+        <pre><span class="c">-- 주문 정보에 고객 이름 붙이기</span>
+<span class="k">SELECT</span> o.order_id, c.name, o.amount
+<span class="k">FROM</span> orders o
+<span class="k">INNER JOIN</span> customers c <span class="k">ON</span> o.customer_id = c.customer_id;</pre>
+        <p><code class="inl">o</code>, <code class="inl">c</code>는 테이블 별칭. <code class="inl">ON</code>에 연결 기준. INNER JOIN은 <strong>양쪽에 다 있는</strong> 행만(주문 없는 정유나 제외).</p>
+        <details class="ex"><summary>연습 · order_items에 상품명 붙이기</summary>
+          <pre><span class="k">SELECT</span> oi.order_id, p.product_name, oi.quantity
+<span class="k">FROM</span> order_items oi <span class="k">JOIN</span> products p <span class="k">ON</span> oi.product_id = p.product_id;</pre></details>
+      </div>
+    </div>
+
+    <div class="level mid">
+      <div class="level-head"><span class="chip mid">중급</span><span class="lv-title">LEFT JOIN과 3중 조인</span></div>
+      <div class="level-body">
+        <pre><span class="c">-- 모든 고객 나열 (주문 없어도 고객은 나옴)</span>
+<span class="k">SELECT</span> c.name, o.order_id, o.amount
+<span class="k">FROM</span> customers c
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> c.customer_id = o.customer_id;
+
+<span class="c">-- 세 테이블 연결: 주문 → 주문상세 → 상품</span>
+<span class="k">SELECT</span> c.name, o.order_id, p.product_name, oi.quantity
+<span class="k">FROM</span> orders o
+<span class="k">JOIN</span> customers   c  <span class="k">ON</span> o.customer_id = c.customer_id
+<span class="k">JOIN</span> order_items oi <span class="k">ON</span> o.order_id    = oi.order_id
+<span class="k">JOIN</span> products    p  <span class="k">ON</span> oi.product_id = p.product_id;</pre>
+        <details class="ex"><summary>연습 · 주문이 없는 고객의 이름 (LEFT JOIN + IS NULL)</summary>
+          <pre><span class="k">SELECT</span> c.name <span class="k">FROM</span> customers c
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> c.customer_id = o.customer_id
+<span class="k">WHERE</span> o.order_id <span class="k">IS NULL</span>;</pre></details>
+      </div>
+    </div>
+
+    <div class="level adv">
+      <div class="level-head"><span class="chip adv">고급</span><span class="lv-title">SELF JOIN · UNION · JOIN + 집계</span></div>
+      <div class="level-body">
+        <h4>JOIN + 집계 (가장 실무적)</h4>
+        <pre><span class="k">SELECT</span> c.city, <span class="k">SUM</span>(o.amount) <span class="k">AS</span> 도시매출
+<span class="k">FROM</span> customers c <span class="k">JOIN</span> orders o <span class="k">ON</span> c.customer_id = o.customer_id
+<span class="k">WHERE</span> o.status = 'PAID'
+<span class="k">GROUP BY</span> c.city <span class="k">ORDER BY</span> 도시매출 <span class="k">DESC</span>;</pre>
+        <h4>UNION · SELF JOIN</h4>
+        <pre><span class="k">SELECT</span> name <span class="k">AS</span> 이름, '고객' <span class="k">AS</span> 구분 <span class="k">FROM</span> customers
+<span class="k">UNION ALL</span>
+<span class="k">SELECT</span> product_name, '상품' <span class="k">FROM</span> products;   <span class="c">-- 위아래 컬럼 수·타입 같아야 함</span>
+
+<span class="c">-- 같은 도시에 사는 고객 짝 찾기 (자기 자신과 조인)</span>
+<span class="k">SELECT</span> a.name <span class="k">AS</span> 고객A, b.name <span class="k">AS</span> 고객B, a.city
+<span class="k">FROM</span> customers a <span class="k">JOIN</span> customers b
+  <span class="k">ON</span> a.city = b.city <span class="k">AND</span> a.customer_id &lt; b.customer_id;</pre>
+        <div class="note"><strong>UNION vs UNION ALL</strong> — <code class="inl">UNION</code>은 중복 제거(느림), <code class="inl">UNION ALL</code>은 중복 포함(빠름).</div>
+        <details class="ex"><summary>연습 · 고객별 총결제액(PAID), 주문 없으면 0으로</summary>
+          <pre><span class="k">SELECT</span> c.name, <span class="k">COALESCE</span>(<span class="k">SUM</span>(o.amount), 0) <span class="k">AS</span> total
+<span class="k">FROM</span> customers c
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> c.customer_id = o.customer_id <span class="k">AND</span> o.status='PAID'
+<span class="k">GROUP BY</span> c.name;
+<span class="c">-- 힌트: status를 ON에 두어야 LEFT JOIN 유지 (WHERE에 두면 0원 고객이 사라짐)</span></pre></details>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ==================== DAY 5 ==================== -->
+  <section id="day5">
+    <h2 class="day"><span class="dnum">DAY 5</span> 서브쿼리에서 윈도우 함수까지</h2>
+    <p class="day-sub">"쿼리 안에 쿼리를 넣는 법(서브쿼리)"과 "행을 유지한 채 순위·누적·비교를 계산하는 법(윈도우 함수)".</p>
+
+    <div class="level beg">
+      <div class="level-head"><span class="chip beg">초급</span><span class="lv-title">서브쿼리의 기본</span></div>
+      <div class="level-body">
+        <p>서브쿼리 = "먼저 계산해야 할 값"을 괄호 <code class="inl">()</code> 안에 넣어 미리 구하는 것.</p>
+        <figure class="diagram">
+          <svg viewBox="0 0 720 110" role="img" aria-label="서브쿼리 실행 흐름">
+            <defs><marker id="ah3" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" class="mk-a"/></marker></defs>
+            <g class="mono" text-anchor="middle">
+              <rect class="pipe" x="10" y="34" width="220" height="46" rx="9"/><text class="pipe-n" x="120" y="55">① 안쪽 서브쿼리</text><text class="pipe-t" x="120" y="72" font-size="11">SELECT AVG(amount)…</text>
+              <rect class="pipe" x="270" y="34" width="150" height="46" rx="9"/><text class="pipe-n" x="345" y="55">② 값으로 치환</text><text class="pipe-t" x="345" y="72">64125</text>
+              <rect class="pipe" x="460" y="34" width="240" height="46" rx="9"/><text class="pipe-n" x="580" y="55">③ 바깥쪽 쿼리 실행</text><text class="pipe-t" x="580" y="72" font-size="11">WHERE amount &gt; 64125</text>
+            </g>
+            <g class="flowline" marker-end="url(#ah3)">
+              <line x1="230" y1="57" x2="268" y2="57"/><line x1="420" y1="57" x2="458" y2="57"/>
+            </g>
+          </svg>
+          <figcaption>괄호 안이 먼저 계산되어 하나의 값(또는 목록)이 된 뒤, 바깥 쿼리가 그 값을 사용</figcaption>
+        </figure>
+        <pre><span class="c">-- 전체 평균보다 큰 주문</span>
+<span class="k">SELECT</span> order_id, amount <span class="k">FROM</span> orders <span class="k">WHERE</span> amount &gt; (<span class="k">SELECT</span> <span class="k">AVG</span>(amount) <span class="k">FROM</span> orders);
+<span class="c">-- 서울 고객의 주문 (다중행 → IN)</span>
+<span class="k">SELECT</span> order_id, amount <span class="k">FROM</span> orders
+<span class="k">WHERE</span> customer_id <span class="k">IN</span> (<span class="k">SELECT</span> customer_id <span class="k">FROM</span> customers <span class="k">WHERE</span> city='서울');</pre>
+        <details class="ex"><summary>연습 · ①평균보다 싼 상품 ②부산 고객의 주문 수</summary>
+          <pre><span class="k">SELECT</span> product_name, price <span class="k">FROM</span> products <span class="k">WHERE</span> price &lt; (<span class="k">SELECT</span> <span class="k">AVG</span>(price) <span class="k">FROM</span> products);
+<span class="k">SELECT</span> <span class="k">COUNT</span>(*) <span class="k">FROM</span> orders <span class="k">WHERE</span> customer_id <span class="k">IN</span> (<span class="k">SELECT</span> customer_id <span class="k">FROM</span> customers <span class="k">WHERE</span> city='부산');</pre></details>
+      </div>
+    </div>
+
+    <div class="level mid">
+      <div class="level-head"><span class="chip mid">중급</span><span class="lv-title">상관 서브쿼리 · 인라인 뷰 · EXISTS · CTE</span></div>
+      <div class="level-body">
+        <div class="tablewrap"><table>
+          <thead><tr><th>기법</th><th>위치</th><th>특징</th></tr></thead>
+          <tbody>
+            <tr><td>상관 서브쿼리</td><td>WHERE/SELECT</td><td>바깥 행 값을 참조, 행마다 재실행</td></tr>
+            <tr><td>인라인 뷰</td><td>FROM</td><td>서브쿼리 결과를 임시 테이블처럼</td></tr>
+            <tr><td>EXISTS</td><td>WHERE</td><td>값이 아니라 "존재 여부"만 → 빠름</td></tr>
+            <tr><td>CTE (<code class="inl">WITH</code>)</td><td>맨 앞</td><td>이름 붙여 단계별로 쪼갬</td></tr>
+          </tbody>
+        </table></div>
+        <pre><span class="c">-- 상관 서브쿼리: 그 고객 '자신의' 평균보다 큰 주문 (고객마다 기준이 다름)</span>
+<span class="k">SELECT</span> o.order_id, o.customer_id, o.amount <span class="k">FROM</span> orders o
+<span class="k">WHERE</span> o.amount &gt; (<span class="k">SELECT</span> <span class="k">AVG</span>(o2.amount) <span class="k">FROM</span> orders o2 <span class="k">WHERE</span> o2.customer_id = o.customer_id);
+
+<span class="c">-- EXISTS: 주문을 한 번이라도 한 고객</span>
+<span class="k">SELECT</span> c.customer_id, c.name <span class="k">FROM</span> customers c
+<span class="k">WHERE</span> <span class="k">EXISTS</span> (<span class="k">SELECT</span> 1 <span class="k">FROM</span> orders o <span class="k">WHERE</span> o.customer_id = c.customer_id);
+
+<span class="c">-- CTE: 서브쿼리에 이름을 붙여 가독성 UP</span>
+<span class="k">WITH</span> customer_totals <span class="k">AS</span> (
+    <span class="k">SELECT</span> customer_id, <span class="k">SUM</span>(amount) <span class="k">AS</span> total <span class="k">FROM</span> orders <span class="k">WHERE</span> status='PAID' <span class="k">GROUP BY</span> customer_id
+)
+<span class="k">SELECT</span> * <span class="k">FROM</span> customer_totals <span class="k">WHERE</span> total &gt;= 100000 <span class="k">ORDER BY</span> total <span class="k">DESC</span>;</pre>
+        <div class="note"><code class="inl">SELECT 1</code>인 이유: EXISTS는 존재 여부만 보므로 무엇을 SELECT하든 무관. <code class="inl">NOT EXISTS</code> → "주문한 적 없는 고객".</div>
+        <details class="ex"><summary>연습 · ①PAID 주문 있는 고객(EXISTS) ②고객 2명↑ 도시(인라인 뷰)</summary>
+          <pre><span class="k">SELECT</span> c.customer_id, c.name <span class="k">FROM</span> customers c
+<span class="k">WHERE</span> <span class="k">EXISTS</span> (<span class="k">SELECT</span> 1 <span class="k">FROM</span> orders o <span class="k">WHERE</span> o.customer_id=c.customer_id <span class="k">AND</span> o.status='PAID');
+
+<span class="k">SELECT</span> city, cnt <span class="k">FROM</span> (
+    <span class="k">SELECT</span> city, <span class="k">COUNT</span>(*) <span class="k">AS</span> cnt <span class="k">FROM</span> customers <span class="k">GROUP BY</span> city
+) t <span class="k">WHERE</span> cnt &gt;= 2;</pre></details>
+      </div>
+    </div>
+
+    <div class="level adv">
+      <div class="level-head"><span class="chip adv">고급</span><span class="lv-title">윈도우 함수 · 재귀 CTE</span></div>
+      <div class="level-body">
+        <p><code class="inl">GROUP BY</code>는 행을 <strong>합쳐 없애지만</strong>, 윈도우 함수는 행을 <strong>그대로 두고</strong> 옆에 계산 결과를 붙입니다.</p>
+        <figure class="diagram">
+          <svg viewBox="0 0 720 220" role="img" aria-label="GROUP BY 대 윈도우 함수 비교">
+            <text class="v-cap" x="175" y="22">GROUP BY — 행이 사라짐</text>
+            <text class="v-cap" x="545" y="22">윈도우 함수 — 행이 유지됨</text>
+            <g class="mono" font-size="12">
+              <rect class="svg-box" x="60" y="40" width="140" height="26"/><text class="svg-t" x="72" y="57">고객1 · 45000</text>
+              <rect class="svg-box" x="60" y="70" width="140" height="26"/><text class="svg-t" x="72" y="87">고객1 · 12000</text>
+              <rect class="svg-box" x="60" y="100" width="140" height="26"/><text class="svg-t" x="72" y="117">고객1 · 98000</text>
+              <path class="arrow" d="M130,126 V150"/>
+              <rect class="svg-card" x="60" y="152" width="140" height="30" rx="7"/><text class="svg-pk" x="72" y="172">합계 155000 (1행)</text>
+              <text class="v-sub" x="130" y="204">3행 → 1행, 원본 사라짐</text>
+
+              <rect class="svg-box" x="420" y="40" width="220" height="26"/><text class="svg-t" x="432" y="57">고객1 · 45000 · 합155000</text>
+              <rect class="svg-box" x="420" y="70" width="220" height="26"/><text class="svg-t" x="432" y="87">고객1 · 12000 · 합155000</text>
+              <rect class="svg-box" x="420" y="100" width="220" height="26"/><text class="svg-t" x="432" y="117">고객1 · 98000 · 합155000</text>
+              <text class="v-sub" x="530" y="150">원본 3행 그대로 + 옆에 합계 부착</text>
+            </g>
+          </svg>
+          <figcaption>SUM(amount) OVER (PARTITION BY customer_id) — 행 수는 그대로, 각 행에 그룹 합계가 붙는다</figcaption>
+        </figure>
+        <h4>순위 함수 3형제 (동점 처리 차이)</h4>
+        <pre><span class="k">SELECT</span> order_id, amount,
+    <span class="k">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> amount <span class="k">DESC</span>) <span class="k">AS</span> row_num,
+    <span class="k">RANK</span>()       <span class="k">OVER</span> (<span class="k">ORDER BY</span> amount <span class="k">DESC</span>) <span class="k">AS</span> rnk,
+    <span class="k">DENSE_RANK</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> amount <span class="k">DESC</span>) <span class="k">AS</span> dense
+<span class="k">FROM</span> orders;</pre>
+        <div class="tablewrap"><table>
+          <thead><tr><th>함수</th><th>동점일 때 (예: 100,90,90,80)</th></tr></thead>
+          <tbody>
+            <tr><td><code class="inl">ROW_NUMBER</code></td><td>1, 2, 3, 4 &nbsp;(무조건 순번)</td></tr>
+            <tr><td><code class="inl">RANK</code></td><td>1, 2, 2, 4 &nbsp;(동점 후 건너뜀)</td></tr>
+            <tr><td><code class="inl">DENSE_RANK</code></td><td>1, 2, 2, 3 &nbsp;(동점 후 안 건너뜀)</td></tr>
+          </tbody>
+        </table></div>
+        <h4>그룹별 순위 · 이동 · 누적</h4>
+        <pre><span class="c">-- 고객별 최고 금액 주문 (그룹별 TOP N 정석 패턴)</span>
+<span class="k">WITH</span> ranked <span class="k">AS</span> (
+  <span class="k">SELECT</span> customer_id, order_id, amount,
+    <span class="k">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> amount <span class="k">DESC</span>) <span class="k">AS</span> rn
+  <span class="k">FROM</span> orders )
+<span class="k">SELECT</span> * <span class="k">FROM</span> ranked <span class="k">WHERE</span> rn = 1;
+
+<span class="c">-- LAG: 직전 주문 대비 증감 / SUM OVER: 누적합</span>
+<span class="k">SELECT</span> order_date, amount,
+    <span class="k">LAG</span>(amount) <span class="k">OVER</span> (<span class="k">ORDER BY</span> order_date) <span class="k">AS</span> 직전,
+    <span class="k">SUM</span>(amount) <span class="k">OVER</span> (<span class="k">ORDER BY</span> order_date) <span class="k">AS</span> 누적합
+<span class="k">FROM</span> orders <span class="k">WHERE</span> status='PAID';</pre>
+        <h4>재귀 CTE (계층·연속 데이터 생성)</h4>
+        <pre><span class="k">WITH RECURSIVE</span> numbers <span class="k">AS</span> (
+    <span class="k">SELECT</span> 1 <span class="k">AS</span> n                 <span class="c">-- ① 시작(앵커)</span>
+    <span class="k">UNION ALL</span>
+    <span class="k">SELECT</span> n + 1 <span class="k">FROM</span> numbers      <span class="c">-- ② 자기 참조로 반복</span>
+    <span class="k">WHERE</span> n &lt; 5                    <span class="c">-- ③ 종료 조건 (필수!)</span>
+)
+<span class="k">SELECT</span> n <span class="k">FROM</span> numbers;                 <span class="c">-- 1,2,3,4,5</span></pre>
+        <div class="note"><strong>📌 DBMS 차이</strong> — SQL Server는 <code class="inl">WITH</code>(RECURSIVE 없음), Oracle은 <code class="inl">CONNECT BY</code>도 지원. 실무: 조직도·카테고리 트리·빈 날짜 채우기.</div>
+        <details class="ex"><summary>연습 · ①category별 가격 DENSE_RANK ②고객별 누적 결제금액</summary>
+          <pre><span class="k">SELECT</span> category, product_name, price,
+    <span class="k">DENSE_RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> category <span class="k">ORDER BY</span> price <span class="k">DESC</span>) <span class="k">AS</span> price_rank
+<span class="k">FROM</span> products;
+
+<span class="k">SELECT</span> customer_id, order_date, amount,
+    <span class="k">SUM</span>(amount) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> order_date) <span class="k">AS</span> cumulative
+<span class="k">FROM</span> orders <span class="k">WHERE</span> status='PAID';</pre></details>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <section id="summary">
+    <h2 class="plain">📎 5일 총정리</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Day</th><th>반드시 기억할 것</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td><code class="inl">SELECT-FROM-WHERE-ORDER BY</code> 뼈대 / <code class="inl">IN·LIKE·BETWEEN</code> / NULL은 <code class="inl">IS NULL</code></td></tr>
+        <tr><td><strong>2</strong></td><td>별칭 <code class="inl">AS</code> / 문자열·숫자·날짜 함수 / <code class="inl">CASE WHEN</code> / <code class="inl">COALESCE</code></td></tr>
+        <tr><td><strong>3</strong></td><td>집계 5종 / <code class="inl">GROUP BY</code> 규칙 / <code class="inl">WHERE</code>(전) vs <code class="inl">HAVING</code>(후)</td></tr>
+        <tr><td><strong>4</strong></td><td><code class="inl">INNER</code>(교집합) vs <code class="inl">LEFT</code>(한쪽 다) / 3중 조인 / <code class="inl">UNION</code> / JOIN+집계</td></tr>
+        <tr><td><strong>5</strong></td><td>서브쿼리(스칼라·상관) / <code class="inl">EXISTS</code> / <code class="inl">CTE</code> / 윈도우 함수(순위·누적·<code class="inl">LAG</code>)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>🎯 5일 완주 셀프 체크</h3>
+    <ul class="clean">
+      <li><code class="inl">WHERE</code>와 <code class="inl">HAVING</code>의 차이를 예로 설명할 수 있다. (Day 3)</li>
+      <li><code class="inl">INNER JOIN</code>과 <code class="inl">LEFT JOIN</code>이 결과에서 어떻게 다른지 안다. (Day 4)</li>
+      <li>"전체 평균 vs 고객별 평균"의 쿼리 차이(상관 서브쿼리)를 안다. (Day 5)</li>
+      <li><code class="inl">GROUP BY</code>와 윈도우 함수의 차이(행이 사라지는가?)를 말할 수 있다. (Day 5)</li>
+      <li>실행 순서 <code class="inl">FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY</code>를 외웠다.</li>
+    </ul>
+
+    <h3>➡️ 다음 단계 (Day 6+)</h3>
+    <ul class="body">
+      <li>인덱스와 실행계획(<code class="inl">EXPLAIN</code>)으로 <strong>쿼리 성능</strong> 이해하기</li>
+      <li>서브쿼리 vs JOIN vs 윈도우 함수 — <strong>언제 무엇을 쓸까</strong></li>
+      <li>트랜잭션(<code class="inl">COMMIT</code>/<code class="inl">ROLLBACK</code>)과 데이터 정합성</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  DB 쿼리 5일 완성 학습 자료 · 실습 DBMS: MySQL 8.0+ / PostgreSQL 12+ 기준 · 작성일 2026-07-24<br>
+  코드 블록은 그대로 복사해 실습할 수 있습니다. 예제는 상단 샘플 스키마 기준입니다.
+</footer>
+
+</body>
+</html>
